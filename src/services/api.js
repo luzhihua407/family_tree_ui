@@ -15,7 +15,7 @@ export default {
   queryPostList: '/posts',
 
   queryDashboard: '/dashboard',
-  
+
   getMenuTree: '/security/menu/getMenuTree',
   queryMenu: '/security/menu/get',
   getParentMenus: '/security/menu/getParentMenus',
@@ -24,7 +24,7 @@ export default {
   createMenu: 'POST /security/menu/addOrUpdate',
   removeMenu: 'POST /security/menu/delete',
   removeMenuList: 'POST /security/menu/delete',
-  
+
   queryRole: '/security/role/get',
   getRoles: '/security/role/getRoles',
   queryRoleList: 'POST /security/role/page',
@@ -34,4 +34,11 @@ export default {
   removeRoleList: 'POST /security/role/delete',
   saveRoleMenu: 'POST /security/role-menu/addOrUpdate',
   getRoleMenuByRoleId: 'POST /security/role-menu/getRoleMenuByRoleId',
+
+  queryCategoryByPage: 'POST /folk/category/page',
+  queryCategoryById: 'GET /folk/category/get',
+  updateCategory: 'POST /folk/category/edit',
+  createCategory: 'POST /folk/category/add',
+  removeCategory: 'POST /folk/category/delete',
+  removeCategoryList: 'POST /folk/category/delete',
 }

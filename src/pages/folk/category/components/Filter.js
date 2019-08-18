@@ -1,11 +1,8 @@
 /* global document */
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
-import { FilterItem } from 'components'
 import { Trans, withI18n } from '@lingui/react'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
-import city from 'utils/city'
 
 const { Search } = Input
 const { RangePicker } = DatePicker
@@ -36,6 +33,7 @@ class Filter extends PureComponent {
 
     let fields = getFieldsValue()
     fields = this.handleFields(fields)
+    fields = { param: fields }
     onFilterChange(fields)
   }
 
@@ -69,23 +67,13 @@ class Filter extends PureComponent {
   render() {
     const { onAdd, filter, form, i18n } = this.props
     const { getFieldDecorator } = form
-    const { username, mobile } = filter
+    const { name } = filter
 
     return (
       <Row gutter={24}>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-          {getFieldDecorator('username', { initialValue: username })(
-            <Input placeholder={'搜索用户名称'} allowClear />
-          )}
-        </Col>
-        <Col
-          {...ColProps}
-          xl={{ span: 4 }}
-          md={{ span: 8 }}
-          id="addressCascader"
-        >
-          {getFieldDecorator('mobile', { initialValue: mobile })(
-            <Input placeholder={'搜索用户手机'} allowClear />
+          {getFieldDecorator('name', { initialValue: name })(
+            <Input placeholder={'搜索名称'} allowClear />
           )}
         </Col>
         <Col
@@ -104,13 +92,13 @@ class Filter extends PureComponent {
               >
                 <Trans>Search</Trans>
               </Button>
-              <Button onClick={this.handleReset} icon="delete">
+              <Button className="margin-right" onClick={this.handleReset}>
                 <Trans>Reset</Trans>
               </Button>
+              <Button type="ghost" onClick={onAdd} icon="form">
+                <Trans>Create</Trans>
+              </Button>
             </div>
-            <Button type="ghost" onClick={onAdd}>
-              <Trans>Create</Trans>
-            </Button>
           </Row>
         </Col>
       </Row>

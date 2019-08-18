@@ -72,7 +72,7 @@ export default {
   // Webpack Configuration
   proxy: {
     '/api/v1/': {
-      target: 'http://localhost',
+      target: 'http://localhost:8080',
       changeOrigin: true,
       pathRewrite: { '^/api/v1/': '' },
     }

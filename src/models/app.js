@@ -24,15 +24,14 @@ export default {
         icon: 'laptop',
         name: '仪表盘',
         zhName: '仪表盘',
-        route: '/user',
+        route: '/folk/category',
       },
     ],
     locationPathname: '',
     locationQuery: {},
     theme: store.get('theme') || 'light',
     collapsed: store.get('collapsed') || false,
-    notifications: [
-    ],
+    notifications: [],
   },
   subscriptions: {
     setupHistory({ dispatch, history }) {
@@ -67,11 +66,15 @@ export default {
   },
   effects: {
     *query({ payload }, { call, put, select }) {
-      const { success, user,data:{menus} } = yield call(queryUserInfo, payload)
-  
+      const {
+        success,
+        user,
+        data: { menus },
+      } = yield call(queryUserInfo, payload)
+
       const { locationPathname } = yield select(_ => _.app)
       if (success && menus) {
-        const { list } = menus;
+        const { list } = menus
         const { permissions } = {
           id: 0,
           username: 'admin',
@@ -81,9 +84,9 @@ export default {
         }
         // const { permissions } = user
         let routeList = menus
-        console.log(111111);
-        console.log(routeList);
-        
+        console.log(111111)
+        console.log(routeList)
+
         // if (
         //   permissions.role === ROLE_TYPE.ADMIN ||
         //   permissions.role === ROLE_TYPE.DEVELOPER
@@ -109,7 +112,7 @@ export default {
             routeList,
           },
         })
-        if (pathMatchRegexp(['/','/login'], window.location.pathname)) {
+        if (pathMatchRegexp(['/', '/login'], window.location.pathname)) {
           router.push({
             pathname: '/user',
           })
