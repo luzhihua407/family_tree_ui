@@ -36,6 +36,7 @@ class Filter extends PureComponent {
 
     let fields = getFieldsValue()
     fields = this.handleFields(fields)
+    fields = { param: fields }
     onFilterChange(fields)
   }
 
@@ -67,7 +68,7 @@ class Filter extends PureComponent {
   }
 
   render() {
-    const { onAdd, filter, form, i18n,onAddMenu} = this.props
+    const { onAdd, filter, form, i18n, onAddMenu } = this.props
     const { getFieldDecorator } = form
     const { name, code } = filter
 
@@ -77,9 +78,7 @@ class Filter extends PureComponent {
       <Row gutter={24}>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
           {getFieldDecorator('code', { initialValue: code })(
-            <Input
-              placeholder={"搜索角色编码"} allowClear 
-            />
+            <Input placeholder={'搜索角色编码'} allowClear />
           )}
         </Col>
         <Col
@@ -89,9 +88,7 @@ class Filter extends PureComponent {
           id="addressCascader"
         >
           {getFieldDecorator('name', { initialValue: name })(
-            <Input
-              placeholder={"搜索角色名称"} allowClear 
-            />
+            <Input placeholder={'搜索角色名称'} allowClear />
           )}
         </Col>
         <Col
@@ -104,7 +101,8 @@ class Filter extends PureComponent {
             <div>
               <Button
                 type="primary"
-                className="margin-right" icon="search"
+                className="margin-right"
+                icon="search"
                 onClick={this.handleSubmit}
               >
                 <Trans>Search</Trans>

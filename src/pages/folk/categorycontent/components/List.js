@@ -1,16 +1,16 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal, Button } from 'antd'
+import { Table, Modal, Avatar, Button } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
+import Link from 'umi/link'
 import styles from './List.less'
 
 const { confirm } = Modal
 
 @withI18n()
 class List extends PureComponent {
-  handleMenuClick = (record, e) => {
+  handleUserClick = (record, e) => {
     const { onDeleteItem, onEditItem, i18n } = this.props
-
     if (e === '1') {
       onEditItem(record)
     } else if (e === '2') {
@@ -28,60 +28,42 @@ class List extends PureComponent {
 
     const columns = [
       {
-        title: '菜单编码',
-        dataIndex: 'code',
-        key: 'code',
-        width: 120,
+        title: '标题',
+        dataIndex: 'title',
+        key: 'title',
+        width: '20%',
       },
       {
-        title: '菜单名称',
-        dataIndex: 'name',
-        key: 'name',
-        width: 120,
+        title: '子标题',
+        dataIndex: 'subTitle',
+        key: 'subTitle',
+        width: '20%',
       },
       {
-        title: '目录',
-        dataIndex: 'parentMenuName',
-        key: 'parentMenuName',
-        width: 120,
-      },
-      {
-        title: '图标',
-        dataIndex: 'icon',
-        key: 'icon',
-        width: 120,
-      },
-      {
-        title: '类型',
-        dataIndex: 'type',
-        key: 'type',
-        width: 120,
-        render: text => <span>{text == 1 ? '菜单' : '目录'}</span>,
-      },
-      {
-        title: '路径',
-        dataIndex: 'url',
-        key: 'url',
-        width: 120,
-      },
-      {
-        title: '备注',
-        dataIndex: 'remark',
-        key: 'remark',
-        width: 120,
+        title: '类别',
+        dataIndex: 'categoryId',
+        key: 'categoryId',
+        width: '10%',
+        render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
       },
       {
         title: '创建时间',
         dataIndex: 'createTime',
         key: 'createTime',
-        width: 120,
+        width: '10%',
       },
       {
         title: '启用',
         dataIndex: 'valid',
         key: 'valid',
-        width: 120,
+        width: '10%',
         render: text => <span>{text ? '是' : '否'}</span>,
+      },
+      {
+        title: '备注',
+        dataIndex: 'remark',
+        key: 'remark',
+        width: '20%',
       },
       {
         title: '操作',
@@ -92,14 +74,14 @@ class List extends PureComponent {
             <Button.Group>
               <Button
                 icon="edit"
-                onClick={e => this.handleMenuClick(record, '1')}
+                onClick={e => this.handleUserClick(record, '1')}
                 size={'small'}
               >
                 更新
               </Button>
               <Button
                 icon="delete"
-                onClick={e => this.handleMenuClick(record, '2')}
+                onClick={e => this.handleUserClick(record, '2')}
                 size={'small'}
               >
                 删除
@@ -119,7 +101,7 @@ class List extends PureComponent {
         }}
         className={styles.table}
         bordered
-        scroll={{ x: 1200 }}
+        scroll={{ x: '100%' }}
         columns={columns}
         simple
         rowKey={record => record.id}

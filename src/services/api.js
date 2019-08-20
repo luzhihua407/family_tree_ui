@@ -41,4 +41,11 @@ export default {
   createCategory: 'POST /folk/category/add',
   removeCategory: 'POST /folk/category/delete',
   removeCategoryList: 'POST /folk/category/delete',
+
+  queryCategoryContentByPage: 'POST /folk/category_content/page',
+  queryCategoryContentById: 'GET /folk/category_content/get',
+  updateCategoryContent: 'POST /folk/category_content/edit',
+  createCategoryContent: 'POST /folk/category_content/add',
+  removeCategoryContent: 'POST /folk/category_content/delete',
+  removeCategoryContentList: 'POST /folk/category_content/delete',
 }

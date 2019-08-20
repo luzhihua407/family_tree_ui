@@ -11,10 +11,10 @@ import Filter from './components/Filter'
 import Modal from './components/Modal'
 
 @withI18n()
-@connect(({ role, loading }) => ({ role, loading }))
-class role extends PureComponent {
+@connect(({ categoryContent, loading }) => ({ categoryContent, loading }))
+class CategoryContent extends PureComponent {
   render() {
-    const { location, dispatch, role, loading, i18n } = this.props
+    const { location, dispatch, categoryContent, loading, i18n } = this.props
     const { query, pathname } = location
     const {
       list,
@@ -23,11 +23,11 @@ class role extends PureComponent {
       modalVisible,
       modalType,
       selectedRowKeys,
-    } = role
+    } = categoryContent
 
     const handleRefresh = newQuery => {
       dispatch({
-        type: 'role/query',
+        type: 'categoryContent/query',
         payload: newQuery,
       })
     }
@@ -36,14 +36,17 @@ class role extends PureComponent {
       item: modalType === 'create' ? {} : currentItem,
       visible: modalVisible,
       maskClosable: false,
-      confirmLoading: loading.effects[`role/${modalType}`],
+      confirmLoading: loading.effects[`categoryContent/${modalType}`],
       title: `${
-        modalType === 'create' ? i18n.t`Create role` : i18n.t`Update role`
+        modalType === 'create'
+          ? i18n.t`Create categoryContent`
+          : i18n.t`Update categoryContent`
       }`,
+      width: '80%',
       centered: true,
       onOk(data) {
         dispatch({
-          type: `role/${modalType}`,
+          type: `categoryContent/${modalType}`,
           payload: data,
         }).then(() => {
           handleRefresh()
@@ -51,28 +54,28 @@ class role extends PureComponent {
       },
       onCancel() {
         dispatch({
-          type: 'role/hideModal',
+          type: 'categoryContent/hideModal',
         })
       },
     }
 
     const listProps = {
       dataSource: list,
-      loading: loading.effects['role/query'],
+      loading: loading.effects['categoryContent/query'],
       pagination,
       onChange(page) {
         handleRefresh({
-          page: page.current,
+          pageNumber: page.current,
           pageSize: page.pageSize,
         })
       },
       onDeleteItem(id) {
         dispatch({
-          type: 'role/delete',
+          type: 'categoryContent/delete',
           payload: id,
         }).then(() => {
           handleRefresh({
-            page:
+            pageNumber:
               list.length === 1 && pagination.current > 1
                 ? pagination.current - 1
                 : pagination.current,
@@ -81,7 +84,7 @@ class role extends PureComponent {
       },
       onEditItem(item) {
         dispatch({
-          type: 'role/get',
+          type: 'categoryContent/get',
           payload: item.id,
         })
       },
@@ -89,7 +92,7 @@ class role extends PureComponent {
         selectedRowKeys,
         onChange: keys => {
           dispatch({
-            type: 'role/updateState',
+            type: 'categoryContent/updateState',
             payload: {
               selectedRowKeys: keys,
             },
@@ -105,12 +108,12 @@ class role extends PureComponent {
       onFilterChange(value) {
         handleRefresh({
           ...value,
-          page: 1,
+          pageNumber: 1,
         })
       },
       onAdd() {
         dispatch({
-          type: 'role/showModal',
+          type: 'categoryContent/showModal',
           payload: {
             modalType: 'create',
           },
@@ -120,13 +123,13 @@ class role extends PureComponent {
 
     const handleDeleteItems = () => {
       dispatch({
-        type: 'role/multiDelete',
+        type: 'categoryContent/multiDelete',
         payload: {
           ids: selectedRowKeys,
         },
       }).then(() => {
         handleRefresh({
-          page:
+          pageNumber:
             list.length === selectedRowKeys.length && pagination.current > 1
               ? pagination.current - 1
               : pagination.current,
@@ -160,11 +163,11 @@ class role extends PureComponent {
   }
 }
 
-role.propTypes = {
-  role: PropTypes.object,
+CategoryContent.propTypes = {
+  categoryContent: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default role
+export default CategoryContent

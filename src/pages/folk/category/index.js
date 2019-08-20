@@ -26,21 +26,10 @@ class Category extends PureComponent {
     } = category
 
     const handleRefresh = newQuery => {
-      console.log(newQuery)
       dispatch({
         type: 'category/query',
         payload: newQuery,
       })
-      // router.push({
-      //   pathname,
-      //   search: stringify(
-      //     {
-      //       ...query,
-      //       ...newQuery,
-      //     },
-      //     { arrayFormat: 'repeat' }
-      //   ),
-      // })
     }
 
     const modalProps = {

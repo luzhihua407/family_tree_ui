@@ -14,11 +14,10 @@ const gen = params => {
   }
 
   return function(data) {
-    console.log(url);
     return request({
       url,
       data,
-      method
+      method,
     })
   }
 }

@@ -33,7 +33,6 @@ class List extends PureComponent {
         dataIndex: 'name',
         key: 'name',
         width: '25%',
-        render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
       },
       {
         title: '创建时间',

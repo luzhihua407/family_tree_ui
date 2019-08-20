@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader,Select } from 'antd'
+import { Form, Input, InputNumber, Radio, Modal, Cascader, Select } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
 
 const FormItem = Form.Item
-
+const TextArea = Input.TextArea
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -32,15 +32,22 @@ class MenuModal extends PureComponent {
     })
   }
 
-
   render() {
-    const { item = {}, onOk, form, i18n,parentMenusData,getParentMenus, ...modalProps } = this.props
+    const {
+      item = {},
+      onOk,
+      form,
+      i18n,
+      parentMenusData,
+      getParentMenus,
+      ...modalProps
+    } = this.props
     const { getFieldDecorator } = form
 
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label='菜单编码' hasFeedback {...formItemLayout}>
+          <FormItem label="菜单编码" hasFeedback {...formItemLayout}>
             {getFieldDecorator('code', {
               initialValue: item.code,
               rules: [
@@ -50,7 +57,7 @@ class MenuModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label='菜单名称' hasFeedback {...formItemLayout}>
+          <FormItem label="菜单名称" hasFeedback {...formItemLayout}>
             {getFieldDecorator('name', {
               initialValue: item.name,
               rules: [
@@ -60,7 +67,7 @@ class MenuModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label='图标' hasFeedback {...formItemLayout}>
+          <FormItem label="图标" hasFeedback {...formItemLayout}>
             {getFieldDecorator('icon', {
               initialValue: item.icon,
               rules: [
@@ -68,37 +75,34 @@ class MenuModal extends PureComponent {
                   required: false,
                 },
               ],
-            })(<Input />
-            )}
+            })(<Input />)}
           </FormItem>
-          <FormItem label='类型' hasFeedback {...formItemLayout}>
+          <FormItem label="类型" hasFeedback {...formItemLayout}>
             {getFieldDecorator('type', {
-              initialValue: item.type,
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(<Radio.Group>
-              <Radio value={0}>
-                目录
-              </Radio>
-              <Radio value={1}>
-                菜单
-              </Radio>
-            </Radio.Group>)}
-          </FormItem>
-          <FormItem label='路径' hasFeedback {...formItemLayout}>
-            {getFieldDecorator('url', {
-              initialValue: item.url,
+              initialValue: item.type == null ? 1 : item.type,
               rules: [
                 {
                   required: false,
                 },
               ],
+            })(
+              <Radio.Group>
+                <Radio value={0}>目录</Radio>
+                <Radio value={1}>菜单</Radio>
+              </Radio.Group>
+            )}
+          </FormItem>
+          <FormItem label="路径" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('url', {
+              initialValue: item.url,
+              rules: [
+                {
+                  required: true,
+                },
+              ],
             })(<Input />)}
           </FormItem>
-          <FormItem label='目录' hasFeedback {...formItemLayout}>
+          <FormItem label="目录" hasFeedback {...formItemLayout}>
             {getFieldDecorator('parent', {
               initialValue: item.parent,
               rules: [
@@ -106,33 +110,43 @@ class MenuModal extends PureComponent {
                   required: false,
                 },
               ],
-            })(<Select
-              labelInValue={false}
-              placeholder="请选择"
-              style={{ width: '100%' }}
-            >
-            {parentMenusData.map(d => <Option key={d.id}>{d.name}</Option>)}
-            </Select>)}
+            })(
+              <Select
+                labelInValue={false}
+                placeholder="请选择"
+                style={{ width: '100%' }}
+              >
+                {parentMenusData.map(d => (
+                  <Option key={d.id}>{d.name}</Option>
+                ))}
+              </Select>
+            )}
           </FormItem>
-          <FormItem label='启用' hasFeedback {...formItemLayout}>
+          <FormItem label="启用" hasFeedback {...formItemLayout}>
             {getFieldDecorator('valid', {
-              initialValue: item.valid,
+              initialValue: item.valid == null ? true : item.valid,
               rules: [
                 {
-                  required: true,
+                  required: false,
                   type: 'boolean',
                 },
               ],
             })(
               <Radio.Group>
-                <Radio value>
-                  是
-                </Radio>
-                <Radio value={false}>
-                  否
-                </Radio>
+                <Radio value>是</Radio>
+                <Radio value={false}>否</Radio>
               </Radio.Group>
             )}
+          </FormItem>
+          <FormItem label="备注" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('remark', {
+              initialValue: item.remark,
+              rules: [
+                {
+                  required: false,
+                },
+              ],
+            })(<TextArea rows={3} />)}
           </FormItem>
         </Form>
       </Modal>

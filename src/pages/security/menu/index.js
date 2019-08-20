@@ -27,15 +27,9 @@ class menu extends PureComponent {
     } = menu
 
     const handleRefresh = newQuery => {
-      router.push({
-        pathname,
-        search: stringify(
-          {
-            ...query,
-            ...newQuery,
-          },
-          { arrayFormat: 'repeat' }
-        ),
+      dispatch({
+        type: 'menu/query',
+        payload: newQuery,
       })
     }
 
@@ -48,7 +42,7 @@ class menu extends PureComponent {
         modalType === 'create' ? i18n.t`Create menu` : i18n.t`Update menu`
       }`,
       centered: true,
-      parentMenusData:parentMenusData,
+      parentMenusData: parentMenusData,
       onOk(data) {
         dispatch({
           type: `menu/${modalType}`,
@@ -62,7 +56,6 @@ class menu extends PureComponent {
           type: 'menu/hideModal',
         })
       },
-
     }
 
     const listProps = {
@@ -78,7 +71,7 @@ class menu extends PureComponent {
       onDeleteItem(id) {
         dispatch({
           type: 'menu/delete',
-          payload: id,
+          payload: [id],
         }).then(() => {
           handleRefresh({
             pageNumber:
@@ -97,8 +90,6 @@ class menu extends PureComponent {
             payload: item.id,
           })
         })
-  
-  
       },
       rowSelection: {
         selectedRowKeys,

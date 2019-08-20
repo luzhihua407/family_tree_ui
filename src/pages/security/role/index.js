@@ -30,16 +30,9 @@ class role extends PureComponent {
     } = role
 
     const handleRefresh = newQuery => {
-      console.log(newQuery+">>");
-      router.push({
-        pathname,
-        search: stringify(
-          {
-            ...query,
-            ...newQuery,
-          },
-          { arrayFormat: 'repeat' }
-        ),
+      dispatch({
+        type: 'role/query',
+        payload: newQuery,
       })
     }
 
@@ -70,12 +63,10 @@ class role extends PureComponent {
       item: roleMenuModalType === 'create' ? {} : currentRoleItem,
       visible: roleMenuModalVisible,
       treeData: treeData,
-      currentRoleItem:  currentRoleItem,
+      currentRoleItem: currentRoleItem,
       maskClosable: false,
       confirmLoading: loading.effects[`role/${roleMenuModalType}`],
-      title: `${
-        roleMenuModalType === 'create' ? '分配菜单' : '修改分配菜单'
-      }`,
+      title: `${roleMenuModalType === 'create' ? '分配菜单' : '修改分配菜单'}`,
       centered: true,
       onOk(data) {
         dispatch({
@@ -90,7 +81,6 @@ class role extends PureComponent {
           type: 'role/hideRoleMenuModal',
         })
       },
-
     }
 
     const listProps = {
@@ -121,7 +111,6 @@ class role extends PureComponent {
           type: 'role/get',
           payload: item.id,
         })
-  
       },
       rowSelection: {
         selectedRowKeys,
@@ -137,16 +126,16 @@ class role extends PureComponent {
       onAddMenu(item) {
         dispatch({
           type: 'role/getMenuTree',
-        }).then(()=>{
+        }).then(() => {
           dispatch({
             type: 'role/getRoleMenuByRoleId',
-            payload: item.id
+            payload: item.id,
           })
           dispatch({
             type: 'role/showRoleMenuModal',
             payload: {
               modalType: 'update',
-              currentRoleItem:item,
+              currentRoleItem: item,
             },
           })
         })
@@ -171,7 +160,6 @@ class role extends PureComponent {
           },
         })
       },
-
     }
 
     const handleDeleteItems = () => {

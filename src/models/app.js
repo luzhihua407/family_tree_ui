@@ -24,7 +24,7 @@ export default {
         icon: 'laptop',
         name: '仪表盘',
         zhName: '仪表盘',
-        route: '/folk/category',
+        route: '/security/menu',
       },
     ],
     locationPathname: '',

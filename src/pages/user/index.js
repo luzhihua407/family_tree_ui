@@ -27,15 +27,9 @@ class User extends PureComponent {
     } = user
 
     const handleRefresh = newQuery => {
-      router.push({
-        pathname,
-        search: stringify(
-          {
-            ...query,
-            ...newQuery,
-          },
-          { arrayFormat: 'repeat' }
-        ),
+      dispatch({
+        type: 'user/query',
+        payload: newQuery,
       })
     }
 
@@ -44,7 +38,7 @@ class User extends PureComponent {
       visible: modalVisible,
       maskClosable: false,
       confirmLoading: loading.effects[`user/${modalType}`],
-      rolesData:rolesData,
+      rolesData: rolesData,
       title: `${
         modalType === 'create' ? i18n.t`Create User` : i18n.t`Update User`
       }`,
@@ -88,7 +82,7 @@ class User extends PureComponent {
         })
       },
       onEditItem(item) {
-        console.log(item);
+        console.log(item)
         dispatch({
           type: 'user/getRoles',
         }).then(() => {

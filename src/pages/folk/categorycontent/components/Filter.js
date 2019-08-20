@@ -1,11 +1,8 @@
 /* global document */
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
-import { FilterItem } from 'components'
 import { Trans, withI18n } from '@lingui/react'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
-import city from 'utils/city'
 
 const { Search } = Input
 const { RangePicker } = DatePicker
@@ -27,13 +24,6 @@ const TwoColProps = {
 @Form.create()
 class Filter extends PureComponent {
   handleFields = fields => {
-    const { createTime } = fields
-    if (createTime.length) {
-      fields.createTime = [
-        moment(createTime[0]).format('YYYY-MM-DD'),
-        moment(createTime[1]).format('YYYY-MM-DD'),
-      ]
-    }
     return fields
   }
 
@@ -77,64 +67,14 @@ class Filter extends PureComponent {
   render() {
     const { onAdd, filter, form, i18n } = this.props
     const { getFieldDecorator } = form
-    const { name, address } = filter
-
-    let initialCreateTime = []
-    if (filter.createTime && filter.createTime[0]) {
-      initialCreateTime[0] = moment(filter.createTime[0])
-    }
-    if (filter.createTime && filter.createTime[1]) {
-      initialCreateTime[1] = moment(filter.createTime[1])
-    }
+    const { title } = filter
 
     return (
       <Row gutter={24}>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-          {getFieldDecorator('name', { initialValue: name })(
-            <Search
-              placeholder={i18n.t`Search Name`}
-              onSearch={this.handleSubmit}
-            />
+          {getFieldDecorator('title', { initialValue: title })(
+            <Input placeholder={'搜索标题'} allowClear />
           )}
-        </Col>
-        <Col
-          {...ColProps}
-          xl={{ span: 4 }}
-          md={{ span: 8 }}
-          id="addressCascader"
-        >
-          {getFieldDecorator('address', { initialValue: address })(
-            <Cascader
-              style={{ width: '100%' }}
-              options={city}
-              placeholder={i18n.t`Please pick an address`}
-              onChange={this.handleChange.bind(this, 'address')}
-              getPopupContainer={() =>
-                document.getElementById('addressCascader')
-              }
-            />
-          )}
-        </Col>
-        <Col
-          {...ColProps}
-          xl={{ span: 6 }}
-          md={{ span: 8 }}
-          sm={{ span: 12 }}
-          id="createTimeRangePicker"
-        >
-          <FilterItem label={i18n.t`CreateTime`}>
-            {getFieldDecorator('createTime', {
-              initialValue: initialCreateTime,
-            })(
-              <RangePicker
-                style={{ width: '100%' }}
-                onChange={this.handleChange.bind(this, 'createTime')}
-                getCalendarContainer={() => {
-                  return document.getElementById('createTimeRangePicker')
-                }}
-              />
-            )}
-          </FilterItem>
         </Col>
         <Col
           {...TwoColProps}
@@ -147,17 +87,18 @@ class Filter extends PureComponent {
               <Button
                 type="primary"
                 className="margin-right"
+                icon="search"
                 onClick={this.handleSubmit}
               >
                 <Trans>Search</Trans>
               </Button>
-              <Button onClick={this.handleReset}>
+              <Button className="margin-right" onClick={this.handleReset}>
                 <Trans>Reset</Trans>
               </Button>
+              <Button type="ghost" onClick={onAdd} icon="form">
+                <Trans>Create</Trans>
+              </Button>
             </div>
-            <Button type="ghost" onClick={onAdd}>
-              <Trans>Create</Trans>
-            </Button>
           </Row>
         </Col>
       </Row>

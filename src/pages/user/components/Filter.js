@@ -36,6 +36,7 @@ class Filter extends PureComponent {
 
     let fields = getFieldsValue()
     fields = this.handleFields(fields)
+    fields = { param: fields }
     onFilterChange(fields)
   }
 
