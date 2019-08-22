@@ -61,17 +61,16 @@ class CategoryModal extends PureComponent {
           </FormItem>
           <FormItem label="启用" hasFeedback {...formItemLayout}>
             {getFieldDecorator('valid', {
-              initialValue: item.valid == null ? false : item.valid,
+              initialValue: item.valid == null ? '否' : item.valid,
               rules: [
                 {
                   required: true,
-                  type: 'boolean',
                 },
               ],
             })(
               <Radio.Group>
-                <Radio value>是</Radio>
-                <Radio value={false}>否</Radio>
+                <Radio value={'是'}>是</Radio>
+                <Radio value={'否'}>否</Radio>
               </Radio.Group>
             )}
           </FormItem>

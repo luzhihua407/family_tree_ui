@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal, Avatar } from 'antd'
+import { Table, Modal, Button } from 'antd'
 import { DropOption } from 'components'
 import { Trans, withI18n } from '@lingui/react'
-import Link from 'umi/link'
 import styles from './List.less'
 
 const { confirm } = Modal
@@ -11,20 +10,19 @@ const { confirm } = Modal
 @withI18n()
 class List extends PureComponent {
   handleRoleClick = (record, e) => {
-    const { onDeleteItem, onEditItem, i18n ,onAddMenu} = this.props
+    const { onDeleteItem, onEditItem, i18n, onAddMenu } = this.props
 
-    if (e.key === '1') {
+    if (e === '1') {
       onEditItem(record)
-    } else if (e.key === '2') {
+    } else if (e === '2') {
       confirm({
         title: '你确定要删除这条记录吗？',
         onOk() {
           onDeleteItem(record.id)
         },
       })
-    } else if (e.key === '3') {
-      console.log(record);
-      onAddMenu(record);
+    } else if (e === '3') {
+      onAddMenu(record)
     }
   }
 
@@ -36,45 +34,43 @@ class List extends PureComponent {
         title: '角色编码',
         dataIndex: 'code',
         key: 'code',
-        width: 120
+        width: '15%',
       },
       {
         title: '角色名称',
         dataIndex: 'name',
         key: 'name',
-        width: 120,
+        width: '15%',
       },
       {
         title: '备注',
         dataIndex: 'remark',
         key: 'remark',
-        width: 120,
+        width: '15%',
       },
       {
         title: '超级管理员',
         dataIndex: 'admin',
         key: 'admin',
-        width: 120,
-        render: text => <span>{text==1 ? '是' : '否'}</span>,
+        width: '15%',
       },
       {
         title: '创建人',
         dataIndex: 'creater',
         key: 'creater',
-        width: 120,
+        width: '15%',
       },
       {
         title: '创建时间',
         dataIndex: 'createTime',
         key: 'createTime',
-        width: 120,
+        width: '15%',
       },
       {
         title: '启用',
         dataIndex: 'valid',
         key: 'valid',
-        width: 120,
-        render: text => <span>{text==1 ? '是' : '否'}</span>,
+        width: '15%',
       },
       {
         title: '操作',
@@ -82,14 +78,29 @@ class List extends PureComponent {
         fixed: 'right',
         render: (text, record) => {
           return (
-            <DropOption
-              onMenuClick={e => this.handleRoleClick(record, e)}
-              menuOptions={[
-                { key: '1', name: '更新' },
-                { key: '2', name: '删除' },
-                { key: '3', name: '分配菜单' },
-              ]}
-            />
+            <Button.Group>
+              <Button
+                icon="edit"
+                onClick={e => this.handleRoleClick(record, '1')}
+                size={'small'}
+              >
+                更新
+              </Button>
+              <Button
+                icon="delete"
+                onClick={e => this.handleRoleClick(record, '2')}
+                size={'small'}
+              >
+                删除
+              </Button>
+              <Button
+                icon="delete"
+                onClick={e => this.handleRoleClick(record, '3')}
+                size={'small'}
+              >
+                分配菜单
+              </Button>
+            </Button.Group>
           )
         },
       },
@@ -104,7 +115,7 @@ class List extends PureComponent {
         }}
         className={styles.table}
         bordered
-        scroll={{ x: 800 }}
+        scroll={{ x: '100%' }}
         columns={columns}
         simple
         rowKey={record => record.id}

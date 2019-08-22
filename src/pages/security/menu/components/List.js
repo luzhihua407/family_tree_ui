@@ -56,7 +56,6 @@ class List extends PureComponent {
         dataIndex: 'type',
         key: 'type',
         width: 120,
-        render: text => <span>{text == 1 ? '菜单' : '目录'}</span>,
       },
       {
         title: '路径',
@@ -81,7 +80,6 @@ class List extends PureComponent {
         dataIndex: 'valid',
         key: 'valid',
         width: 120,
-        render: text => <span>{text ? '是' : '否'}</span>,
       },
       {
         title: '操作',

@@ -87,8 +87,8 @@ class MenuModal extends PureComponent {
               ],
             })(
               <Radio.Group>
-                <Radio value={0}>目录</Radio>
-                <Radio value={1}>菜单</Radio>
+                <Radio value={'目录'}>目录</Radio>
+                <Radio value={'菜单'}>菜单</Radio>
               </Radio.Group>
             )}
           </FormItem>
@@ -124,17 +124,16 @@ class MenuModal extends PureComponent {
           </FormItem>
           <FormItem label="启用" hasFeedback {...formItemLayout}>
             {getFieldDecorator('valid', {
-              initialValue: item.valid == null ? true : item.valid,
+              initialValue: item.valid == null ? '否' : item.valid,
               rules: [
                 {
                   required: false,
-                  type: 'boolean',
                 },
               ],
             })(
               <Radio.Group>
-                <Radio value>是</Radio>
-                <Radio value={false}>否</Radio>
+                <Radio value={'是'}>是</Radio>
+                <Radio value={'否'}>否</Radio>
               </Radio.Group>
             )}
           </FormItem>

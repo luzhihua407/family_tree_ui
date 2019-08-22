@@ -24,7 +24,7 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
-    treeData:[],
+    treeData: [],
   },
 
   subscriptions: {
@@ -42,10 +42,10 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
-    *query({ payload}, { call, put }) {
+    *query({ payload }, { call, put }) {
       const data = yield call(queryRoleList, payload)
       if (data) {
-        let {pageNumber,pageSize,result}=data.data;
+        let { pageNumber, pageSize, result } = data.data
         yield put({
           type: 'querySuccess',
           payload: {
@@ -61,7 +61,7 @@ export default modelExtend(pageModel, {
     },
 
     *delete({ payload }, { call, put, select }) {
-      const data = yield call(removeRole, { ids: payload })
+      const data = yield call(removeRole, { ids: [payload] })
       const { selectedRowKeys } = yield select(_ => _.role)
       if (data.success) {
         yield put({
@@ -119,7 +119,7 @@ export default modelExtend(pageModel, {
           type: 'showModal',
           payload: {
             modalType: 'update',
-            currentItem:  resp.data,
+            currentItem: resp.data,
           },
         })
       } else {
@@ -129,7 +129,10 @@ export default modelExtend(pageModel, {
     *getRoleMenuByRoleId({ payload }, { call, put, select }) {
       const resp = yield call(getRoleMenuByRoleId, { roleId: payload })
       if (resp.success) {
-        yield put({ type: 'updateState', payload: {  currentRoleItem:  resp.data } })
+        yield put({
+          type: 'updateState',
+          payload: { currentRoleItem: resp.data },
+        })
       } else {
         throw resp
       }
@@ -137,7 +140,7 @@ export default modelExtend(pageModel, {
     *getMenuTree({ payload }, { call, put, select }) {
       const resp = yield call(getMenuTree, { id: payload })
       if (resp.success) {
-        yield put({ type: 'updateState', payload: { treeData:  resp.data, } })
+        yield put({ type: 'updateState', payload: { treeData: resp.data } })
       } else {
         throw resp
       }

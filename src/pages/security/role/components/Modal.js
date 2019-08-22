@@ -16,12 +16,12 @@ const formItemLayout = {
 @withI18n()
 @Form.create()
 class RoleModal extends PureComponent {
-  onRegionChange=(value, selectedOptions)=>{
-    const {form } = this.props
-    let [province,city,district]=selectedOptions;
-    form.setFieldsValue({province:province.id});
-    form.setFieldsValue({city:city.id});
-    form.setFieldsValue({district:district.id});
+  onRegionChange = (value, selectedOptions) => {
+    const { form } = this.props
+    let [province, city, district] = selectedOptions
+    form.setFieldsValue({ province: province.id })
+    form.setFieldsValue({ city: city.id })
+    form.setFieldsValue({ district: district.id })
   }
   handleOk = () => {
     const { item = {}, onOk, form } = this.props
@@ -46,7 +46,7 @@ class RoleModal extends PureComponent {
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label='角色编码' hasFeedback {...formItemLayout}>
+          <FormItem label="角色编码" hasFeedback {...formItemLayout}>
             {getFieldDecorator('code', {
               initialValue: item.code,
               rules: [
@@ -56,7 +56,7 @@ class RoleModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label='角色名称' hasFeedback {...formItemLayout}>
+          <FormItem label="角色名称" hasFeedback {...formItemLayout}>
             {getFieldDecorator('name', {
               initialValue: item.name,
               rules: [
@@ -66,45 +66,37 @@ class RoleModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label='超级管理员' hasFeedback {...formItemLayout}>
+          <FormItem label="超级管理员" hasFeedback {...formItemLayout}>
             {getFieldDecorator('admin', {
-              initialValue: item.admin,
+              initialValue: item.admin == null ? '否' : item.admin,
               rules: [
                 {
                   required: true,
-                  type: 'boolean',
-                },
-              ],
-            })(<Radio.Group>
-              <Radio value={true}>
-                是
-              </Radio>
-              <Radio value={false}>
-                否
-              </Radio>
-            </Radio.Group>)}
-          </FormItem>
-          <FormItem label='启用' hasFeedback {...formItemLayout}>
-            {getFieldDecorator('valid', {
-              initialValue: item.valid,
-              rules: [
-                {
-                  required: true,
-                  type: 'boolean',
                 },
               ],
             })(
               <Radio.Group>
-                <Radio value>
-                  是
-                </Radio>
-                <Radio value={false}>
-                  否
-                </Radio>
+                <Radio value={'是'}>是</Radio>
+                <Radio value={'否'}>否</Radio>
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label='备注' hasFeedback {...formItemLayout}>
+          <FormItem label="启用" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('valid', {
+              initialValue: item.valid == null ? '否' : item.valid,
+              rules: [
+                {
+                  required: false,
+                },
+              ],
+            })(
+              <Radio.Group>
+                <Radio value={'是'}>是</Radio>
+                <Radio value={'否'}>否</Radio>
+              </Radio.Group>
+            )}
+          </FormItem>
+          <FormItem label="备注" hasFeedback {...formItemLayout}>
             {getFieldDecorator('remark', {
               initialValue: item.remark,
               rules: [
@@ -112,8 +104,7 @@ class RoleModal extends PureComponent {
                   required: false,
                 },
               ],
-            })(<Input.TextArea />
-            )}
+            })(<Input.TextArea />)}
           </FormItem>
         </Form>
       </Modal>

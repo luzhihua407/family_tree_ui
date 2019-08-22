@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader,Select } from 'antd'
+import { Form, Input, InputNumber, Radio, Modal, Cascader, Select } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
 import city from 'utils/city'
 
@@ -17,12 +17,12 @@ const formItemLayout = {
 @withI18n()
 @Form.create()
 class UserModal extends PureComponent {
-  onRegionChange=(value, selectedOptions)=>{
-    const {item = {},form} = this.props
-    let [province,city,district]=selectedOptions;
-    item.province=province.id;
-    item.city=city.id;
-    item.district=district.id;
+  onRegionChange = (value, selectedOptions) => {
+    const { item = {}, form } = this.props
+    let [province, city, district] = selectedOptions
+    item.province = province.id
+    item.city = city.id
+    item.district = district.id
   }
   handleOk = () => {
     const { item = {}, onOk, form } = this.props
@@ -37,24 +37,24 @@ class UserModal extends PureComponent {
         key: item.key,
       }
       data.address = data.address.join(' ')
-      data.province=item.province;
-      data.city=item.city;
-      data.district=item.district;
+      data.province = item.province
+      data.city = item.city
+      data.district = item.district
       onOk(data)
     })
   }
 
   render() {
-    const { item = {}, onOk, form, i18n,rolesData, ...modalProps } = this.props
+    const { item = {}, onOk, form, i18n, rolesData, ...modalProps } = this.props
     const { getFieldDecorator } = form
 
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <Input type="hidden" id="province" value={item.province}/>
-          <Input type="hidden" id="city" value={item.city}/>
-          <Input type="hidden" id="district" value={item.district}/>
-          <FormItem label='用户名' hasFeedback {...formItemLayout}>
+          <Input type="hidden" id="province" value={item.province} />
+          <Input type="hidden" id="city" value={item.city} />
+          <Input type="hidden" id="district" value={item.district} />
+          <FormItem label="用户名" hasFeedback {...formItemLayout}>
             {getFieldDecorator('username', {
               initialValue: item.username,
               rules: [
@@ -64,7 +64,7 @@ class UserModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label='真实姓名' hasFeedback {...formItemLayout}>
+          <FormItem label="真实姓名" hasFeedback {...formItemLayout}>
             {getFieldDecorator('realName', {
               initialValue: item.realName,
               rules: [
@@ -74,7 +74,7 @@ class UserModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label='性别' hasFeedback {...formItemLayout}>
+          <FormItem label="性别" hasFeedback {...formItemLayout}>
             {getFieldDecorator('gender', {
               initialValue: item.gender,
               rules: [
@@ -85,16 +85,13 @@ class UserModal extends PureComponent {
               ],
             })(
               <Radio.Group>
-                <Radio value={1}>
-                  男
-                </Radio>
-                <Radio value={0}>
-                  女
-                </Radio>
+                <Radio value={1}>男</Radio>
+                <Radio value={2}>女</Radio>
+                <Radio value={0}>不清楚</Radio>
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label='年龄' hasFeedback {...formItemLayout}>
+          <FormItem label="年龄" hasFeedback {...formItemLayout}>
             {getFieldDecorator('age', {
               initialValue: item.age,
               rules: [
@@ -105,7 +102,7 @@ class UserModal extends PureComponent {
               ],
             })(<InputNumber min={18} max={100} />)}
           </FormItem>
-          <FormItem label='手机' hasFeedback {...formItemLayout}>
+          <FormItem label="手机" hasFeedback {...formItemLayout}>
             {getFieldDecorator('mobile', {
               initialValue: item.mobile,
               rules: [
@@ -117,7 +114,7 @@ class UserModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label='邮箱' hasFeedback {...formItemLayout}>
+          <FormItem label="邮箱" hasFeedback {...formItemLayout}>
             {getFieldDecorator('email', {
               initialValue: item.email,
               rules: [
@@ -129,7 +126,7 @@ class UserModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label='住址' hasFeedback {...formItemLayout}>
+          <FormItem label="住址" hasFeedback {...formItemLayout}>
             {getFieldDecorator('address', {
               initialValue: item.address && item.address.split(' '),
               rules: [
@@ -141,52 +138,42 @@ class UserModal extends PureComponent {
               <Cascader
                 style={{ width: '100%' }}
                 options={city}
-                placeholder='选择住址'
+                placeholder="选择住址"
                 onChange={this.onRegionChange}
               />
             )}
           </FormItem>
-          <FormItem label='类型' hasFeedback {...formItemLayout}>
+          <FormItem label="类型" hasFeedback {...formItemLayout}>
             {getFieldDecorator('type', {
-              initialValue: item.type,
+              initialValue: item.type == null ? '普通用户' : item.type,
               rules: [
                 {
                   required: true,
-                  type: 'number',
                 },
               ],
             })(
               <Radio.Group>
-                <Radio value={99}>
-                  管理员
-                </Radio>
-                <Radio value={0}>
-                  普通用户
-                </Radio>
+                <Radio value={'管理员'}>管理员</Radio>
+                <Radio value={'普通用户'}>普通用户</Radio>
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label='启用' hasFeedback {...formItemLayout}>
+          <FormItem label="启用" hasFeedback {...formItemLayout}>
             {getFieldDecorator('valid', {
-              initialValue: item.valid,
+              initialValue: item.valid == null ? '否' : item.valid,
               rules: [
                 {
-                  required: true,
-                  type: 'boolean',
+                  required: false,
                 },
               ],
             })(
               <Radio.Group>
-                <Radio value>
-                  是
-                </Radio>
-                <Radio value={false}>
-                  否
-                </Radio>
+                <Radio value={'是'}>是</Radio>
+                <Radio value={'否'}>否</Radio>
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label='分配角色' hasFeedback {...formItemLayout}>
+          <FormItem label="分配角色" hasFeedback {...formItemLayout}>
             {getFieldDecorator('roles', {
               initialValue: item.roles,
               rules: [
@@ -194,14 +181,17 @@ class UserModal extends PureComponent {
                   required: false,
                 },
               ],
-            })(<Select
-              mode="multiple"
-              labelInValue={false}
-              placeholder="请选择"
-              style={{ width: '100%' }}
-            >
-            {rolesData.map(d => <Option key={d.id}>{d.name}</Option>)}
-            </Select>
+            })(
+              <Select
+                mode="multiple"
+                labelInValue={false}
+                placeholder="请选择"
+                style={{ width: '100%' }}
+              >
+                {rolesData.map(d => (
+                  <Option key={d.id}>{d.name}</Option>
+                ))}
+              </Select>
             )}
           </FormItem>
         </Form>
