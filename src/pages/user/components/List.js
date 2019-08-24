@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal, Avatar } from 'antd'
+import { Table, Modal, Button } from 'antd'
 import { DropOption } from 'components'
 import { Trans, withI18n } from '@lingui/react'
 import Link from 'umi/link'
@@ -13,9 +13,9 @@ class List extends PureComponent {
   handleUserClick = (record, e) => {
     const { onDeleteItem, onEditItem, i18n } = this.props
 
-    if (e.key === '1') {
+    if (e === '1') {
       onEditItem(record)
-    } else if (e.key === '2') {
+    } else if (e === '2') {
       confirm({
         title: '你确定要删除这条记录吗？',
         onOk() {
@@ -34,7 +34,6 @@ class List extends PureComponent {
         dataIndex: 'username',
         key: 'username',
         width: 120,
-        render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
       },
       {
         title: '真实姓名',
@@ -53,7 +52,6 @@ class List extends PureComponent {
         dataIndex: 'gender',
         key: 'gender',
         width: 120,
-        render: text => <span>{text ? '男' : '女'}</span>,
       },
       {
         title: '手机',
@@ -84,7 +82,6 @@ class List extends PureComponent {
         dataIndex: 'type',
         key: 'type',
         width: 120,
-        render: text => <span>{text==99 ? '管理员' : '普通用户'}</span>,
       },
       {
         title: '创建时间',
@@ -97,7 +94,6 @@ class List extends PureComponent {
         dataIndex: 'valid',
         key: 'valid',
         width: 120,
-        render: text => <span>{text ? '是' : '否'}</span>,
       },
       {
         title: '操作',
@@ -105,13 +101,22 @@ class List extends PureComponent {
         fixed: 'right',
         render: (text, record) => {
           return (
-            <DropOption
-              onMenuClick={e => this.handleUserClick(record, e)}
-              menuOptions={[
-                { key: '1', name: '更新' },
-                { key: '2', name: '删除' },
-              ]}
-            />
+            <Button.Group>
+              <Button
+                icon="edit"
+                onClick={e => this.handleUserClick(record, '1')}
+                size={'small'}
+              >
+                更新
+              </Button>
+              <Button
+                icon="delete"
+                onClick={e => this.handleUserClick(record, '2')}
+                size={'small'}
+              >
+                删除
+              </Button>
+            </Button.Group>
           )
         },
       },
@@ -126,7 +131,7 @@ class List extends PureComponent {
         }}
         className={styles.table}
         bordered
-        scroll={{ x: 1400 }}
+        scroll={{ x: 1500 }}
         columns={columns}
         simple
         rowKey={record => record.id}

@@ -20,9 +20,10 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
+    passwordVisible: true,
     modalType: 'create',
     selectedRowKeys: [],
-    rolesData:[],
+    rolesData: [],
   },
 
   subscriptions: {
@@ -40,10 +41,10 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
-    *query({ payload}, { call, put }) {
+    *query({ payload }, { call, put }) {
       const data = yield call(queryUserList, payload)
       if (data) {
-        let {pageNumber,pageSize,result}=data.data;
+        let { pageNumber, pageSize, result } = data.data
         yield put({
           type: 'querySuccess',
           payload: {
@@ -59,7 +60,7 @@ export default modelExtend(pageModel, {
     },
 
     *delete({ payload }, { call, put, select }) {
-      const data = yield call(removeUser, { ids: payload })
+      const data = yield call(removeUser, { ids: [payload] })
       const { selectedRowKeys } = yield select(_ => _.user)
       if (data.success) {
         yield put({
@@ -74,7 +75,7 @@ export default modelExtend(pageModel, {
     },
 
     *multiDelete({ payload }, { call, put }) {
-      const data = yield call(removeUserList, { ids: payload })
+      const data = yield call(removeUserList, payload)
       if (data.success) {
         yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
       } else {
@@ -84,6 +85,7 @@ export default modelExtend(pageModel, {
 
     *create({ payload }, { call, put }) {
       const data = yield call(createUser, payload)
+      console.log(data)
       if (data.success) {
         yield put({ type: 'hideModal' })
       } else {
@@ -109,7 +111,8 @@ export default modelExtend(pageModel, {
           type: 'showModal',
           payload: {
             modalType: 'update',
-            currentItem:  resp.data,
+            currentItem: resp.data,
+            passwordVisible: false,
           },
         })
       } else {
@@ -119,7 +122,7 @@ export default modelExtend(pageModel, {
     *getRoles({ payload }, { call, put, select }) {
       const resp = yield call(getRoles, {})
       if (resp.success) {
-        yield put({ type: 'updateState', payload: { rolesData: resp.data} })
+        yield put({ type: 'updateState', payload: { rolesData: resp.data } })
       } else {
         throw resp
       }

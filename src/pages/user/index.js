@@ -82,7 +82,6 @@ class User extends PureComponent {
         })
       },
       onEditItem(item) {
-        console.log(item)
         dispatch({
           type: 'user/getRoles',
         }).then(() => {

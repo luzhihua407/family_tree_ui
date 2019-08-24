@@ -33,7 +33,7 @@ export default {
   removeRole: 'POST /security/role/delete',
   removeRoleList: 'POST /security/role/delete',
   saveRoleMenu: 'POST /security/role_menu/addOrUpdate',
-  getRoleMenuByRoleId: 'POST /security/role_menu/getRoleMenuByRoleId',
+  getRoleMenuByRoleId: 'GET /security/role_menu/getRoleMenuByRoleId',
 
   queryCategoryByPage: 'POST /folk/category/page',
   queryCategoryById: 'GET /folk/category/get',

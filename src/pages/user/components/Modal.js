@@ -74,20 +74,29 @@ class UserModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
+          <FormItem label="密码" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('password', {
+              initialValue: item.password,
+              rules: [
+                {
+                  required: true,
+                },
+              ],
+            })(<Input />)}
+          </FormItem>
           <FormItem label="性别" hasFeedback {...formItemLayout}>
             {getFieldDecorator('gender', {
               initialValue: item.gender,
               rules: [
                 {
                   required: true,
-                  type: 'number',
                 },
               ],
             })(
               <Radio.Group>
-                <Radio value={1}>男</Radio>
-                <Radio value={2}>女</Radio>
-                <Radio value={0}>不清楚</Radio>
+                <Radio value={'男'}>男</Radio>
+                <Radio value={'女'}>女</Radio>
+                <Radio value={'不清楚'}>不清楚</Radio>
               </Radio.Group>
             )}
           </FormItem>
@@ -100,7 +109,7 @@ class UserModal extends PureComponent {
                   type: 'number',
                 },
               ],
-            })(<InputNumber min={18} max={100} />)}
+            })(<InputNumber min={1} max={150} />)}
           </FormItem>
           <FormItem label="手机" hasFeedback {...formItemLayout}>
             {getFieldDecorator('mobile', {
