@@ -2,8 +2,8 @@ export default {
   queryRouteList: '/routes',
 
   queryUserInfo: 'POST /usercenter/user/current',
-  logoutUser: 'POST /usercenter/user/logout',
-  loginUser: 'POST /oauth/token',
+  logoutUser: 'POST /logout',
+  loginUser: 'POST /login',
 
   queryUser: '/usercenter/user/get',
   queryUserList: 'POST /usercenter/user/page',

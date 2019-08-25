@@ -79,7 +79,7 @@ class MenuModal extends PureComponent {
           </FormItem>
           <FormItem label="类型" hasFeedback {...formItemLayout}>
             {getFieldDecorator('type', {
-              initialValue: item.type == null ? 1 : item.type,
+              initialValue: item.type == null ? '菜单' : item.type,
               rules: [
                 {
                   required: false,
@@ -115,9 +115,10 @@ class MenuModal extends PureComponent {
                 labelInValue={false}
                 placeholder="请选择"
                 style={{ width: '100%' }}
+                allowClear={true}
               >
                 {parentMenusData.map(d => (
-                  <Option key={d.id}>{d.name}</Option>
+                  <Select.Option key={d.id}>{d.name}</Select.Option>
                 ))}
               </Select>
             )}
