@@ -57,11 +57,11 @@ class CategoryModal extends PureComponent {
                   required: false,
                 },
               ],
-            })(<Input />)}
+            })(<Input.TextArea rows={6} />)}
           </FormItem>
           <FormItem label="启用" hasFeedback {...formItemLayout}>
             {getFieldDecorator('valid', {
-              initialValue: item.valid == null ? '否' : item.valid,
+              initialValue: item.valid == null ? '是' : item.valid,
               rules: [
                 {
                   required: true,

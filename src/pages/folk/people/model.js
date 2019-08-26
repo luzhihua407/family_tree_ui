@@ -3,33 +3,31 @@ import modelExtend from 'dva-model-extend'
 import { pathMatchRegexp } from 'utils'
 import api from 'api'
 import { pageModel } from 'utils/model'
-import { EditorState, ContentState } from 'draft-js'
-import htmlToDraft from 'html-to-draftjs'
 
 const {
-  queryCategoryContentByPage,
-  queryCategoryContentById,
-  createCategoryContent,
-  removeCategoryContent,
-  updateCategoryContent,
-  removeCategoryContentList,
+  queryPeopleByPage,
+  queryPeopleById,
+  createPeople,
+  removePeople,
+  updatePeople,
+  removePeopleList,
 } = api
 
 export default modelExtend(pageModel, {
-  namespace: 'categoryContent',
+  namespace: 'people',
 
   state: {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
-    editorContent: null,
+    rolesData: [],
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (pathMatchRegexp('/folk/categoryContent', location.pathname)) {
+        if (pathMatchRegexp('/folk/people', location.pathname)) {
           const payload = location.query || { page: 1, pageSize: 10 }
           dispatch({
             type: 'query',
@@ -42,7 +40,7 @@ export default modelExtend(pageModel, {
 
   effects: {
     *query({ payload }, { call, put }) {
-      const data = yield call(queryCategoryContentByPage, payload)
+      const data = yield call(queryPeopleByPage, payload)
       if (data) {
         let { pageNumber, pageSize, total, result } = data.data
         yield put({
@@ -60,8 +58,8 @@ export default modelExtend(pageModel, {
     },
 
     *delete({ payload }, { call, put, select }) {
-      const data = yield call(removeCategoryContent, { ids: [payload] })
-      const { selectedRowKeys } = yield select(_ => _.categoryContent)
+      const data = yield call(removePeople, { ids: [payload] })
+      const { selectedRowKeys } = yield select(_ => _.people)
       if (data.success) {
         yield put({
           type: 'updateState',
@@ -75,7 +73,7 @@ export default modelExtend(pageModel, {
     },
 
     *multiDelete({ payload }, { call, put }) {
-      const data = yield call(removeCategoryContentList, payload)
+      const data = yield call(removePeopleList, payload)
       if (data.success) {
         yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
       } else {
@@ -84,7 +82,7 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      const data = yield call(createCategoryContent, payload)
+      const data = yield call(createPeople, payload)
       if (data.success) {
         yield put({ type: 'hideModal' })
       } else {
@@ -93,11 +91,9 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      const id = yield select(
-        ({ categoryContent }) => categoryContent.currentItem.id
-      )
-      const newCategoryContent = { ...payload, id }
-      const data = yield call(updateCategoryContent, newCategoryContent)
+      const id = yield select(({ people }) => people.currentItem.id)
+      const newPeople = { ...payload, id }
+      const data = yield call(updatePeople, newPeople)
       if (data.success) {
         yield put({ type: 'hideModal' })
       } else {
@@ -105,8 +101,8 @@ export default modelExtend(pageModel, {
       }
     },
 
-    get: function*({ state, payload }, { call, put, select }) {
-      const resp = yield call(queryCategoryContentById, { id: payload })
+    *get({ payload }, { call, put, select }) {
+      const resp = yield call(queryPeopleById, { id: payload })
       if (resp.success) {
         yield put({
           type: 'showModal',
@@ -123,20 +119,7 @@ export default modelExtend(pageModel, {
 
   reducers: {
     showModal(state, { payload }) {
-      // const { content } = payload.currentItem
-      // const contentBlock = htmlToDraft(content)
-      // let editorState = null
-      // if (contentBlock) {
-      //   const contentState = ContentState.createFromBlockArray(
-      //     contentBlock.contentBlocks
-      //   )
-      //   editorState = EditorState.createWithContent(contentState)
-      // }
-      return {
-        ...state,
-        ...payload,
-        modalVisible: true,
-      }
+      return { ...state, ...payload, modalVisible: true }
     },
 
     hideModal(state) {

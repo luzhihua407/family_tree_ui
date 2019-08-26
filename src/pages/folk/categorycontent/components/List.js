@@ -44,7 +44,6 @@ class List extends PureComponent {
         dataIndex: 'categoryId',
         key: 'categoryId',
         width: '10%',
-        render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
       },
       {
         title: '创建时间',
@@ -57,7 +56,6 @@ class List extends PureComponent {
         dataIndex: 'valid',
         key: 'valid',
         width: '10%',
-        render: text => <span>{text ? '是' : '否'}</span>,
       },
       {
         title: '备注',

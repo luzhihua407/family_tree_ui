@@ -42,6 +42,13 @@ export default {
   removeCategory: 'POST /folk/category/delete',
   removeCategoryList: 'POST /folk/category/delete',
 
+  queryPeopleByPage: 'POST /folk/people/page',
+  queryPeopleById: 'GET /folk/people/get',
+  updatePeople: 'POST /folk/people/edit',
+  createPeople: 'POST /folk/people/add',
+  removePeople: 'POST /folk/people/delete',
+  removePeopleList: 'POST /folk/people/delete',
+
   queryCategoryContentByPage: 'POST /folk/category_content/page',
   queryCategoryContentById: 'GET /folk/category_content/get',
   updateCategoryContent: 'POST /folk/category_content/edit',

@@ -169,7 +169,7 @@ class UserModal extends PureComponent {
           </FormItem>
           <FormItem label="启用" hasFeedback {...formItemLayout}>
             {getFieldDecorator('valid', {
-              initialValue: item.valid == null ? '否' : item.valid,
+              initialValue: item.valid == null ? '是' : item.valid,
               rules: [
                 {
                   required: false,
