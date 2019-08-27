@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 import {
   Form,
   Input,
@@ -12,7 +13,7 @@ import {
 import { Trans, withI18n } from '@lingui/react'
 import locale from 'antd/es/date-picker/locale/zh_CN'
 const FormItem = Form.Item
-
+const dateFormat = 'YYYY-MM-DD'
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -122,7 +123,6 @@ class PeopleModal extends PureComponent {
               rules: [
                 {
                   required: false,
-                  type: 'number',
                 },
               ],
             })(<InputNumber min={1} max={300} />)}
@@ -133,7 +133,6 @@ class PeopleModal extends PureComponent {
               rules: [
                 {
                   required: false,
-                  type: 'number',
                 },
               ],
             })(<InputNumber min={1} max={300} />)}
@@ -180,13 +179,13 @@ class PeopleModal extends PureComponent {
           </FormItem>
           <FormItem label="出生年月" hasFeedback {...formItemLayout}>
             {getFieldDecorator('birth', {
-              initialValue: item.birth,
+              initialValue: moment(item.birth, dateFormat),
               rules: [
                 {
                   required: true,
                 },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} locale={locale} />)}
+            })(<DatePicker format={dateFormat} />)}
           </FormItem>
           <FormItem label="第几世" hasFeedback {...formItemLayout}>
             {getFieldDecorator('generations', {
@@ -211,13 +210,13 @@ class PeopleModal extends PureComponent {
           </FormItem>
           <FormItem label="卒于" hasFeedback {...formItemLayout}>
             {getFieldDecorator('death', {
-              initialValue: item.death,
+              initialValue: moment(item.death, dateFormat),
               rules: [
                 {
                   required: false,
                 },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} locale={locale} />)}
+            })(<DatePicker format={dateFormat} />)}
           </FormItem>
           <FormItem label="简介" hasFeedback {...formItemLayout}>
             {getFieldDecorator('brief', {
