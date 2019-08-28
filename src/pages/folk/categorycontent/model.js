@@ -3,8 +3,6 @@ import modelExtend from 'dva-model-extend'
 import { pathMatchRegexp } from 'utils'
 import api from 'api'
 import { pageModel } from 'utils/model'
-import { EditorState, ContentState } from 'draft-js'
-import htmlToDraft from 'html-to-draftjs'
 
 const {
   queryCategoryContentByPage,
@@ -23,7 +21,6 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
-    editorContent: null,
   },
 
   subscriptions: {
@@ -105,7 +102,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    get: function*({ state, payload }, { call, put, select }) {
+    get: function*({ payload }, { call, put, select }) {
       const resp = yield call(queryCategoryContentById, { id: payload })
       if (resp.success) {
         yield put({
@@ -113,6 +110,7 @@ export default modelExtend(pageModel, {
           payload: {
             modalType: 'update',
             currentItem: resp.data,
+            editorContent: resp.data.content,
           },
         })
       } else {
@@ -123,15 +121,6 @@ export default modelExtend(pageModel, {
 
   reducers: {
     showModal(state, { payload }) {
-      // const { content } = payload.currentItem
-      // const contentBlock = htmlToDraft(content)
-      // let editorState = null
-      // if (contentBlock) {
-      //   const contentState = ContentState.createFromBlockArray(
-      //     contentBlock.contentBlocks
-      //   )
-      //   editorState = EditorState.createWithContent(contentState)
-      // }
       return {
         ...state,
         ...payload,

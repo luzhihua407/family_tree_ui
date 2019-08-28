@@ -1,19 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Editor } from 'components'
-import {
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Modal,
-  Cascader,
-  Select,
-  Card,
-} from 'antd'
+import CKEditor from 'ckeditor4-react'
+import { Form, Input, Radio, Modal } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
-import { convertToRaw } from 'draft-js'
-import draftToHtml from 'draftjs-to-html'
 
 const FormItem = Form.Item
 
@@ -30,44 +19,6 @@ const formItemLayout = {
 class CategoryModal extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = {
-      editorContent: null,
-    }
-  }
-  onEditorStateChange = editorContent => {
-    this.setState({
-      editorContent,
-    })
-  }
-  uploadImageCallBack = info => {
-    return new Promise(function(resolve, reject) {
-      let formData = new window.FormData()
-      formData.append('file', info, info.name)
-      Axios({
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        method: 'post',
-        data: formData,
-        url: 'http://192.168.5.14:8081/node/file_upload',
-      }).then(
-        res => {
-          if (res.data.code === 200) {
-            let imgurl = res.data.result[0].photoBig
-            let imgObj = {
-              data: {
-                link: 'http://192.168.5.14:8081/' + imgurl,
-              },
-            }
-            resolve(imgObj)
-          } else {
-          }
-        },
-        err => {
-          console.log('err', err)
-        }
-      )
-    })
   }
   handleOk = () => {
     const { item = {}, onOk, form } = this.props
@@ -81,17 +32,15 @@ class CategoryModal extends PureComponent {
         ...getFieldsValue(),
         key: item.key,
       }
-      // 转换成html，重新赋值保存到数据库
-      let editorContent = draftToHtml(
-        convertToRaw(this.state.editorContent.getCurrentContent())
-      )
-      data.content = editorContent
+      for (var i in CKEDITOR.instances) {
+        /* this retrieve the data of each instances and store it into an associative array with
+            the names of the textareas as keys... */
+        data.content = CKEDITOR.instances[i].getData()
+      }
       onOk(data)
     })
   }
-
   render() {
-    const { editorContent } = this.state
     const { item = {}, onOk, form, i18n, rolesData, ...modalProps } = this.props
     const { getFieldDecorator } = form
 
@@ -152,25 +101,10 @@ class CategoryModal extends PureComponent {
                 },
               ],
             })(
-              <Editor
-                wrapperStyle={{
-                  minHeight: 500,
-                }}
-                editorStyle={{
-                  minHeight: 376,
-                }}
-                localization={{ locale: 'zh' }}
-                toolbar={{
-                  image: {
-                    previewImage: true,
-                    uploadEnabled: true,
-                    urlEnabled: true,
-                    uploadCallback: this.uploadImageCallBack,
-                    alt: { present: true, mandatory: true },
-                  },
-                }}
-                editorState={editorContent}
-                onEditorStateChange={this.onEditorStateChange}
+              <CKEditor
+                id="content"
+                data={modalProps.editorContent}
+                type="classic"
               />
             )}
           </FormItem>

@@ -23,6 +23,7 @@ class CategoryContent extends PureComponent {
       modalVisible,
       modalType,
       selectedRowKeys,
+      editorContent,
     } = categoryContent
 
     const handleRefresh = newQuery => {
@@ -35,6 +36,7 @@ class CategoryContent extends PureComponent {
     const modalProps = {
       item: modalType === 'create' ? {} : currentItem,
       visible: modalVisible,
+      editorContent: editorContent,
       maskClosable: false,
       confirmLoading: loading.effects[`categoryContent/${modalType}`],
       title: `${
