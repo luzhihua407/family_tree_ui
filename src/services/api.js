@@ -55,4 +55,6 @@ export default {
   createCategoryContent: 'POST /folk/category_content/add',
   removeCategoryContent: 'POST /folk/category_content/delete',
   removeCategoryContentList: 'POST /folk/category_content/delete',
+
+  queryTreeByPage: 'POST /folk/people/tree',
 }
