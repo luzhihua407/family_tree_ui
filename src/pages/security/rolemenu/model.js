@@ -38,10 +38,10 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
-    *query({ payload = {"pageNumber":1} }, { call, put }) {
-      const data = yield call(queryRoleMenuList, {"pageNumber":1})
+    *query({ payload = { pageNumber: 1 } }, { call, put }) {
+      const data = yield call(queryRoleMenuList, { pageNumber: 1 })
       if (data) {
-        let {pageNumber,pageSize,result}=data.data;
+        let { pageNumber, pageSize, result, total } = data.data
         yield put({
           type: 'querySuccess',
           payload: {
@@ -49,7 +49,7 @@ export default modelExtend(pageModel, {
             pagination: {
               current: Number(pageNumber) || 1,
               pageSize: Number(pageSize) || 10,
-              total: data.total,
+              total: total,
             },
           },
         })
@@ -107,7 +107,7 @@ export default modelExtend(pageModel, {
           type: 'showModal',
           payload: {
             modalType: 'update',
-            currentItem:  resp.data,
+            currentItem: resp.data,
           },
         })
       } else {
@@ -118,7 +118,7 @@ export default modelExtend(pageModel, {
 
   reducers: {
     showModal(state, { payload }) {
-      console.log(2222);
+      console.log(2222)
       return { ...state, ...payload, modalVisible: true }
     },
 

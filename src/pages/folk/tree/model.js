@@ -9,7 +9,9 @@ const { queryTreeByPage } = api
 export default modelExtend(pageModel, {
   namespace: 'tree',
 
-  state: {},
+  state: {
+    list: [],
+  },
 
   subscriptions: {
     setup({ dispatch, history }) {
@@ -18,7 +20,7 @@ export default modelExtend(pageModel, {
           const payload = location.query || { page: 1, pageSize: 10 }
           dispatch({
             type: 'query',
-            payload,
+            payload: { gen: 1 },
           })
         }
       })
@@ -30,7 +32,6 @@ export default modelExtend(pageModel, {
       const result = yield call(queryTreeByPage, payload)
       if (result) {
         let { data } = result
-        console.log(data)
         yield put({
           type: 'querySuccess',
           payload: {

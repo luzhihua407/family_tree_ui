@@ -11,10 +11,10 @@ import Filter from './components/Filter'
 import Modal from './components/Modal'
 
 @withI18n()
-@connect(({ people, loading }) => ({ people, loading }))
-class People extends PureComponent {
+@connect(({ region, loading }) => ({ region, loading }))
+class Region extends PureComponent {
   render() {
-    const { location, dispatch, people, loading, i18n } = this.props
+    const { location, dispatch, region, loading, i18n } = this.props
     const { query, pathname } = location
     const {
       list,
@@ -23,12 +23,12 @@ class People extends PureComponent {
       modalVisible,
       modalType,
       selectedRowKeys,
-      educationListData,
-    } = people
+      parentRegionData,
+    } = region
 
     const handleRefresh = newQuery => {
       dispatch({
-        type: 'people/query',
+        type: 'region/query',
         payload: newQuery,
       })
     }
@@ -37,15 +37,15 @@ class People extends PureComponent {
       item: modalType === 'create' ? {} : currentItem,
       visible: modalVisible,
       maskClosable: false,
-      educationListData: educationListData,
-      confirmLoading: loading.effects[`people/${modalType}`],
+      confirmLoading: loading.effects[`region/${modalType}`],
       title: `${
-        modalType === 'create' ? i18n.t`Create people` : i18n.t`Update people`
+        modalType === 'create' ? i18n.t`Create Region` : i18n.t`Update Region`
       }`,
+      parentRegionData: parentRegionData,
       centered: true,
       onOk(data) {
         dispatch({
-          type: `people/${modalType}`,
+          type: `region/${modalType}`,
           payload: data,
         }).then(() => {
           handleRefresh()
@@ -53,14 +53,14 @@ class People extends PureComponent {
       },
       onCancel() {
         dispatch({
-          type: 'people/hideModal',
+          type: 'region/hideModal',
         })
       },
     }
 
     const listProps = {
       dataSource: list,
-      loading: loading.effects['people/query'],
+      loading: loading.effects['region/query'],
       pagination,
       onChange(page) {
         handleRefresh({
@@ -70,7 +70,7 @@ class People extends PureComponent {
       },
       onDeleteItem(id) {
         dispatch({
-          type: 'people/delete',
+          type: 'region/delete',
           payload: id,
         }).then(() => {
           handleRefresh({
@@ -83,20 +83,15 @@ class People extends PureComponent {
       },
       onEditItem(item) {
         dispatch({
-          type: 'people/get',
+          type: 'region/get',
           payload: item.id,
-        }).then(() => {
-          dispatch({
-            type: 'people/getSubDictListByParentCode',
-            payload: { parentCode: 'education' },
-          })
         })
       },
       rowSelection: {
         selectedRowKeys,
         onChange: keys => {
           dispatch({
-            type: 'people/updateState',
+            type: 'region/updateState',
             payload: {
               selectedRowKeys: keys,
             },
@@ -117,22 +112,17 @@ class People extends PureComponent {
       },
       onAdd() {
         dispatch({
-          type: 'people/getSubDictListByParentCode',
-          payload: { parentCode: 'education' },
-        }).then(() => {
-          dispatch({
-            type: 'people/showModal',
-            payload: {
-              modalType: 'create',
-            },
-          })
+          type: 'region/showModal',
+          payload: {
+            modalType: 'create',
+          },
         })
       },
     }
 
     const handleDeleteItems = () => {
       dispatch({
-        type: 'people/multiDelete',
+        type: 'region/multiDelete',
         payload: {
           ids: selectedRowKeys,
         },
@@ -172,11 +162,11 @@ class People extends PureComponent {
   }
 }
 
-People.propTypes = {
-  people: PropTypes.object,
+Region.propTypes = {
+  region: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default People
+export default Region

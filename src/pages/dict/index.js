@@ -11,10 +11,10 @@ import Filter from './components/Filter'
 import Modal from './components/Modal'
 
 @withI18n()
-@connect(({ people, loading }) => ({ people, loading }))
-class People extends PureComponent {
+@connect(({ dict, loading }) => ({ dict, loading }))
+class Dict extends PureComponent {
   render() {
-    const { location, dispatch, people, loading, i18n } = this.props
+    const { location, dispatch, dict, loading, i18n } = this.props
     const { query, pathname } = location
     const {
       list,
@@ -23,12 +23,12 @@ class People extends PureComponent {
       modalVisible,
       modalType,
       selectedRowKeys,
-      educationListData,
-    } = people
+      parentDictData,
+    } = dict
 
     const handleRefresh = newQuery => {
       dispatch({
-        type: 'people/query',
+        type: 'dict/query',
         payload: newQuery,
       })
     }
@@ -37,15 +37,15 @@ class People extends PureComponent {
       item: modalType === 'create' ? {} : currentItem,
       visible: modalVisible,
       maskClosable: false,
-      educationListData: educationListData,
-      confirmLoading: loading.effects[`people/${modalType}`],
+      confirmLoading: loading.effects[`dict/${modalType}`],
       title: `${
-        modalType === 'create' ? i18n.t`Create people` : i18n.t`Update people`
+        modalType === 'create' ? i18n.t`Create Dict` : i18n.t`Update Dict`
       }`,
+      parentDictData: parentDictData,
       centered: true,
       onOk(data) {
         dispatch({
-          type: `people/${modalType}`,
+          type: `dict/${modalType}`,
           payload: data,
         }).then(() => {
           handleRefresh()
@@ -53,14 +53,14 @@ class People extends PureComponent {
       },
       onCancel() {
         dispatch({
-          type: 'people/hideModal',
+          type: 'dict/hideModal',
         })
       },
     }
 
     const listProps = {
       dataSource: list,
-      loading: loading.effects['people/query'],
+      loading: loading.effects['dict/query'],
       pagination,
       onChange(page) {
         handleRefresh({
@@ -70,7 +70,7 @@ class People extends PureComponent {
       },
       onDeleteItem(id) {
         dispatch({
-          type: 'people/delete',
+          type: 'dict/delete',
           payload: id,
         }).then(() => {
           handleRefresh({
@@ -83,12 +83,11 @@ class People extends PureComponent {
       },
       onEditItem(item) {
         dispatch({
-          type: 'people/get',
-          payload: item.id,
+          type: 'dict/getParentDict',
         }).then(() => {
           dispatch({
-            type: 'people/getSubDictListByParentCode',
-            payload: { parentCode: 'education' },
+            type: 'dict/get',
+            payload: item.id,
           })
         })
       },
@@ -96,7 +95,7 @@ class People extends PureComponent {
         selectedRowKeys,
         onChange: keys => {
           dispatch({
-            type: 'people/updateState',
+            type: 'dict/updateState',
             payload: {
               selectedRowKeys: keys,
             },
@@ -117,11 +116,11 @@ class People extends PureComponent {
       },
       onAdd() {
         dispatch({
-          type: 'people/getSubDictListByParentCode',
-          payload: { parentCode: 'education' },
+          type: 'dict/getParentDict',
+          payload: {},
         }).then(() => {
           dispatch({
-            type: 'people/showModal',
+            type: 'dict/showModal',
             payload: {
               modalType: 'create',
             },
@@ -132,7 +131,7 @@ class People extends PureComponent {
 
     const handleDeleteItems = () => {
       dispatch({
-        type: 'people/multiDelete',
+        type: 'dict/multiDelete',
         payload: {
           ids: selectedRowKeys,
         },
@@ -172,11 +171,11 @@ class People extends PureComponent {
   }
 }
 
-People.propTypes = {
-  people: PropTypes.object,
+Dict.propTypes = {
+  dict: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default People
+export default Dict

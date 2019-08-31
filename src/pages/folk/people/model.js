@@ -11,6 +11,7 @@ const {
   removePeople,
   updatePeople,
   removePeopleList,
+  getSubDictListByParentCode,
 } = api
 
 export default modelExtend(pageModel, {
@@ -21,7 +22,7 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
-    rolesData: [],
+    educationListData: [],
   },
 
   subscriptions: {
@@ -101,6 +102,24 @@ export default modelExtend(pageModel, {
       }
     },
 
+    *fileUpload({ payload }, { select, call, put }) {
+      const data = yield call(fileUpload, payload)
+      if (data.success) {
+      }
+    },
+    *getSubDictListByParentCode({ payload }, { call, put, select }) {
+      const resp = yield call(getSubDictListByParentCode, payload)
+      if (resp.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            educationListData: resp.data,
+          },
+        })
+      } else {
+        throw resp
+      }
+    },
     *get({ payload }, { call, put, select }) {
       const resp = yield call(queryPeopleById, { id: payload })
       if (resp.success) {

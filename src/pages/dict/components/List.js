@@ -1,17 +1,16 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal, Avatar, Button } from 'antd'
-import { DropOption } from 'components'
+import { Table, Modal, Button } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
-import Link from 'umi/link'
 import styles from './List.less'
 
 const { confirm } = Modal
 
 @withI18n()
 class List extends PureComponent {
-  handlePeopleClick = (record, e) => {
+  handleDictClick = (record, e) => {
     const { onDeleteItem, onEditItem, i18n } = this.props
+
     if (e === '1') {
       onEditItem(record)
     } else if (e === '2') {
@@ -29,39 +28,39 @@ class List extends PureComponent {
 
     const columns = [
       {
-        title: '全名',
-        dataIndex: 'fullName',
-        key: 'fullName',
+        title: '字典编码',
+        dataIndex: 'code',
+        key: 'code',
         width: '15%',
       },
       {
-        title: '性别',
-        dataIndex: 'gender',
-        key: 'gender',
+        title: '字典编码',
+        dataIndex: 'name',
+        key: 'name',
+        width: '15%',
+      },
+      {
+        title: '字典数值',
+        dataIndex: 'numValue',
+        key: 'numValue',
         width: '10%',
       },
       {
-        title: '出生年月',
-        dataIndex: 'birth',
-        key: 'birth',
+        title: '字典字符值',
+        dataIndex: 'value',
+        key: 'value',
         width: '10%',
       },
       {
-        title: '第几世',
-        dataIndex: 'generations',
-        key: 'generations',
-        width: '10%',
+        title: '备注',
+        dataIndex: 'remark',
+        key: 'remark',
+        width: '15%',
       },
       {
-        title: '是否结婚',
-        dataIndex: 'isMarried',
-        key: 'isMarried',
-        width: '10%',
-      },
-      {
-        title: '学历',
-        dataIndex: 'education',
-        key: 'education',
+        title: 'dis',
+        dataIndex: 'dis',
+        key: 'dis',
         width: '15%',
       },
       {
@@ -79,14 +78,14 @@ class List extends PureComponent {
             <Button.Group>
               <Button
                 icon="edit"
-                onClick={e => this.handlePeopleClick(record, '1')}
+                onClick={e => this.handleDictClick(record, '1')}
                 size={'small'}
               >
                 更新
               </Button>
               <Button
                 icon="delete"
-                onClick={e => this.handlePeopleClick(record, '2')}
+                onClick={e => this.handleDictClick(record, '2')}
                 size={'small'}
               >
                 删除

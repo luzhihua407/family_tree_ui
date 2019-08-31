@@ -59,7 +59,7 @@ class Login extends PureComponent {
           <form>
             <FormItem hasFeedback>
               {getFieldDecorator('username', {
-                initialValue:'test',
+                initialValue: 'admin',
                 rules: [
                   {
                     required: true,
@@ -74,7 +74,7 @@ class Login extends PureComponent {
             </FormItem>
             <FormItem hasFeedback>
               {getFieldDecorator('password', {
-                initialValue:'test',
+                initialValue: '123456',
                 rules: [
                   {
                     required: true,
@@ -97,12 +97,8 @@ class Login extends PureComponent {
                 登录
               </Button>
               <p>
-                <span>
-                  用户名                 
-                </span>
-                <span>
-                  密码               
-                </span>
+                <span>用户名</span>
+                <span>密码</span>
               </p>
             </Row>
           </form>

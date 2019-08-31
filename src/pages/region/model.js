@@ -5,17 +5,16 @@ import api from 'api'
 import { pageModel } from 'utils/model'
 
 const {
-  queryUserList,
-  getRoles,
-  queryUser,
-  createUser,
-  removeUser,
-  updateUser,
-  removeUserList,
+  queryRegionList,
+  queryRegion,
+  createRegion,
+  removeRegion,
+  updateRegion,
+  removeRegionList,
 } = api
 
 export default modelExtend(pageModel, {
-  namespace: 'user',
+  namespace: 'region',
 
   state: {
     currentItem: {},
@@ -23,13 +22,12 @@ export default modelExtend(pageModel, {
     passwordVisible: true,
     modalType: 'create',
     selectedRowKeys: [],
-    rolesData: [],
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (pathMatchRegexp('/user', location.pathname)) {
+        if (pathMatchRegexp('/region', location.pathname)) {
           const payload = location.query || { page: 1, pageSize: 10 }
           dispatch({
             type: 'query',
@@ -42,9 +40,9 @@ export default modelExtend(pageModel, {
 
   effects: {
     *query({ payload }, { call, put }) {
-      const data = yield call(queryUserList, payload)
+      const data = yield call(queryRegionList, payload)
       if (data) {
-        let { pageNumber, pageSize, result, total } = data.data
+        let { pageNumber, pageSize, total, result } = data.data
         yield put({
           type: 'querySuccess',
           payload: {
@@ -60,8 +58,8 @@ export default modelExtend(pageModel, {
     },
 
     *delete({ payload }, { call, put, select }) {
-      const data = yield call(removeUser, { ids: [payload] })
-      const { selectedRowKeys } = yield select(_ => _.user)
+      const data = yield call(removeRegion, { ids: [payload] })
+      const { selectedRowKeys } = yield select(_ => _.region)
       if (data.success) {
         yield put({
           type: 'updateState',
@@ -75,7 +73,7 @@ export default modelExtend(pageModel, {
     },
 
     *multiDelete({ payload }, { call, put }) {
-      const data = yield call(removeUserList, payload)
+      const data = yield call(removeRegionList, payload)
       if (data.success) {
         yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
       } else {
@@ -84,8 +82,7 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      const data = yield call(createUser, payload)
-      console.log(data)
+      const data = yield call(createRegion, payload)
       if (data.success) {
         yield put({ type: 'hideModal' })
       } else {
@@ -94,18 +91,17 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      const id = yield select(({ user }) => user.currentItem.id)
-      const newUser = { ...payload, id }
-      const data = yield call(updateUser, newUser)
+      const id = yield select(({ region }) => region.currentItem.id)
+      const newRegion = { ...payload, id }
+      const data = yield call(updateRegion, newRegion)
       if (data.success) {
         yield put({ type: 'hideModal' })
       } else {
         throw data
       }
     },
-
     *get({ payload }, { call, put, select }) {
-      const resp = yield call(queryUser, { id: payload })
+      const resp = yield call(queryRegion, { id: payload })
       if (resp.success) {
         yield put({
           type: 'showModal',
@@ -115,14 +111,6 @@ export default modelExtend(pageModel, {
             passwordVisible: false,
           },
         })
-      } else {
-        throw resp
-      }
-    },
-    *getRoles({ payload }, { call, put, select }) {
-      const resp = yield call(getRoles, {})
-      if (resp.success) {
-        yield put({ type: 'updateState', payload: { rolesData: resp.data } })
       } else {
         throw resp
       }

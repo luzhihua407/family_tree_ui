@@ -22,7 +22,7 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
-    parentMenusData:[],
+    parentMenusData: [],
   },
 
   subscriptions: {
@@ -40,10 +40,10 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
-    *query({ payload}, { call, put }) {
+    *query({ payload }, { call, put }) {
       const data = yield call(queryMenuList, payload)
       if (data) {
-        let {pageNumber,pageSize,result}=data.data;
+        let { pageNumber, pageSize, result, total } = data.data
         yield put({
           type: 'querySuccess',
           payload: {
@@ -51,7 +51,7 @@ export default modelExtend(pageModel, {
             pagination: {
               current: Number(pageNumber) || 1,
               pageSize: Number(pageSize) || 10,
-              total: data.total,
+              total: total,
             },
           },
         })
@@ -80,7 +80,7 @@ export default modelExtend(pageModel, {
           type: 'showModal',
           payload: {
             modalType: 'update',
-            currentItem:  resp.data,
+            currentItem: resp.data,
           },
         })
       } else {
@@ -93,7 +93,7 @@ export default modelExtend(pageModel, {
         yield put({
           type: 'updateState',
           payload: {
-            parentMenusData:  resp.data,
+            parentMenusData: resp.data,
           },
         })
       } else {
@@ -104,7 +104,7 @@ export default modelExtend(pageModel, {
     *multiDelete({ payload }, { call, put }) {
       const data = yield call(removeMenuList, payload)
       if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: []  } })
+        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
       } else {
         throw data
       }

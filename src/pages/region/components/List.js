@@ -1,17 +1,16 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal, Avatar, Button } from 'antd'
-import { DropOption } from 'components'
+import { Table, Modal, Button } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
-import Link from 'umi/link'
 import styles from './List.less'
 
 const { confirm } = Modal
 
 @withI18n()
 class List extends PureComponent {
-  handlePeopleClick = (record, e) => {
+  handleRegionClick = (record, e) => {
     const { onDeleteItem, onEditItem, i18n } = this.props
+
     if (e === '1') {
       onEditItem(record)
     } else if (e === '2') {
@@ -29,46 +28,40 @@ class List extends PureComponent {
 
     const columns = [
       {
-        title: '全名',
+        title: '区号',
+        dataIndex: 'areaCode',
+        key: 'areaCode',
+        width: '15%',
+      },
+      {
+        title: '编码',
+        dataIndex: 'code',
+        key: 'code',
+        width: '15%',
+      },
+      {
+        title: '简称',
+        dataIndex: 'shortName',
+        key: 'shortName',
+        width: '15%',
+      },
+      {
+        title: '全称',
         dataIndex: 'fullName',
         key: 'fullName',
         width: '15%',
       },
       {
-        title: '性别',
-        dataIndex: 'gender',
-        key: 'gender',
-        width: '10%',
-      },
-      {
-        title: '出生年月',
-        dataIndex: 'birth',
-        key: 'birth',
-        width: '10%',
-      },
-      {
-        title: '第几世',
-        dataIndex: 'generations',
-        key: 'generations',
-        width: '10%',
-      },
-      {
-        title: '是否结婚',
-        dataIndex: 'isMarried',
-        key: 'isMarried',
-        width: '10%',
-      },
-      {
-        title: '学历',
-        dataIndex: 'education',
-        key: 'education',
+        title: '邮政编码',
+        dataIndex: 'postCode',
+        key: 'postCode',
         width: '15%',
       },
       {
         title: '启用',
         dataIndex: 'valid',
         key: 'valid',
-        width: '10%',
+        width: '15%',
       },
       {
         title: '操作',
@@ -79,14 +72,14 @@ class List extends PureComponent {
             <Button.Group>
               <Button
                 icon="edit"
-                onClick={e => this.handlePeopleClick(record, '1')}
+                onClick={e => this.handleRegionClick(record, '1')}
                 size={'small'}
               >
                 更新
               </Button>
               <Button
                 icon="delete"
-                onClick={e => this.handlePeopleClick(record, '2')}
+                onClick={e => this.handleRegionClick(record, '2')}
                 size={'small'}
               >
                 删除

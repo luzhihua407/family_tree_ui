@@ -57,4 +57,21 @@ export default {
   removeCategoryContentList: 'POST /folk/category_content/delete',
 
   queryTreeByPage: 'POST /folk/people/tree',
+
+  queryDict: 'GET /basic/dict/get',
+  queryDictList: 'POST /basic/dict/page',
+  updateDict: 'POST /basic/dict/addOrUpdate',
+  createDict: 'POST /basic/dict/addOrUpdate',
+  removeDict: 'POST /basic/dict/delete',
+  removeDictList: 'POST /basic/dict/delete',
+  getParentDict: 'POST /basic/dict/getParentDict',
+  getSubDictListByParentCode: 'POST /basic/dict/getSubDictListByParentCode',
+  fileUpload: 'POST /file_upload/upload',
+
+  queryRegion: '/basic/region/get',
+  queryRegionList: 'POST /basic/region/page',
+  updateRegion: 'POST /basic/region/addOrUpdate',
+  createRegion: 'POST /basic/region/addOrUpdate',
+  removeRegion: 'POST /basic/region/delete',
+  removeRegionList: 'POST /basic/region/delete',
 }

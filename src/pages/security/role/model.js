@@ -45,7 +45,7 @@ export default modelExtend(pageModel, {
     *query({ payload }, { call, put }) {
       const data = yield call(queryRoleList, payload)
       if (data) {
-        let { pageNumber, pageSize, result } = data.data
+        let { pageNumber, pageSize, result, total } = data.data
         yield put({
           type: 'querySuccess',
           payload: {
@@ -53,7 +53,7 @@ export default modelExtend(pageModel, {
             pagination: {
               current: Number(pageNumber) || 1,
               pageSize: Number(pageSize) || 10,
-              total: data.total,
+              total: total,
             },
           },
         })
