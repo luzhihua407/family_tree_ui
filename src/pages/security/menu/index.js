@@ -116,10 +116,14 @@ class menu extends PureComponent {
       },
       onAdd() {
         dispatch({
-          type: 'menu/showModal',
-          payload: {
-            modalType: 'create',
-          },
+          type: 'menu/getParentMenus',
+        }).then(() => {
+          dispatch({
+            type: 'menu/showModal',
+            payload: {
+              modalType: 'create',
+            },
+          })
         })
       },
     }

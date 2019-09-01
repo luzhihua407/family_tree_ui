@@ -116,10 +116,14 @@ class User extends PureComponent {
       },
       onAdd() {
         dispatch({
-          type: 'user/showModal',
-          payload: {
-            modalType: 'create',
-          },
+          type: 'user/getRoles',
+        }).then(() => {
+          dispatch({
+            type: 'user/showModal',
+            payload: {
+              modalType: 'create',
+            },
+          })
         })
       },
     }

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import CKEditor from 'ckeditor4-react'
-import { Form, Input, Radio, Modal } from 'antd'
+import { Form, Input, Radio, Modal, Select } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
 
 const FormItem = Form.Item
@@ -41,7 +41,14 @@ class CategoryModal extends PureComponent {
     })
   }
   render() {
-    const { item = {}, onOk, form, i18n, rolesData, ...modalProps } = this.props
+    const {
+      item = {},
+      onOk,
+      form,
+      i18n,
+      categoryListData,
+      ...modalProps
+    } = this.props
     const { getFieldDecorator } = form
 
     return (
@@ -55,7 +62,18 @@ class CategoryModal extends PureComponent {
                   required: false,
                 },
               ],
-            })(<Input />)}
+            })(
+              <Select
+                labelInValue={false}
+                placeholder="请选择"
+                style={{ width: 160 }}
+                allowClear={true}
+              >
+                {categoryListData.map(d => (
+                  <Select.Option key={d.id}>{d.name}</Select.Option>
+                ))}
+              </Select>
+            )}
           </FormItem>
           <FormItem label="启用" hasFeedback {...formItemLayout}>
             {getFieldDecorator('valid', {

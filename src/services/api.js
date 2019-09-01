@@ -66,6 +66,7 @@ export default {
   removeDictList: 'POST /basic/dict/delete',
   getParentDict: 'POST /basic/dict/getParentDict',
   getSubDictListByParentCode: 'POST /basic/dict/getSubDictListByParentCode',
+  getCategoryList: 'GET /folk/category/getCategoryList',
   fileUpload: 'POST /file_upload/upload',
 
   queryRegion: '/basic/region/get',

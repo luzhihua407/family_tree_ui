@@ -41,8 +41,8 @@ class List extends PureComponent {
       },
       {
         title: '类别',
-        dataIndex: 'categoryId',
-        key: 'categoryId',
+        dataIndex: 'categoryName',
+        key: 'categoryName',
         width: '10%',
       },
       {
