@@ -82,6 +82,11 @@ class PeopleModal extends PureComponent {
         return
       }
       fields = this.handleFields(fields)
+      const { file } = fields
+      if (file != undefined) {
+        fields.avatar = fields.file.file.response.data
+      }
+
       const data = {
         ...fields,
         key: item.key,
@@ -131,8 +136,8 @@ class PeopleModal extends PureComponent {
             })(<Input />)}
           </FormItem>
           <FormItem label="头像" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('avatar', {
-              initialValue: item.avatar,
+            {getFieldDecorator('file', {
+              initialValue: item.file,
               rules: [
                 {
                   required: false,
@@ -144,7 +149,7 @@ class PeopleModal extends PureComponent {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="people/fileUpload"
+                action="http://localhost:7000/api/v1//file_upload/upload"
                 beforeUpload={beforeUpload}
                 onChange={this.handleChange}
               >
