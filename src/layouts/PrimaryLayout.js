@@ -77,9 +77,7 @@ class PrimaryLayout extends PureComponent {
     )
 
     // Query whether you have permission to enter this page
-    const hasPermission = currentRoute
-      ? true
-      : false
+    const hasPermission = currentRoute ? true : false
 
     // MenuParentId is equal to -1 is not a available menu.
     const menus = newRouteList.filter(_ => _.menuParentId !== '-1')
@@ -90,7 +88,7 @@ class PrimaryLayout extends PureComponent {
       notifications,
       onCollapseChange,
       avatar: 'user.avatar',
-      username: 'user.username',
+      user: user,
       fixed: config.fixedHeader,
       onSignOut() {
         dispatch({ type: 'app/signOut' })

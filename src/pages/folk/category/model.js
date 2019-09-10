@@ -11,6 +11,7 @@ const {
   removeCategory,
   updateCategory,
   removeCategoryList,
+  getCategoryList,
 } = api
 
 export default modelExtend(pageModel, {
@@ -21,7 +22,7 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
-    rolesData: [],
+    categoryListData: [],
   },
 
   subscriptions: {
@@ -105,10 +106,23 @@ export default modelExtend(pageModel, {
       const resp = yield call(queryCategoryById, { id: payload })
       if (resp.success) {
         yield put({
-          type: 'showModal',
+          type: 'updateState',
           payload: {
             modalType: 'update',
             currentItem: resp.data,
+          },
+        })
+      } else {
+        throw resp
+      }
+    },
+    *getCategoryList({ payload }, { call, put, select }) {
+      const resp = yield call(getCategoryList, { id: payload })
+      if (resp.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            categoryListData: resp.data,
           },
         })
       } else {

@@ -68,47 +68,16 @@ export default {
     *query({ payload }, { call, put, select }) {
       const {
         success,
-        user,
-        data: { menus },
+        data: { menus, user },
       } = yield call(queryUserInfo, payload)
-
       const { locationPathname } = yield select(_ => _.app)
       if (success && menus) {
         const { list } = menus
-        const { permissions } = {
-          id: 0,
-          username: 'admin',
-          password: 'admin',
-          permissions: '',
-          avatar: '',
-        }
-        // const { permissions } = user
         let routeList = menus
-        console.log(111111)
-        console.log(routeList)
-
-        // if (
-        //   permissions.role === ROLE_TYPE.ADMIN ||
-        //   permissions.role === ROLE_TYPE.DEVELOPER
-        // ) {
-        //   permissions.visit = list.map(item => item.id)
-        // } else {
-        //   routeList = list.filter(item => {
-        //     const cases = [
-        //       permissions.visit.includes(item.id),
-        //       item.mpid
-        //         ? permissions.visit.includes(item.mpid) || item.mpid === '-1'
-        //         : true,
-        //       item.bpid ? permissions.visit.includes(item.bpid) : true,
-        //     ]
-        //     return cases.every(_ => _)
-        //   })
-        // }
         yield put({
           type: 'updateState',
           payload: {
             user,
-            permissions,
             routeList,
           },
         })

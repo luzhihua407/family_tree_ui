@@ -4,7 +4,7 @@ import { pathMatchRegexp } from 'utils'
 import api from 'api'
 import { pageModel } from 'utils/model'
 
-const { queryTreeByPage } = api
+const { queryTreeByPage, getFamilyTree } = api
 
 export default modelExtend(pageModel, {
   namespace: 'tree',
@@ -20,7 +20,7 @@ export default modelExtend(pageModel, {
           const payload = location.query || { page: 1, pageSize: 10 }
           dispatch({
             type: 'query',
-            payload: { gen: 1 },
+            payload: { branch: '五房' },
           })
         }
       })
@@ -29,7 +29,7 @@ export default modelExtend(pageModel, {
 
   effects: {
     *query({ payload }, { call, put }) {
-      const result = yield call(queryTreeByPage, payload)
+      const result = yield call(getFamilyTree, payload)
       if (result) {
         let { data } = result
         yield put({

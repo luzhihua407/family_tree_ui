@@ -33,12 +33,41 @@ class CategoryModal extends PureComponent {
   }
 
   render() {
-    const { item = {}, onOk, form, i18n, rolesData, ...modalProps } = this.props
+    const {
+      item = {},
+      onOk,
+      form,
+      i18n,
+      categoryListData = [],
+      ...modalProps
+    } = this.props
+    console.log(this.props)
     const { getFieldDecorator } = form
 
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
+          <FormItem label="父级" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('parentId', {
+              initialValue: item.parentId,
+              rules: [
+                {
+                  required: true,
+                },
+              ],
+            })(
+              <Select
+                labelInValue={false}
+                placeholder="请选择"
+                style={{ width: 120 }}
+                allowClear={true}
+              >
+                {categoryListData.map(d => (
+                  <Select.Option key={d.id}>{d.name}</Select.Option>
+                ))}
+              </Select>
+            )}
+          </FormItem>
           <FormItem label="名称" hasFeedback {...formItemLayout}>
             {getFieldDecorator('name', {
               initialValue: item.name,

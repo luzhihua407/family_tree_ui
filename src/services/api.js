@@ -57,6 +57,7 @@ export default {
   removeCategoryContentList: 'POST /folk/category_content/delete',
 
   queryTreeByPage: 'POST /folk/people/tree',
+  getFamilyTree: 'POST /folk/people/getFamilyTree',
 
   queryDict: 'GET /basic/dict/get',
   queryDictList: 'POST /basic/dict/page',
@@ -67,6 +68,7 @@ export default {
   getParentDict: 'POST /basic/dict/getParentDict',
   getSubDictListByParentCode: 'POST /basic/dict/getSubDictListByParentCode',
   getCategoryList: 'GET /folk/category/getCategoryList',
+  getBranchList: 'GET /folk/category/getBranchList',
   fileUpload: 'POST /file_upload/upload',
 
   queryRegion: '/basic/region/get',

@@ -23,6 +23,7 @@ class Category extends PureComponent {
       modalVisible,
       modalType,
       selectedRowKeys,
+      categoryListData,
     } = category
 
     const handleRefresh = newQuery => {
@@ -35,6 +36,7 @@ class Category extends PureComponent {
     const modalProps = {
       item: modalType === 'create' ? {} : currentItem,
       visible: modalVisible,
+      categoryListData: categoryListData,
       maskClosable: false,
       confirmLoading: loading.effects[`category/${modalType}`],
       title: `${
@@ -83,9 +85,13 @@ class Category extends PureComponent {
       },
       onEditItem(item) {
         dispatch({
-          type: 'category/get',
-          payload: item.id,
-        })
+          type: 'category/getCategoryList',
+          payload: {},
+        }),
+          dispatch({
+            type: 'category/get',
+            payload: item.id,
+          })
       },
       rowSelection: {
         selectedRowKeys,
@@ -112,11 +118,15 @@ class Category extends PureComponent {
       },
       onAdd() {
         dispatch({
-          type: 'category/showModal',
-          payload: {
-            modalType: 'create',
-          },
-        })
+          type: 'category/getCategoryList',
+          payload: {},
+        }),
+          dispatch({
+            type: 'category/showModal',
+            payload: {
+              modalType: 'create',
+            },
+          })
       },
     }
 

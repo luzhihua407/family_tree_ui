@@ -102,6 +102,7 @@ class PeopleModal extends PureComponent {
       form,
       i18n,
       educationListData,
+      branchListData = [],
       ...modalProps
     } = this.props
     const { getFieldDecorator } = form
@@ -254,7 +255,7 @@ class PeopleModal extends PureComponent {
               initialValue: item.education,
               rules: [
                 {
-                  required: true,
+                  required: false,
                 },
               ],
             })(
@@ -270,13 +271,34 @@ class PeopleModal extends PureComponent {
               </Select>
             )}
           </FormItem>
+          <FormItem label="分支" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('peopleBranch', {
+              initialValue: item.peopleBranch,
+              rules: [
+                {
+                  required: true,
+                },
+              ],
+            })(
+              <Select
+                labelInValue={false}
+                placeholder="请选择"
+                style={{ width: 120 }}
+                allowClear={true}
+              >
+                {branchListData.map(d => (
+                  <Select.Option key={d.id}>{d.name}</Select.Option>
+                ))}
+              </Select>
+            )}
+          </FormItem>
           <FormItem label="出生年月" hasFeedback {...formItemLayout}>
             {getFieldDecorator('birth', {
               initialValue:
                 item.birth != null ? moment(item.birth, dateFormat) : null,
               rules: [
                 {
-                  required: true,
+                  required: false,
                 },
               ],
             })(<DatePicker format={dateFormat} />)}

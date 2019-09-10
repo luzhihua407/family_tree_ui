@@ -20,7 +20,6 @@ class Tree extends PureComponent {
   render() {
     const { location, dispatch, tree, loading, i18n } = this.props
     const { query, pathname } = location
-    console.log(this.props)
     this.setState(this.props.tree.list)
 
     const listProps = {
