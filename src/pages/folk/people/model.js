@@ -14,6 +14,7 @@ const {
   getSubDictListByParentCode,
   getBranchList,
   fileUpload,
+  addRelationship,
 } = api
 
 export default modelExtend(pageModel, {
@@ -22,6 +23,7 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
+    relationshipModalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
     educationListData: [],
@@ -93,6 +95,14 @@ export default modelExtend(pageModel, {
         throw data
       }
     },
+    *addRelationship({ payload }, { call, put }) {
+      const data = yield call(addRelationship, payload)
+      if (data.success) {
+        yield put({ type: 'hideRelationshipModal' })
+      } else {
+        throw data
+      }
+    },
 
     *update({ payload }, { select, call, put }) {
       const id = yield select(({ people }) => people.currentItem.id)
@@ -160,6 +170,13 @@ export default modelExtend(pageModel, {
 
     hideModal(state) {
       return { ...state, modalVisible: false }
+    },
+    showRelationshipModal(state, { payload }) {
+      return { ...state, ...payload, relationshipModalVisible: true }
+    },
+
+    hideRelationshipModal(state) {
+      return { ...state, relationshipModalVisible: false }
     },
   },
 })

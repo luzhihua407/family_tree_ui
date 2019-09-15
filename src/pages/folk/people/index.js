@@ -9,6 +9,7 @@ import { stringify } from 'qs'
 import List from './components/List'
 import Filter from './components/Filter'
 import Modal from './components/Modal'
+import RelationshipModal from './components/RelationshipModal'
 
 @withI18n()
 @connect(({ people, loading }) => ({ people, loading }))
@@ -21,6 +22,7 @@ class People extends PureComponent {
       pagination,
       currentItem,
       modalVisible,
+      relationshipModalVisible,
       modalType,
       selectedRowKeys,
       educationListData,
@@ -56,6 +58,31 @@ class People extends PureComponent {
       onCancel() {
         dispatch({
           type: 'people/hideModal',
+        })
+      },
+    }
+    const relationshipModalProps = {
+      item: modalType === 'create' ? {} : currentItem,
+      visible: relationshipModalVisible,
+      maskClosable: false,
+      branchListData: branchListData,
+      confirmLoading: loading.effects[`people/${modalType}`],
+      title: `${
+        modalType === 'create' ? i18n.t`Create people` : i18n.t`Update people`
+      }`,
+      centered: true,
+      onOk(data) {
+        console.log(data)
+        dispatch({
+          type: `people/addRelationship`,
+          payload: data,
+        }).then(() => {
+          handleRefresh()
+        })
+      },
+      onCancel() {
+        dispatch({
+          type: 'people/hideRelationshipModal',
         })
       },
     }
@@ -138,6 +165,14 @@ class People extends PureComponent {
             payload: {},
           })
       },
+      onSetRelationship() {
+        dispatch({
+          type: 'people/showRelationshipModal',
+          payload: {
+            modalType: 'create',
+          },
+        })
+      },
     }
 
     const handleDeleteItems = () => {
@@ -177,6 +212,9 @@ class People extends PureComponent {
         )}
         <List {...listProps} />
         {modalVisible && <Modal {...modalProps} />}
+        {relationshipModalVisible && (
+          <RelationshipModal {...relationshipModalProps} />
+        )}
       </Page>
     )
   }
@@ -184,6 +222,7 @@ class People extends PureComponent {
 
 People.propTypes = {
   people: PropTypes.object,
+  relationship: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,

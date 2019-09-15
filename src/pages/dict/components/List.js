@@ -52,15 +52,15 @@ class List extends PureComponent {
         width: '10%',
       },
       {
+        title: '上级',
+        dataIndex: 'parentName',
+        key: 'parentName',
+        width: '10%',
+      },
+      {
         title: '备注',
         dataIndex: 'remark',
         key: 'remark',
-        width: '15%',
-      },
-      {
-        title: 'dis',
-        dataIndex: 'dis',
-        key: 'dis',
         width: '15%',
       },
       {

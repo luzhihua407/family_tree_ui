@@ -105,13 +105,17 @@ class Filter extends PureComponent {
               >
                 <Trans>Search</Trans>
               </Button>
-              <Button onClick={this.handleReset} icon="delete">
+              <Button
+                onClick={this.handleReset}
+                icon="delete"
+                className="margin-right"
+              >
                 <Trans>Reset</Trans>
               </Button>
+              <Button type="ghost" onClick={onAdd} className="margin-right">
+                <Trans>Create</Trans>
+              </Button>
             </div>
-            <Button type="ghost" onClick={onAdd}>
-              <Trans>Create</Trans>
-            </Button>
           </Row>
         </Col>
       </Row>

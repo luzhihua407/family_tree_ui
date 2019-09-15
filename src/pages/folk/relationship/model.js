@@ -17,7 +17,7 @@ const {
 } = api
 
 export default modelExtend(pageModel, {
-  namespace: 'people',
+  namespace: 'relationship',
 
   state: {
     currentItem: {},
@@ -31,7 +31,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (pathMatchRegexp('/folk/people', location.pathname)) {
+        if (pathMatchRegexp('/folk/relationship', location.pathname)) {
           const payload = location.query || { page: 1, pageSize: 10 }
           dispatch({
             type: 'query',
@@ -63,7 +63,7 @@ export default modelExtend(pageModel, {
 
     *delete({ payload }, { call, put, select }) {
       const data = yield call(removePeople, { ids: [payload] })
-      const { selectedRowKeys } = yield select(_ => _.people)
+      const { selectedRowKeys } = yield select(_ => _.relationship)
       if (data.success) {
         yield put({
           type: 'updateState',
@@ -95,7 +95,7 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      const id = yield select(({ people }) => people.currentItem.id)
+      const id = yield select(({ relationship }) => relationship.currentItem.id)
       const newPeople = { ...payload, id }
       const data = yield call(updatePeople, newPeople)
       if (data.success) {

@@ -12,6 +12,8 @@ import {
   Upload,
   Icon,
   message,
+  Row,
+  Col,
 } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
 import locale from 'antd/es/date-picker/locale/zh_CN'
@@ -116,260 +118,323 @@ class PeopleModal extends PureComponent {
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label="全名" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('fullName', {
-              initialValue: item.fullName,
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(<Input />)}
-          </FormItem>
-          <FormItem label="小名" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('nickname', {
-              initialValue: item.nickname,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(<Input />)}
-          </FormItem>
-          <FormItem label="头像" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('file', {
-              initialValue: item.file,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(
-              <Upload
-                name="file"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                action="http://localhost:7000/api/v1//file_upload/upload"
-                beforeUpload={beforeUpload}
-                onChange={this.handleChange}
-              >
-                {imageUrl ? (
-                  <img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
-                ) : (
-                  uploadButton
+          <Row>
+            <Col span={12}>
+              <FormItem label="全名" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('fullName', {
+                  initialValue: item.fullName,
+                  rules: [
+                    {
+                      required: true,
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem label="小名" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('nickname', {
+                  initialValue: item.nickname,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <FormItem label="头像" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('file', {
+                  initialValue: item.file,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(
+                  <Upload
+                    name="file"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    action="http://localhost:7000/api/v1/file_upload/upload"
+                    beforeUpload={beforeUpload}
+                    onChange={this.handleChange}
+                  >
+                    {imageUrl ? (
+                      <img
+                        src={imageUrl}
+                        alt="avatar"
+                        style={{ width: '100%' }}
+                      />
+                    ) : (
+                      uploadButton
+                    )}
+                  </Upload>
                 )}
-              </Upload>
-            )}
-          </FormItem>
-          <FormItem label="性别" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('gender', {
-              initialValue: item.gender,
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(
-              <Radio.Group>
-                <Radio value={'男'}>男</Radio>
-                <Radio value={'女'}>女</Radio>
-                <Radio value={'不清楚'}>不清楚</Radio>
-              </Radio.Group>
-            )}
-          </FormItem>
-          <FormItem label="手机" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('phoneNumber', {
-              initialValue: item.phoneNumber,
-              rules: [
-                {
-                  required: false,
-                  pattern: /^1[34578]\d{9}$/,
-                  message: '无效的手机号码',
-                },
-              ],
-            })(<Input />)}
-          </FormItem>
-          <FormItem label="职务" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('job', {
-              initialValue: item.job,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(<Input />)}
-          </FormItem>
-          <FormItem label="身高(厘米)" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('height', {
-              initialValue: item.height,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(<InputNumber min={1} max={300} />)}
-          </FormItem>
-          <FormItem label="体重（公斤）" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('weight', {
-              initialValue: item.weight,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(<InputNumber min={1} max={300} />)}
-          </FormItem>
-          <FormItem label="是否结婚" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('isMarried', {
-              initialValue: item.isMarried == null ? '是' : item.isMarried,
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(
-              <Radio.Group>
-                <Radio value={'是'}>是</Radio>
-                <Radio value={'否'}>否</Radio>
-              </Radio.Group>
-            )}
-          </FormItem>
-          <FormItem label="是否有后代" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('hasChild', {
-              initialValue: item.hasChild == null ? '是' : item.hasChild,
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(
-              <Radio.Group>
-                <Radio value={'是'}>是</Radio>
-                <Radio value={'否'}>否</Radio>
-              </Radio.Group>
-            )}
-          </FormItem>
-          <FormItem label="学历" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('education', {
-              initialValue: item.education,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(
-              <Select
-                labelInValue={false}
-                placeholder="请选择"
-                style={{ width: 120 }}
-                allowClear={true}
-              >
-                {educationListData.map(d => (
-                  <Select.Option key={d.code}>{d.name}</Select.Option>
-                ))}
-              </Select>
-            )}
-          </FormItem>
-          <FormItem label="分支" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('peopleBranch', {
-              initialValue: item.peopleBranch,
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(
-              <Select
-                labelInValue={false}
-                placeholder="请选择"
-                style={{ width: 120 }}
-                allowClear={true}
-              >
-                {branchListData.map(d => (
-                  <Select.Option key={d.id}>{d.name}</Select.Option>
-                ))}
-              </Select>
-            )}
-          </FormItem>
-          <FormItem label="出生年月" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('birth', {
-              initialValue:
-                item.birth != null ? moment(item.birth, dateFormat) : null,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(<DatePicker format={dateFormat} />)}
-          </FormItem>
-          <FormItem label="第几世" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('generations', {
-              initialValue: item.generations,
-              rules: [
-                {
-                  required: true,
-                  type: 'number',
-                },
-              ],
-            })(<InputNumber min={1} max={100} />)}
-          </FormItem>
-          <FormItem label="工作单位" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('company', {
-              initialValue: item.company,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(<Input />)}
-          </FormItem>
-          <FormItem label="卒于" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('death', {
-              initialValue:
-                item.death != null ? moment(item.death, dateFormat) : null,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(<DatePicker format={dateFormat} />)}
-          </FormItem>
-          <FormItem label="简介" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('brief', {
-              initialValue: item.brief,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(<Input.TextArea rows={6} />)}
-          </FormItem>
-          <FormItem label="备注" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('remark', {
-              initialValue: item.remark,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(<Input.TextArea rows={6} />)}
-          </FormItem>
-          <FormItem label="启用" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('valid', {
-              initialValue: item.valid == null ? '是' : item.valid,
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(
-              <Radio.Group>
-                <Radio value={'是'}>是</Radio>
-                <Radio value={'否'}>否</Radio>
-              </Radio.Group>
-            )}
-          </FormItem>
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem label="性别" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('gender', {
+                  initialValue: item.gender,
+                  rules: [
+                    {
+                      required: true,
+                    },
+                  ],
+                })(
+                  <Radio.Group>
+                    <Radio value={'男'}>男</Radio>
+                    <Radio value={'女'}>女</Radio>
+                  </Radio.Group>
+                )}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <FormItem label="房支" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('peopleBranch', {
+                  initialValue: item.peopleBranch,
+                  rules: [
+                    {
+                      required: true,
+                    },
+                  ],
+                })(
+                  <Select
+                    labelInValue={false}
+                    placeholder="请选择"
+                    style={{ width: 120 }}
+                    allowClear={true}
+                  >
+                    {branchListData.map(d => (
+                      <Select.Option key={d.id}>{d.name}</Select.Option>
+                    ))}
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem label="世序" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('generations', {
+                  initialValue: item.generations,
+                  rules: [
+                    {
+                      required: true,
+                      type: 'number',
+                    },
+                  ],
+                })(<InputNumber min={1} max={100} />)}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <FormItem label="手机" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('phoneNumber', {
+                  initialValue: item.phoneNumber,
+                  rules: [
+                    {
+                      required: false,
+                      pattern: /^1[34578]\d{9}$/,
+                      message: '无效的手机号码',
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem label="职务" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('job', {
+                  initialValue: item.job,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <FormItem label="身高(厘米)" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('height', {
+                  initialValue: item.height,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<InputNumber min={1} max={300} />)}
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem label="体重(公斤)" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('weight', {
+                  initialValue: item.weight,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<InputNumber min={1} max={300} />)}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <FormItem label="已婚" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('isMarried', {
+                  initialValue: item.isMarried == null ? '是' : item.isMarried,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(
+                  <Radio.Group>
+                    <Radio value={'是'}>是</Radio>
+                    <Radio value={'否'}>否</Radio>
+                  </Radio.Group>
+                )}
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem label="已育" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('hasChild', {
+                  initialValue: item.hasChild == null ? '是' : item.hasChild,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(
+                  <Radio.Group>
+                    <Radio value={'是'}>是</Radio>
+                    <Radio value={'否'}>否</Radio>
+                  </Radio.Group>
+                )}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <FormItem label="学历" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('education', {
+                  initialValue: item.education,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(
+                  <Select
+                    labelInValue={false}
+                    placeholder="请选择"
+                    style={{ width: 120 }}
+                    allowClear={true}
+                  >
+                    {educationListData.map(d => (
+                      <Select.Option key={d.code}>{d.name}</Select.Option>
+                    ))}
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem label="出生年月" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('birth', {
+                  initialValue:
+                    item.birth != null ? moment(item.birth, dateFormat) : null,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<DatePicker format={dateFormat} />)}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <FormItem label="工作单位" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('company', {
+                  initialValue: item.company,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem label="卒于" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('death', {
+                  initialValue:
+                    item.death != null ? moment(item.death, dateFormat) : null,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<DatePicker format={dateFormat} />)}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24} pull={3}>
+              <FormItem label="简介" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('brief', {
+                  initialValue: item.brief,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<Input.TextArea rows={6} />)}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24} pull={3}>
+              <FormItem label="备注" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('remark', {
+                  initialValue: item.remark,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<Input.TextArea rows={6} />)}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24} pull={3}>
+              <FormItem label="启用" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('valid', {
+                  initialValue: item.valid == null ? '是' : item.valid,
+                  rules: [
+                    {
+                      required: true,
+                    },
+                  ],
+                })(
+                  <Radio.Group>
+                    <Radio value={'是'}>是</Radio>
+                    <Radio value={'否'}>否</Radio>
+                  </Radio.Group>
+                )}
+              </FormItem>
+            </Col>
+          </Row>
         </Form>
       </Modal>
     )

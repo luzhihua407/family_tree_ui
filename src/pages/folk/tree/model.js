@@ -4,13 +4,14 @@ import { pathMatchRegexp } from 'utils'
 import api from 'api'
 import { pageModel } from 'utils/model'
 
-const { queryTreeByPage, getFamilyTree } = api
+const { queryTreeByPage, getFamilyTree, getBranchList } = api
 
 export default modelExtend(pageModel, {
   namespace: 'tree',
 
   state: {
     list: [],
+    branchListData: [],
   },
 
   subscriptions: {
@@ -21,7 +22,11 @@ export default modelExtend(pageModel, {
           dispatch({
             type: 'query',
             payload: { branch: '五房' },
-          })
+          }),
+            dispatch({
+              type: 'getBranchList',
+              payload: {},
+            })
         }
       })
     },
@@ -38,6 +43,19 @@ export default modelExtend(pageModel, {
             list: data,
           },
         })
+      }
+    },
+    *getBranchList({ payload }, { call, put, select }) {
+      const resp = yield call(getBranchList, payload)
+      if (resp.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            branchListData: resp.data,
+          },
+        })
+      } else {
+        throw resp
       }
     },
   },

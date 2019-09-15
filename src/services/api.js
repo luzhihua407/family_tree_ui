@@ -68,7 +68,7 @@ export default {
   getParentDict: 'POST /basic/dict/getParentDict',
   getSubDictListByParentCode: 'POST /basic/dict/getSubDictListByParentCode',
   getCategoryList: 'GET /folk/category/getCategoryList',
-  getBranchList: 'GET /folk/category/getBranchList',
+  getBranchList: 'GET /basic/dict/getBranchList',
   fileUpload: 'POST /file_upload/upload',
 
   queryRegion: '/basic/region/get',
@@ -77,4 +77,6 @@ export default {
   createRegion: 'POST /basic/region/addOrUpdate',
   removeRegion: 'POST /basic/region/delete',
   removeRegionList: 'POST /basic/region/delete',
+
+  addRelationship: 'POST /folk/people/addRelationship',
 }

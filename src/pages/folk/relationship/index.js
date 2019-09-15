@@ -11,13 +11,13 @@ import Filter from './components/Filter'
 import Modal from './components/Modal'
 
 @withI18n()
-@connect(({ people, loading }) => ({ people, loading }))
-class People extends PureComponent {
+@connect(({ relationship, loading }) => ({ relationship, loading }))
+class Relationship extends PureComponent {
   render() {
-    const { location, dispatch, people, loading, i18n } = this.props
+    const { location, dispatch, relationship, loading, i18n } = this.props
     const { query, pathname } = location
     const {
-      list,
+      list = [],
       pagination,
       currentItem,
       modalVisible,
@@ -25,11 +25,11 @@ class People extends PureComponent {
       selectedRowKeys,
       educationListData,
       branchListData,
-    } = people
+    } = relationship
 
     const handleRefresh = newQuery => {
       dispatch({
-        type: 'people/query',
+        type: 'relationship/query',
         payload: newQuery,
       })
     }
@@ -40,14 +40,16 @@ class People extends PureComponent {
       maskClosable: false,
       educationListData: educationListData,
       branchListData: branchListData,
-      confirmLoading: loading.effects[`people/${modalType}`],
+      confirmLoading: loading.effects[`relationship/${modalType}`],
       title: `${
-        modalType === 'create' ? i18n.t`Create people` : i18n.t`Update people`
+        modalType === 'create'
+          ? i18n.t`Create relationship`
+          : i18n.t`Update relationship`
       }`,
       centered: true,
       onOk(data) {
         dispatch({
-          type: `people/${modalType}`,
+          type: `relationship/${modalType}`,
           payload: data,
         }).then(() => {
           handleRefresh()
@@ -55,14 +57,14 @@ class People extends PureComponent {
       },
       onCancel() {
         dispatch({
-          type: 'people/hideModal',
+          type: 'relationship/hideModal',
         })
       },
     }
 
     const listProps = {
       dataSource: list,
-      loading: loading.effects['people/query'],
+      loading: loading.effects['relationship/query'],
       pagination,
       onChange(page) {
         handleRefresh({
@@ -72,7 +74,7 @@ class People extends PureComponent {
       },
       onDeleteItem(id) {
         dispatch({
-          type: 'people/delete',
+          type: 'relationship/delete',
           payload: id,
         }).then(() => {
           handleRefresh({
@@ -85,15 +87,15 @@ class People extends PureComponent {
       },
       onEditItem(item) {
         dispatch({
-          type: 'people/getBranchList',
+          type: 'relationship/getBranchList',
           payload: {},
         }),
           dispatch({
-            type: 'people/get',
+            type: 'relationship/get',
             payload: item.id,
           }).then(() => {
             dispatch({
-              type: 'people/getSubDictListByParentCode',
+              type: 'relationship/getSubDictListByParentCode',
               payload: { parentCode: 'education' },
             })
           })
@@ -102,7 +104,7 @@ class People extends PureComponent {
         selectedRowKeys,
         onChange: keys => {
           dispatch({
-            type: 'people/updateState',
+            type: 'relationship/updateState',
             payload: {
               selectedRowKeys: keys,
             },
@@ -123,26 +125,17 @@ class People extends PureComponent {
       },
       onAdd() {
         dispatch({
-          type: 'people/getSubDictListByParentCode',
-          payload: { parentCode: 'education' },
-        }).then(() => {
-          dispatch({
-            type: 'people/showModal',
-            payload: {
-              modalType: 'create',
-            },
-          })
-        }),
-          dispatch({
-            type: 'people/getBranchList',
-            payload: {},
-          })
+          type: 'relationship/showModal',
+          payload: {
+            modalType: 'create',
+          },
+        })
       },
     }
 
     const handleDeleteItems = () => {
       dispatch({
-        type: 'people/multiDelete',
+        type: 'relationship/multiDelete',
         payload: {
           ids: selectedRowKeys,
         },
@@ -182,11 +175,11 @@ class People extends PureComponent {
   }
 }
 
-People.propTypes = {
-  people: PropTypes.object,
+Relationship.propTypes = {
+  relationship: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default People
+export default Relationship

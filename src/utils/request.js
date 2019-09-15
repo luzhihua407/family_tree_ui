@@ -30,7 +30,6 @@ export default function request(options) {
     }
     url = domain + url
   } catch (e) {
-    console.log(e)
     message.error(e.message)
   }
 
@@ -53,27 +52,8 @@ export default function request(options) {
       }
 
       config.headers = {
-        // 'Content-Type': 'application/x-www-form-urlencoded'
         'Content-Type': 'application/json',
       }
-      // config.transformRequest=function (data) {
-      //   //if(data){
-      //     let access_token=localStorage.getItem('access_token');
-      //     console.log("access_token="+access_token);
-      //     if(access_token){
-      //         // config.headers={
-      //         //   'Content-Type': 'application/x-www-form-urlencoded',
-      //         //   "Authorization": "Bearer "+access_token
-      //         // }
-      //       }
-      //       if(data){
-      //         console.log(data);
-      //         return data; //json 格式
-      //       }
-      //     // return data;
-      //   //}
-      //   // 对 data 进行任意转换处理
-      // }
       // 在发送请求之前做些什么
       return config
     },

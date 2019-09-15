@@ -41,16 +41,25 @@ class List extends PureComponent {
         width: '10%',
       },
       {
+        title: '房支',
+        dataIndex: 'branchName',
+        key: 'branchName',
+        width: '10%',
+      },
+      {
         title: '出生年月',
         dataIndex: 'birth',
         key: 'birth',
         width: '10%',
       },
       {
-        title: '第几世',
+        title: '世序',
         dataIndex: 'generations',
         key: 'generations',
         width: '10%',
+        render: (text, record) => {
+          return text != '' ? text + '世' : ''
+        },
       },
       {
         title: '是否结婚',

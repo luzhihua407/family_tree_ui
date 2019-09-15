@@ -1,5 +1,5 @@
 module.exports = {
-  siteName: '家谱',
+  siteName: '族谱',
   copyright: '星火  © 2019',
   logoPath: '/logo.svg',
   apiPrefix: '/api/v1',

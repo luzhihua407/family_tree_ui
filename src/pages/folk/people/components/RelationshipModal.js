@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Form, Modal, Select } from 'antd'
+import request from 'utils/request'
+const { Option } = Select
 const FormItem = Form.Item
 const formItemLayout = {
   labelCol: {
@@ -9,6 +11,23 @@ const formItemLayout = {
   wrapperCol: {
     span: 14,
   },
+}
+
+function fetch(value, callback) {
+  const params = { name: value }
+  const url = 'http://localhost:7000/api/v1/folk/people/getPeopleByName'
+  request({ url, data: params }).then(result => {
+    if (result.success) {
+      const data = []
+      result.data.forEach(r => {
+        data.push({
+          value: r.id,
+          text: r.fullName,
+        })
+      })
+      callback(data)
+    }
+  })
 }
 @Form.create()
 class RelationshipModal extends PureComponent {
@@ -19,13 +38,29 @@ class RelationshipModal extends PureComponent {
     value: undefined,
   }
 
-  handleSearch = value => {
+  handleSearchHusband = value => {
     if (value) {
-      fetch(value, data => this.setState({ data }))
+      fetch(value, husbandData => this.setState({ husbandData }))
     } else {
       this.setState({
         husbandData: [],
+      })
+    }
+  }
+  handleSearchWife = value => {
+    if (value) {
+      fetch(value, wifeData => this.setState({ wifeData }))
+    } else {
+      this.setState({
         wifeData: [],
+      })
+    }
+  }
+  handleSearchChildren = value => {
+    if (value) {
+      fetch(value, childrenData => this.setState({ childrenData }))
+    } else {
+      this.setState({
         childrenData: [],
       })
     }
@@ -33,6 +68,20 @@ class RelationshipModal extends PureComponent {
 
   handleChange = value => {
     this.setState({ value })
+  }
+  handleOk = () => {
+    const { item = {}, onOk, form } = this.props
+    const { validateFields, getFieldsValue } = form
+    let fields = getFieldsValue()
+    validateFields(errors => {
+      if (errors) {
+        return
+      }
+      const data = {
+        ...fields,
+      }
+      onOk(data)
+    })
   }
 
   render() {
@@ -51,8 +100,8 @@ class RelationshipModal extends PureComponent {
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
           <FormItem label="丈夫" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('husband', {
-              initialValue: item.husband,
+            {getFieldDecorator('husbandId', {
+              initialValue: item.husbandId,
               rules: [
                 {
                   required: true,
@@ -61,13 +110,12 @@ class RelationshipModal extends PureComponent {
             })(
               <Select
                 showSearch
-                value={this.state.value}
-                placeholder={this.props.placeholder}
+                placeholder="输入名字搜索"
                 style={this.props.style}
-                defaultActiveFirstOption={false}
+                defaultActiveFirstOption={true}
                 showArrow={false}
                 filterOption={false}
-                onSearch={this.handleSearch}
+                onSearch={this.handleSearchHusband}
                 onChange={this.handleChange}
                 notFoundContent={null}
               >
@@ -76,23 +124,22 @@ class RelationshipModal extends PureComponent {
             )}
           </FormItem>
           <FormItem label="妻子" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('wife', {
-              initialValue: item.wife,
+            {getFieldDecorator('wifeId', {
+              initialValue: item.wifeId,
               rules: [
                 {
-                  required: true,
+                  required: false,
                 },
               ],
             })(
               <Select
                 showSearch
-                value={this.state.value}
-                placeholder={this.props.placeholder}
+                placeholder="输入名字搜索"
                 style={this.props.style}
-                defaultActiveFirstOption={false}
+                defaultActiveFirstOption={true}
                 showArrow={false}
                 filterOption={false}
-                onSearch={this.handleSearch}
+                onSearch={this.handleSearchWife}
                 onChange={this.handleChange}
                 notFoundContent={null}
               >
@@ -101,23 +148,23 @@ class RelationshipModal extends PureComponent {
             )}
           </FormItem>
           <FormItem label="孩子" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('children', {
-              initialValue: item.children,
+            {getFieldDecorator('childrenIds', {
+              initialValue: item.childrenIds,
               rules: [
                 {
-                  required: true,
+                  required: false,
                 },
               ],
             })(
               <Select
                 showSearch
-                value={this.state.value}
-                placeholder={this.props.placeholder}
+                placeholder="输入名字搜索"
+                mode="multiple"
                 style={this.props.style}
-                defaultActiveFirstOption={false}
+                defaultActiveFirstOption={true}
                 showArrow={false}
                 filterOption={false}
-                onSearch={this.handleSearch}
+                onSearch={this.handleSearchChildren}
                 onChange={this.handleChange}
                 notFoundContent={null}
               >

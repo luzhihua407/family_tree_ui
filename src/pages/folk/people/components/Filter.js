@@ -65,15 +65,15 @@ class Filter extends PureComponent {
   }
 
   render() {
-    const { onAdd, filter, form, i18n } = this.props
+    const { onAdd, onSetRelationship, filter, form, i18n } = this.props
     const { getFieldDecorator } = form
-    const { name } = filter
+    const { fullName } = filter
 
     return (
       <Row gutter={24}>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-          {getFieldDecorator('name', { initialValue: name })(
-            <Input placeholder={'搜索名称'} allowClear />
+          {getFieldDecorator('fullName', { initialValue: fullName })(
+            <Input placeholder={'搜索全名'} allowClear />
           )}
         </Col>
         <Col
@@ -95,8 +95,21 @@ class Filter extends PureComponent {
               <Button className="margin-right" onClick={this.handleReset}>
                 <Trans>Reset</Trans>
               </Button>
-              <Button type="ghost" onClick={onAdd} icon="form">
+              <Button
+                type="ghost"
+                className="margin-right"
+                onClick={onAdd}
+                icon="form"
+              >
                 <Trans>Create</Trans>
+              </Button>
+              <Button
+                type="ghost"
+                className="margin-right"
+                onClick={onSetRelationship}
+                icon="form"
+              >
+                设置关系
               </Button>
             </div>
           </Row>
@@ -108,6 +121,7 @@ class Filter extends PureComponent {
 
 Filter.propTypes = {
   onAdd: PropTypes.func,
+  onSetRelationship: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
