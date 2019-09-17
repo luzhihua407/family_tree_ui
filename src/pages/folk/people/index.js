@@ -26,6 +26,7 @@ class People extends PureComponent {
       modalType,
       selectedRowKeys,
       educationListData,
+      prodTeamListData,
       branchListData,
     } = people
 
@@ -41,6 +42,7 @@ class People extends PureComponent {
       visible: modalVisible,
       maskClosable: false,
       educationListData: educationListData,
+      prodTeamListData: prodTeamListData,
       branchListData: branchListData,
       confirmLoading: loading.effects[`people/${modalType}`],
       title: `${

@@ -104,6 +104,7 @@ class PeopleModal extends PureComponent {
       form,
       i18n,
       educationListData,
+      prodTeamListData = [],
       branchListData = [],
       ...modalProps
     } = this.props
@@ -230,6 +231,31 @@ class PeopleModal extends PureComponent {
                     },
                   ],
                 })(<InputNumber min={1} max={100} />)}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+              <FormItem label="生产队" hasFeedback {...formItemLayout}>
+                {getFieldDecorator('prodTeam', {
+                  initialValue: item.prodTeam,
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(
+                  <Select
+                    labelInValue={false}
+                    placeholder="请选择"
+                    style={{ width: 120 }}
+                    allowClear={true}
+                  >
+                    {prodTeamListData.map(d => (
+                      <Select.Option key={d.code}>{d.name}</Select.Option>
+                    ))}
+                  </Select>
+                )}
               </FormItem>
             </Col>
           </Row>

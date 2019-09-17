@@ -15,6 +15,7 @@ const {
   getBranchList,
   fileUpload,
   addRelationship,
+  getProdTeam,
 } = api
 
 export default modelExtend(pageModel, {
@@ -27,6 +28,7 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     educationListData: [],
+    prodTeamListData: [],
     branchListData: [],
   },
 
@@ -127,6 +129,19 @@ export default modelExtend(pageModel, {
           type: 'updateState',
           payload: {
             educationListData: resp.data,
+          },
+        })
+      } else {
+        throw resp
+      }
+    },
+    *getProdTeam({ payload }, { call, put, select }) {
+      const resp = yield call(getProdTeam, payload)
+      if (resp.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            prodTeamListData: resp.data,
           },
         })
       } else {
