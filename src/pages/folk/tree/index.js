@@ -54,7 +54,6 @@ class Tree extends PureComponent {
       },
     }
     const handleSelectChange = value => {
-      console.log(value)
       dispatch({
         type: 'tree/query',
         payload: { branch: value },

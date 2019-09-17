@@ -12,6 +12,7 @@ const {
   removeUser,
   updateUser,
   removeUserList,
+  resetPassword,
 } = api
 
 export default modelExtend(pageModel, {
@@ -20,6 +21,8 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
+    resetPasswordModalVisible: false,
+    userId: '',
     passwordVisible: true,
     modalType: 'create',
     selectedRowKeys: [],
@@ -85,9 +88,16 @@ export default modelExtend(pageModel, {
 
     *create({ payload }, { call, put }) {
       const data = yield call(createUser, payload)
-      console.log(data)
       if (data.success) {
         yield put({ type: 'hideModal' })
+      } else {
+        throw data
+      }
+    },
+    *resetPassword({ payload }, { call, put }) {
+      const data = yield call(resetPassword, payload)
+      if (data.success) {
+        yield put({ type: 'hideResetPasswordModal' })
       } else {
         throw data
       }
@@ -136,6 +146,13 @@ export default modelExtend(pageModel, {
 
     hideModal(state) {
       return { ...state, modalVisible: false }
+    },
+    showResetPasswordModal(state, { payload }) {
+      return { ...state, ...payload, resetPasswordModalVisible: true }
+    },
+
+    hideResetPasswordModal(state) {
+      return { ...state, resetPasswordModalVisible: false }
     },
   },
 })

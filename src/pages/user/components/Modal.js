@@ -74,16 +74,6 @@ class UserModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="密码" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('password', {
-              initialValue: item.password,
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(<Input />)}
-          </FormItem>
           <FormItem label="性别" hasFeedback {...formItemLayout}>
             {getFieldDecorator('gender', {
               initialValue: item.gender,

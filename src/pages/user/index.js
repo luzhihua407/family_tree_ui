@@ -9,6 +9,7 @@ import { stringify } from 'qs'
 import List from './components/List'
 import Filter from './components/Filter'
 import Modal from './components/Modal'
+import ResetPasswordModal from './components/ResetPasswordModal'
 
 @withI18n()
 @connect(({ user, loading }) => ({ user, loading }))
@@ -21,9 +22,11 @@ class User extends PureComponent {
       pagination,
       currentItem,
       modalVisible,
+      resetPasswordModalVisible,
       modalType,
       selectedRowKeys,
       rolesData,
+      userId,
     } = user
 
     const handleRefresh = newQuery => {
@@ -54,6 +57,29 @@ class User extends PureComponent {
       onCancel() {
         dispatch({
           type: 'user/hideModal',
+        })
+      },
+    }
+
+    const resetPasswordModalProps = {
+      item: modalType === 'create' ? {} : currentItem,
+      visible: resetPasswordModalVisible,
+      userId: userId,
+      maskClosable: false,
+      confirmLoading: loading.effects[`user/${modalType}`],
+      title: `重设密码`,
+      centered: true,
+      onOk(data) {
+        dispatch({
+          type: `user/resetPassword`,
+          payload: data,
+        }).then(() => {
+          handleRefresh()
+        })
+      },
+      onCancel() {
+        dispatch({
+          type: 'user/hideResetPasswordModal',
         })
       },
     }
@@ -101,6 +127,20 @@ class User extends PureComponent {
             },
           })
         },
+      },
+      onResetPassword(userId) {
+        dispatch({
+          type: 'user/updateState',
+          payload: {
+            userId: userId,
+          },
+        }),
+          dispatch({
+            type: 'user/showResetPasswordModal',
+            payload: {
+              modalType: 'create',
+            },
+          })
       },
     }
 
@@ -165,6 +205,9 @@ class User extends PureComponent {
         )}
         <List {...listProps} />
         {modalVisible && <Modal {...modalProps} />}
+        {resetPasswordModalVisible && (
+          <ResetPasswordModal {...resetPasswordModalProps} />
+        )}
       </Page>
     )
   }

@@ -68,7 +68,7 @@ class Filter extends PureComponent {
   }
 
   render() {
-    const { onAdd, filter, form, i18n } = this.props
+    const { onAdd, filter, form } = this.props
     const { getFieldDecorator } = form
     const { username, mobile } = filter
 
@@ -125,6 +125,7 @@ class Filter extends PureComponent {
 
 Filter.propTypes = {
   onAdd: PropTypes.func,
+  onResetPassword: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,

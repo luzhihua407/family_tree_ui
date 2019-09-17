@@ -11,6 +11,7 @@ export default {
   createUser: 'POST /usercenter/user/addOrUpdate',
   removeUser: 'POST /usercenter/user/delete',
   removeUserList: 'POST /usercenter/user/delete',
+  resetPassword: 'POST /usercenter/user/resetPassword',
 
   queryPostList: '/posts',
 

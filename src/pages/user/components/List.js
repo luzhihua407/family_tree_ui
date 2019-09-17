@@ -11,7 +11,7 @@ const { confirm } = Modal
 @withI18n()
 class List extends PureComponent {
   handleUserClick = (record, e) => {
-    const { onDeleteItem, onEditItem, i18n } = this.props
+    const { onDeleteItem, onEditItem, i18n, onResetPassword } = this.props
 
     if (e === '1') {
       onEditItem(record)
@@ -22,6 +22,8 @@ class List extends PureComponent {
           onDeleteItem(record.id)
         },
       })
+    } else if (e === '3') {
+      onResetPassword(record.id)
     }
   }
 
@@ -116,6 +118,13 @@ class List extends PureComponent {
               >
                 删除
               </Button>
+              <Button
+                icon="delete"
+                onClick={e => this.handleUserClick(record, '3')}
+                size={'small'}
+              >
+                重设密码
+              </Button>
             </Button.Group>
           )
         },
@@ -143,6 +152,7 @@ class List extends PureComponent {
 List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
+  onResetPassword: PropTypes.func,
   location: PropTypes.object,
 }
 
