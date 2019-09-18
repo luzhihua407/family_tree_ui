@@ -74,7 +74,6 @@ class People extends PureComponent {
       }`,
       centered: true,
       onOk(data) {
-        console.log(data)
         dispatch({
           type: `people/addRelationship`,
           payload: data,
@@ -166,6 +165,10 @@ class People extends PureComponent {
             type: 'people/getBranchList',
             payload: {},
           })
+        dispatch({
+          type: 'people/getProdTeam',
+          payload: {},
+        })
       },
       onSetRelationship() {
         dispatch({

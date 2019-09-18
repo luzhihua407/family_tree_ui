@@ -108,6 +108,7 @@ class PeopleModal extends PureComponent {
       branchListData = [],
       ...modalProps
     } = this.props
+
     const { getFieldDecorator } = form
     const uploadButton = (
       <div>
@@ -197,7 +198,7 @@ class PeopleModal extends PureComponent {
             </Col>
           </Row>
           <Row>
-            <Col span={12}>
+            <Col span={8}>
               <FormItem label="房支" hasFeedback {...formItemLayout}>
                 {getFieldDecorator('peopleBranch', {
                   initialValue: item.peopleBranch,
@@ -220,7 +221,7 @@ class PeopleModal extends PureComponent {
                 )}
               </FormItem>
             </Col>
-            <Col span={12}>
+            <Col span={8}>
               <FormItem label="世序" hasFeedback {...formItemLayout}>
                 {getFieldDecorator('generations', {
                   initialValue: item.generations,
@@ -233,9 +234,7 @@ class PeopleModal extends PureComponent {
                 })(<InputNumber min={1} max={100} />)}
               </FormItem>
             </Col>
-          </Row>
-          <Row>
-            <Col span={24}>
+            <Col span={8}>
               <FormItem label="生产队" hasFeedback {...formItemLayout}>
                 {getFieldDecorator('prodTeam', {
                   initialValue: item.prodTeam,
@@ -252,7 +251,7 @@ class PeopleModal extends PureComponent {
                     allowClear={true}
                   >
                     {prodTeamListData.map(d => (
-                      <Select.Option key={d.code}>{d.name}</Select.Option>
+                      <Select.Option key={d.id}>{d.name}</Select.Option>
                     ))}
                   </Select>
                 )}
