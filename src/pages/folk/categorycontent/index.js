@@ -41,11 +41,7 @@ class CategoryContent extends PureComponent {
       maskClosable: false,
       categoryListData: categoryListData,
       confirmLoading: loading.effects[`categoryContent/${modalType}`],
-      title: `${
-        modalType === 'create'
-          ? i18n.t`Create categoryContent`
-          : i18n.t`Update categoryContent`
-      }`,
+      title: `${modalType === 'create' ? '创建分类内容' : '更新分类内容'}`,
       width: '80%',
       centered: true,
       onOk(data) {

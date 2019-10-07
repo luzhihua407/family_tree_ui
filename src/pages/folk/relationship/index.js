@@ -41,11 +41,7 @@ class Relationship extends PureComponent {
       educationListData: educationListData,
       branchListData: branchListData,
       confirmLoading: loading.effects[`relationship/${modalType}`],
-      title: `${
-        modalType === 'create'
-          ? i18n.t`Create relationship`
-          : i18n.t`Update relationship`
-      }`,
+      title: `${modalType === 'create' ? '创建关系' : '更新关系'}`,
       centered: true,
       onOk(data) {
         dispatch({

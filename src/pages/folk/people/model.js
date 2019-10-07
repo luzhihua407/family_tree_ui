@@ -40,7 +40,11 @@ export default modelExtend(pageModel, {
           dispatch({
             type: 'query',
             payload,
-          })
+          }),
+            dispatch({
+              type: 'getBranchList',
+              payload: {},
+            })
         }
       })
     },

@@ -1,7 +1,7 @@
 module.exports = {
-  siteName: '族谱',
+  siteName: '盧氏迺炯公后裔族譜',
   copyright: '星火  © 2019',
-  logoPath: '/logo.svg',
+  logoPath: '/lu.jpg',
   apiPrefix: '/api/v1',
   fixedHeader: true, // sticky primary layout header
 
@@ -19,9 +19,9 @@ module.exports = {
     /* Countrys flags: https://www.flaticon.com/packs/countrys-flags */
     languages: [
       {
-        key: 'zh',
-        title: '中文',
-        flag: '/china.svg',
+        key: '',
+        title: '',
+        flag: '',
       },
     ],
     defaultLanguage: 'zh',

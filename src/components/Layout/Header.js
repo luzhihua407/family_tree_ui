@@ -48,37 +48,6 @@ class Header extends PureComponent {
       </Menu>,
     ]
 
-    if (config.i18n) {
-      const { languages } = config.i18n
-      const currentLanguage = languages.find(
-        item => item.key === i18n._language
-      )
-
-      rightContent.unshift(
-        <Menu
-          key="language"
-          selectedKeys={[currentLanguage.key]}
-          onClick={data => {
-            setLocale(data.key)
-          }}
-          mode="horizontal"
-        >
-          <SubMenu title={<Avatar size="small" src={currentLanguage.flag} />}>
-            {languages.map(item => (
-              <Menu.Item key={item.key}>
-                <Avatar
-                  size="small"
-                  style={{ marginRight: 8 }}
-                  src={item.flag}
-                />
-                {item.title}
-              </Menu.Item>
-            ))}
-          </SubMenu>
-        </Menu>
-      )
-    }
-
     rightContent.unshift(
       <Popover
         placement="bottomRight"

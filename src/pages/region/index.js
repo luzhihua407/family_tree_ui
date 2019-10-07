@@ -38,9 +38,7 @@ class Region extends PureComponent {
       visible: modalVisible,
       maskClosable: false,
       confirmLoading: loading.effects[`region/${modalType}`],
-      title: `${
-        modalType === 'create' ? i18n.t`Create Region` : i18n.t`Update Region`
-      }`,
+      title: `${modalType === 'create' ? '创建地区' : '更新地区'}`,
       parentRegionData: parentRegionData,
       centered: true,
       onOk(data) {

@@ -96,10 +96,6 @@ class Login extends PureComponent {
               >
                 登录
               </Button>
-              <p>
-                <span>用户名</span>
-                <span>密码</span>
-              </p>
             </Row>
           </form>
         </div>

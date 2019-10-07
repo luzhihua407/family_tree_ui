@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Trans, withI18n } from '@lingui/react'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
+import { Form, Button, Row, Col, DatePicker, Input, Select } from 'antd'
 
 const { Search } = Input
 const { RangePicker } = DatePicker
@@ -65,15 +65,42 @@ class Filter extends PureComponent {
   }
 
   render() {
-    const { onAdd, onSetRelationship, filter, form, i18n } = this.props
+    const {
+      onAdd,
+      onSetRelationship,
+      filter,
+      form,
+      branchListData,
+    } = this.props
     const { getFieldDecorator } = form
-    const { fullName } = filter
+    const { fullName, peopleBranch } = filter
 
     return (
       <Row gutter={24}>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
           {getFieldDecorator('fullName', { initialValue: fullName })(
-            <Input placeholder={'搜索全名'} allowClear />
+            <Input placeholder={'输入全名'} allowClear />
+          )}
+        </Col>
+        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+          {getFieldDecorator('peopleBranch', {
+            initialValue: peopleBranch,
+            rules: [
+              {
+                required: true,
+              },
+            ],
+          })(
+            <Select
+              labelInValue={false}
+              placeholder="请选择房支"
+              style={{ width: 120 }}
+              allowClear={true}
+            >
+              {branchListData.map(d => (
+                <Select.Option key={d.id}>{d.name}</Select.Option>
+              ))}
+            </Select>
           )}
         </Col>
         <Col

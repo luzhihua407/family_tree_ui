@@ -37,9 +37,7 @@ class role extends PureComponent {
       visible: modalVisible,
       maskClosable: false,
       confirmLoading: loading.effects[`role/${modalType}`],
-      title: `${
-        modalType === 'create' ? i18n.t`Create role` : i18n.t`Update role`
-      }`,
+      title: `${modalType === 'create' ? '创建角色菜单' : '更新角色菜单'}`,
       centered: true,
       onOk(data) {
         dispatch({

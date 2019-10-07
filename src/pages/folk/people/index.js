@@ -45,9 +45,7 @@ class People extends PureComponent {
       prodTeamListData: prodTeamListData,
       branchListData: branchListData,
       confirmLoading: loading.effects[`people/${modalType}`],
-      title: `${
-        modalType === 'create' ? i18n.t`Create people` : i18n.t`Update people`
-      }`,
+      title: `${modalType === 'create' ? '创建族谱' : '更新族谱'}`,
       centered: true,
       onOk(data) {
         dispatch({
@@ -69,9 +67,7 @@ class People extends PureComponent {
       maskClosable: false,
       branchListData: branchListData,
       confirmLoading: loading.effects[`people/${modalType}`],
-      title: `${
-        modalType === 'create' ? i18n.t`Create people` : i18n.t`Update people`
-      }`,
+      title: `${modalType === 'create' ? '创建关系' : '更新关系'}`,
       centered: true,
       onOk(data) {
         dispatch({
@@ -140,6 +136,7 @@ class People extends PureComponent {
     }
 
     const filterProps = {
+      branchListData: branchListData,
       filter: {
         ...query,
       },

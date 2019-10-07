@@ -39,9 +39,7 @@ class menu extends PureComponent {
       maskClosable: false,
       width: '70%',
       confirmLoading: loading.effects[`menu/${modalType}`],
-      title: `${
-        modalType === 'create' ? i18n.t`Create menu` : i18n.t`Update menu`
-      }`,
+      title: `${modalType === 'create' ? '创建菜单' : '更新菜单'}`,
       centered: true,
       parentMenusData: parentMenusData,
       onOk(data) {

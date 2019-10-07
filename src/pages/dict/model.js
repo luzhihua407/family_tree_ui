@@ -35,6 +35,10 @@ export default modelExtend(pageModel, {
             type: 'query',
             payload,
           })
+          dispatch({
+            type: 'getParentDict',
+            payload: {},
+          })
         }
       })
     },
@@ -103,7 +107,10 @@ export default modelExtend(pageModel, {
       }
     },
     *getParentDict({ payload }, { call, put, select }) {
-      const resp = yield call(getParentDict, payload)
+      const resp = yield call(
+        getParentDict,
+        payload == undefined ? {} : payload
+      )
       if (resp.success) {
         yield put({
           type: 'updateState',

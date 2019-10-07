@@ -39,11 +39,7 @@ class Cemetery extends PureComponent {
       cemeteryListData: cemeteryListData,
       maskClosable: false,
       confirmLoading: loading.effects[`cemetery/${modalType}`],
-      title: `${
-        modalType === 'create'
-          ? i18n.t`Create cemetery`
-          : i18n.t`Update cemetery`
-      }`,
+      title: `${modalType === 'create' ? '创建公墓' : '更新公墓'}`,
       centered: true,
       onOk(data) {
         dispatch({

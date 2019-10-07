@@ -41,7 +41,6 @@ class DictModal extends PureComponent {
       ...modalProps
     } = this.props
     const { getFieldDecorator } = form
-    console.log(parentDictData)
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
@@ -66,7 +65,7 @@ class DictModal extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <FormItem label="字典编码" hasFeedback {...formItemLayout}>
+          <FormItem label="编码" hasFeedback {...formItemLayout}>
             {getFieldDecorator('code', {
               initialValue: item.code,
               rules: [
@@ -76,7 +75,7 @@ class DictModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="字典名称" hasFeedback {...formItemLayout}>
+          <FormItem label="名称" hasFeedback {...formItemLayout}>
             {getFieldDecorator('name', {
               initialValue: item.name,
               rules: [
@@ -86,7 +85,7 @@ class DictModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="字典数值" hasFeedback {...formItemLayout}>
+          <FormItem label="数值" hasFeedback {...formItemLayout}>
             {getFieldDecorator('numValue', {
               initialValue: item.numValue,
               rules: [
@@ -97,7 +96,7 @@ class DictModal extends PureComponent {
               ],
             })(<InputNumber />)}
           </FormItem>
-          <FormItem label="字典字符值" hasFeedback {...formItemLayout}>
+          <FormItem label="字符值" hasFeedback {...formItemLayout}>
             {getFieldDecorator('value', {
               initialValue: item.value,
               rules: [

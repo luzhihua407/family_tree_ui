@@ -28,25 +28,25 @@ class List extends PureComponent {
 
     const columns = [
       {
-        title: '字典编码',
+        title: '编码',
         dataIndex: 'code',
         key: 'code',
         width: '15%',
       },
       {
-        title: '字典编码',
+        title: '名称',
         dataIndex: 'name',
         key: 'name',
         width: '15%',
       },
       {
-        title: '字典数值',
+        title: '数值',
         dataIndex: 'numValue',
         key: 'numValue',
         width: '10%',
       },
       {
-        title: '字典字符值',
+        title: '字符值',
         dataIndex: 'value',
         key: 'value',
         width: '10%',

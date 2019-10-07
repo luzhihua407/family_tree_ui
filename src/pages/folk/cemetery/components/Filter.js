@@ -67,13 +67,18 @@ class Filter extends PureComponent {
   render() {
     const { onAdd, filter, form, i18n } = this.props
     const { getFieldDecorator } = form
-    const { name } = filter
+    const { name, address } = filter
 
     return (
       <Row gutter={24}>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
           {getFieldDecorator('name', { initialValue: name })(
-            <Input placeholder={'搜索名称'} allowClear />
+            <Input placeholder={'搜索祖名'} allowClear />
+          )}
+        </Col>
+        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+          {getFieldDecorator('address', { initialValue: address })(
+            <Input placeholder={'搜索葬地点'} allowClear />
           )}
         </Col>
         <Col

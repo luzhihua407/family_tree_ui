@@ -38,9 +38,7 @@ class Dict extends PureComponent {
       visible: modalVisible,
       maskClosable: false,
       confirmLoading: loading.effects[`dict/${modalType}`],
-      title: `${
-        modalType === 'create' ? i18n.t`Create Dict` : i18n.t`Update Dict`
-      }`,
+      title: `${modalType === 'create' ? '创建字典' : '更新字典'}`,
       parentDictData: parentDictData,
       centered: true,
       onOk(data) {
@@ -105,6 +103,7 @@ class Dict extends PureComponent {
     }
 
     const filterProps = {
+      parentDictData: parentDictData,
       filter: {
         ...query,
       },

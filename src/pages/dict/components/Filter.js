@@ -1,10 +1,8 @@
 /* global document */
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
-import { FilterItem } from 'components'
-import { Trans, withI18n } from '@lingui/react'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
+import { Trans } from '@lingui/react'
+import { Form, Button, Row, Col, Select, Input } from 'antd'
 
 const ColProps = {
   xs: 24,
@@ -19,7 +17,6 @@ const TwoColProps = {
   xl: 96,
 }
 
-@withI18n()
 @Form.create()
 class Filter extends PureComponent {
   handleFields = fields => {
@@ -64,25 +61,41 @@ class Filter extends PureComponent {
   }
 
   render() {
-    const { onAdd, filter, form, i18n } = this.props
+    const { onAdd, filter, form, parentDictData } = this.props
     const { getFieldDecorator } = form
-    const { username, mobile } = filter
+    const { code, name, parentId } = filter
 
     return (
       <Row gutter={24}>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-          {getFieldDecorator('username', { initialValue: username })(
-            <Input placeholder={'搜索用户名称'} allowClear />
+          {getFieldDecorator('code', { initialValue: code })(
+            <Input placeholder={'搜索编码'} allowClear />
           )}
         </Col>
-        <Col
-          {...ColProps}
-          xl={{ span: 4 }}
-          md={{ span: 8 }}
-          id="addressCascader"
-        >
-          {getFieldDecorator('mobile', { initialValue: mobile })(
-            <Input placeholder={'搜索用户手机'} allowClear />
+        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+          {getFieldDecorator('name', { initialValue: name })(
+            <Input placeholder={'搜索名称'} allowClear />
+          )}
+        </Col>
+        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+          {getFieldDecorator('parentId', {
+            initialValue: parentId,
+            rules: [
+              {
+                required: false,
+              },
+            ],
+          })(
+            <Select
+              labelInValue={false}
+              placeholder="请选择"
+              style={{ width: '100%' }}
+              allowClear={true}
+            >
+              {parentDictData.map(d => (
+                <Select.Option key={d.id}>{d.name}</Select.Option>
+              ))}
+            </Select>
           )}
         </Col>
         <Col
