@@ -43,6 +43,13 @@ export default {
   removeCategory: 'POST /folk/category/delete',
   removeCategoryList: 'POST /folk/category/delete',
 
+  queryCemeteryByPage: 'POST /folk/cemetery/page',
+  queryCemeteryById: 'GET /folk/cemetery/get',
+  updateCemetery: 'POST /folk/cemetery/edit',
+  createCemetery: 'POST /folk/cemetery/add',
+  removeCemetery: 'POST /folk/cemetery/delete',
+  removeCemeteryList: 'POST /folk/cemetery/delete',
+
   queryPeopleByPage: 'POST /folk/people/page',
   queryPeopleById: 'GET /folk/people/get',
   updatePeople: 'POST /folk/people/edit',
@@ -81,4 +88,5 @@ export default {
   removeRegionList: 'POST /basic/region/delete',
 
   addRelationship: 'POST /folk/people/addRelationship',
+  configMenu: 'POST /security/user_menu/addOrUpdate',
 }

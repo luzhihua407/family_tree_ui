@@ -9,32 +9,26 @@ import { stringify } from 'qs'
 import List from './components/List'
 import Filter from './components/Filter'
 import Modal from './components/Modal'
-import ResetPasswordModal from './components/ResetPasswordModal'
-import MenuModal from './components/MenuModal'
 
 @withI18n()
-@connect(({ user, loading }) => ({ user, loading }))
-class User extends PureComponent {
+@connect(({ cemetery, loading }) => ({ cemetery, loading }))
+class Cemetery extends PureComponent {
   render() {
-    const { location, dispatch, user, loading, i18n } = this.props
+    const { location, dispatch, cemetery, loading, i18n } = this.props
     const { query, pathname } = location
     const {
       list,
       pagination,
       currentItem,
       modalVisible,
-      resetPasswordModalVisible,
-      menuModalVisible,
       modalType,
       selectedRowKeys,
-      rolesData,
-      userId,
-      treeData,
-    } = user
+      cemeteryListData,
+    } = cemetery
 
     const handleRefresh = newQuery => {
       dispatch({
-        type: 'user/query',
+        type: 'cemetery/query',
         payload: newQuery,
       })
     }
@@ -42,16 +36,18 @@ class User extends PureComponent {
     const modalProps = {
       item: modalType === 'create' ? {} : currentItem,
       visible: modalVisible,
+      cemeteryListData: cemeteryListData,
       maskClosable: false,
-      confirmLoading: loading.effects[`user/${modalType}`],
-      rolesData: rolesData,
+      confirmLoading: loading.effects[`cemetery/${modalType}`],
       title: `${
-        modalType === 'create' ? i18n.t`Create User` : i18n.t`Update User`
+        modalType === 'create'
+          ? i18n.t`Create cemetery`
+          : i18n.t`Update cemetery`
       }`,
       centered: true,
       onOk(data) {
         dispatch({
-          type: `user/${modalType}`,
+          type: `cemetery/${modalType}`,
           payload: data,
         }).then(() => {
           handleRefresh()
@@ -59,60 +55,14 @@ class User extends PureComponent {
       },
       onCancel() {
         dispatch({
-          type: 'user/hideModal',
-        })
-      },
-    }
-
-    const resetPasswordModalProps = {
-      item: modalType === 'create' ? {} : currentItem,
-      visible: resetPasswordModalVisible,
-      userId: userId,
-      maskClosable: false,
-      confirmLoading: loading.effects[`user/${modalType}`],
-      title: `重设密码`,
-      centered: true,
-      onOk(data) {
-        dispatch({
-          type: `user/resetPassword`,
-          payload: data,
-        }).then(() => {
-          handleRefresh()
-        })
-      },
-      onCancel() {
-        dispatch({
-          type: 'user/hideResetPasswordModal',
-        })
-      },
-    }
-    const menuModalProps = {
-      item: modalType === 'create' ? {} : currentItem,
-      visible: menuModalVisible,
-      userId: userId,
-      treeData: treeData,
-      maskClosable: false,
-      confirmLoading: loading.effects[`user/${modalType}`],
-      title: `分配菜单`,
-      centered: true,
-      onOk(data) {
-        dispatch({
-          type: `user/configMenu`,
-          payload: data,
-        }).then(() => {
-          handleRefresh()
-        })
-      },
-      onCancel() {
-        dispatch({
-          type: 'user/hideMenuModal',
+          type: 'cemetery/hideModal',
         })
       },
     }
 
     const listProps = {
       dataSource: list,
-      loading: loading.effects['user/query'],
+      loading: loading.effects['cemetery/query'],
       pagination,
       onChange(page) {
         handleRefresh({
@@ -122,7 +72,7 @@ class User extends PureComponent {
       },
       onDeleteItem(id) {
         dispatch({
-          type: 'user/delete',
+          type: 'cemetery/delete',
           payload: id,
         }).then(() => {
           handleRefresh({
@@ -135,55 +85,26 @@ class User extends PureComponent {
       },
       onEditItem(item) {
         dispatch({
-          type: 'user/getRoles',
-        }).then(() => {
+          type: 'cemetery/get',
+          payload: item.id,
+        }),
           dispatch({
-            type: 'user/get',
-            payload: item.id,
+            type: 'cemetery/showModal',
+            payload: {
+              modalType: 'create',
+            },
           })
-        })
       },
       rowSelection: {
         selectedRowKeys,
         onChange: keys => {
           dispatch({
-            type: 'user/updateState',
+            type: 'cemetery/updateState',
             payload: {
               selectedRowKeys: keys,
             },
           })
         },
-      },
-      onResetPassword(userId) {
-        dispatch({
-          type: 'user/updateState',
-          payload: {
-            userId: userId,
-          },
-        }),
-          dispatch({
-            type: 'user/showResetPasswordModal',
-            payload: {
-              modalType: 'create',
-            },
-          })
-      },
-      onConfigMenu(userId) {
-        dispatch({
-          type: 'user/updateState',
-          payload: {
-            userId: userId,
-          },
-        }),
-          dispatch({
-            type: 'user/showMenuModal',
-            payload: {
-              modalType: 'create',
-            },
-          })
-        dispatch({
-          type: 'user/getMenuTree',
-        })
       },
     }
 
@@ -199,21 +120,21 @@ class User extends PureComponent {
       },
       onAdd() {
         dispatch({
-          type: 'user/getRoles',
-        }).then(() => {
+          type: 'cemetery/getCemeteryList',
+          payload: {},
+        }),
           dispatch({
-            type: 'user/showModal',
+            type: 'cemetery/showModal',
             payload: {
               modalType: 'create',
             },
           })
-        })
       },
     }
 
     const handleDeleteItems = () => {
       dispatch({
-        type: 'user/multiDelete',
+        type: 'cemetery/multiDelete',
         payload: {
           ids: selectedRowKeys,
         },
@@ -248,20 +169,16 @@ class User extends PureComponent {
         )}
         <List {...listProps} />
         {modalVisible && <Modal {...modalProps} />}
-        {resetPasswordModalVisible && (
-          <ResetPasswordModal {...resetPasswordModalProps} />
-        )}
-        {menuModalVisible && <MenuModal {...menuModalProps} />}
       </Page>
     )
   }
 }
 
-User.propTypes = {
-  user: PropTypes.object,
+Cemetery.propTypes = {
+  cemetery: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default User
+export default Cemetery

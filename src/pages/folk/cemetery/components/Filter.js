@@ -1,11 +1,8 @@
 /* global document */
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
-import { FilterItem } from 'components'
 import { Trans, withI18n } from '@lingui/react'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
-import city from 'utils/city'
 
 const { Search } = Input
 const { RangePicker } = DatePicker
@@ -27,7 +24,6 @@ const TwoColProps = {
 @Form.create()
 class Filter extends PureComponent {
   handleFields = fields => {
-    const { createTime } = fields
     return fields
   }
 
@@ -71,23 +67,13 @@ class Filter extends PureComponent {
   render() {
     const { onAdd, filter, form, i18n } = this.props
     const { getFieldDecorator } = form
-    const { name, code } = filter
+    const { name } = filter
 
     return (
       <Row gutter={24}>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-          {getFieldDecorator('code', { initialValue: code })(
-            <Input placeholder={'搜索菜单编码'} allowClear />
-          )}
-        </Col>
-        <Col
-          {...ColProps}
-          xl={{ span: 4 }}
-          md={{ span: 8 }}
-          id="addressCascader"
-        >
           {getFieldDecorator('name', { initialValue: name })(
-            <Input placeholder={'搜索菜单名称'} allowClear />
+            <Input placeholder={'搜索名称'} allowClear />
           )}
         </Col>
         <Col
@@ -106,14 +92,10 @@ class Filter extends PureComponent {
               >
                 <Trans>Search</Trans>
               </Button>
-              <Button
-                onClick={this.handleReset}
-                icon="delete"
-                className="margin-right"
-              >
+              <Button className="margin-right" onClick={this.handleReset}>
                 <Trans>Reset</Trans>
               </Button>
-              <Button type="ghost" onClick={onAdd} className="margin-right">
+              <Button type="ghost" onClick={onAdd} icon="form">
                 <Trans>Create</Trans>
               </Button>
             </div>

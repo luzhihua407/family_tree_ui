@@ -37,6 +37,7 @@ class menu extends PureComponent {
       item: modalType === 'create' ? {} : currentItem,
       visible: modalVisible,
       maskClosable: false,
+      width: '70%',
       confirmLoading: loading.effects[`menu/${modalType}`],
       title: `${
         modalType === 'create' ? i18n.t`Create menu` : i18n.t`Update menu`

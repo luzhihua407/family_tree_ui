@@ -11,19 +11,27 @@ const { confirm } = Modal
 @withI18n()
 class List extends PureComponent {
   handleUserClick = (record, e) => {
-    const { onDeleteItem, onEditItem, i18n, onResetPassword } = this.props
+    const {
+      onDeleteItem,
+      onEditItem,
+      i18n,
+      onResetPassword,
+      onConfigMenu,
+    } = this.props
 
-    if (e === '1') {
+    if (e.key === '1') {
       onEditItem(record)
-    } else if (e === '2') {
+    } else if (e.key === '2') {
       confirm({
         title: '你确定要删除这条记录吗？',
         onOk() {
           onDeleteItem(record.id)
         },
       })
-    } else if (e === '3') {
+    } else if (e.key === '3') {
       onResetPassword(record.id)
+    } else if (e.key === '4') {
+      onConfigMenu(record.id)
     }
   }
 
@@ -103,29 +111,15 @@ class List extends PureComponent {
         fixed: 'right',
         render: (text, record) => {
           return (
-            <Button.Group>
-              <Button
-                icon="edit"
-                onClick={e => this.handleUserClick(record, '1')}
-                size={'small'}
-              >
-                更新
-              </Button>
-              <Button
-                icon="delete"
-                onClick={e => this.handleUserClick(record, '2')}
-                size={'small'}
-              >
-                删除
-              </Button>
-              <Button
-                icon="delete"
-                onClick={e => this.handleUserClick(record, '3')}
-                size={'small'}
-              >
-                重设密码
-              </Button>
-            </Button.Group>
+            <DropOption
+              onMenuClick={e => this.handleUserClick(record, e)}
+              menuOptions={[
+                { key: '1', name: '更新' },
+                { key: '2', name: '删除' },
+                { key: '3', name: '重设密码' },
+                { key: '4', name: '分配菜单' },
+              ]}
+            />
           )
         },
       },
@@ -153,6 +147,7 @@ List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   onResetPassword: PropTypes.func,
+  onConfigMenu: PropTypes.func,
   location: PropTypes.object,
 }
 

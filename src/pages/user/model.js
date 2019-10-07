@@ -13,6 +13,8 @@ const {
   updateUser,
   removeUserList,
   resetPassword,
+  configMenu,
+  getMenuTree,
 } = api
 
 export default modelExtend(pageModel, {
@@ -22,11 +24,13 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     resetPasswordModalVisible: false,
+    menuModalVisible: false,
     userId: '',
     passwordVisible: true,
     modalType: 'create',
     selectedRowKeys: [],
     rolesData: [],
+    treeData: [],
   },
 
   subscriptions: {
@@ -137,6 +141,23 @@ export default modelExtend(pageModel, {
         throw resp
       }
     },
+
+    *configMenu({ payload }, { call, put, select }) {
+      const resp = yield call(configMenu, payload)
+      if (resp.success) {
+        yield put({ type: 'hideMenuModal' })
+      } else {
+        throw resp
+      }
+    },
+    *getMenuTree({ payload }, { call, put, select }) {
+      const resp = yield call(getMenuTree, {})
+      if (resp.success) {
+        yield put({ type: 'updateState', payload: { treeData: resp.data } })
+      } else {
+        throw resp
+      }
+    },
   },
 
   reducers: {
@@ -153,6 +174,13 @@ export default modelExtend(pageModel, {
 
     hideResetPasswordModal(state) {
       return { ...state, resetPasswordModalVisible: false }
+    },
+    showMenuModal(state, { payload }) {
+      return { ...state, ...payload, menuModalVisible: true }
+    },
+
+    hideMenuModal(state) {
+      return { ...state, menuModalVisible: false }
     },
   },
 })

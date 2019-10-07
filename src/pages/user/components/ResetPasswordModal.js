@@ -42,7 +42,6 @@ class UserModal extends PureComponent {
       ...resetPasswordModalProps
     } = this.props
     const { getFieldDecorator } = form
-    console.log(this.props)
     return (
       <Modal {...resetPasswordModalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
