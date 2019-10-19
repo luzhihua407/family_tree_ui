@@ -1,6 +1,15 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader,TreeSelect } from 'antd'
+import {
+  Form,
+  Input,
+  Transfer,
+  Tree,
+  Radio,
+  Modal,
+  Cascader,
+  TreeSelect,
+} from 'antd'
 import { Trans, withI18n } from '@lingui/react'
 
 const FormItem = Form.Item
@@ -16,12 +25,6 @@ const formItemLayout = {
 @withI18n()
 @Form.create()
 class RoleMenuModal extends PureComponent {
-  state = {
-    value: undefined,
-  }
-  onRegionChange=(value, selectedOptions)=>{
-    const {form } = this.props
-  }
   handleOk = () => {
     const { item = {}, onOk, form } = this.props
     const { validateFields, getFieldsValue } = form
@@ -34,7 +37,8 @@ class RoleMenuModal extends PureComponent {
         ...getFieldsValue(),
         key: item.key,
       }
-      data.roleId=item.roleId
+      data.roleId = item.roleId
+      data.menuIds = this.state.menuIds
       onOk(data)
     })
   }
@@ -42,18 +46,18 @@ class RoleMenuModal extends PureComponent {
     dispatch({
       type: 'user/hideModal',
     })
-
   }
-  onSelect = (value, node, extra) => {
+  onCheck = (value, node, extra) => {
+    this.state = { menuIds: value }
   }
   render() {
-    const { item = {}, onOk, form, i18n, treeData,...modalProps } = this.props
+    const { item = {}, onOk, form, i18n, treeData, ...modalProps } = this.props
+    console.log(this.props)
     const { getFieldDecorator } = form
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-        <Input type="hidden" id="roleId" value={item.roleId}/>
-        <FormItem label='角色名称' hasFeedback {...formItemLayout}>
+          <FormItem label="角色名称" hasFeedback {...formItemLayout}>
             {getFieldDecorator('roleName', {
               initialValue: item.roleName,
               rules: [
@@ -61,26 +65,16 @@ class RoleMenuModal extends PureComponent {
                   required: false,
                 },
               ],
-            })(<Input />
-            )}
+            })(<Input />)}
           </FormItem>
-          <FormItem label='菜单' hasFeedback {...formItemLayout}>
-            {getFieldDecorator('menuIds', {
-              initialValue: item.menuIds,
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(<TreeSelect
-              style={{ width: 300 }}
-              dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-              placeholder="请选择"
+          <FormItem label="菜单" hasFeedback {...formItemLayout}>
+            <Tree
               treeData={treeData}
-              treeCheckable={true}
-              onSelect={this.onSelect}
-              treeDefaultExpandAll  
-            />)}
+              defaultCheckedKeys={item.menuIds}
+              checkable={true}
+              onCheck={this.onCheck}
+              autoExpandParent={true}
+            />
           </FormItem>
         </Form>
       </Modal>

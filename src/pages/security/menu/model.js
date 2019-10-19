@@ -12,6 +12,7 @@ const {
   updateMenu,
   removeMenuList,
   getParentMenus,
+  getSubDictListByParentCode,
 } = api
 
 export default modelExtend(pageModel, {
@@ -23,6 +24,7 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     parentMenusData: [],
+    optPermissionListData: [],
   },
 
   subscriptions: {
@@ -127,6 +129,19 @@ export default modelExtend(pageModel, {
         yield put({ type: 'hideModal' })
       } else {
         throw data
+      }
+    },
+    *getSubDictListByParentCode({ payload }, { call, put, select }) {
+      const resp = yield call(getSubDictListByParentCode, payload)
+      if (resp.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            optPermissionListData: resp.data,
+          },
+        })
+      } else {
+        throw resp
       }
     },
   },

@@ -68,12 +68,13 @@ export default {
     *query({ payload }, { call, put, select }) {
       const {
         success,
-        data: { menus, user },
+        data: { menus, user, permission },
       } = yield call(queryUserInfo, payload)
       const { locationPathname } = yield select(_ => _.app)
       if (success && menus) {
         const { list } = menus
         let routeList = menus
+        store.set('permission', permission)
         yield put({
           type: 'updateState',
           payload: {

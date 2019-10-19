@@ -6,6 +6,7 @@ import { FilterItem } from 'components'
 import { Trans, withI18n } from '@lingui/react'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
 import city from 'utils/city'
+import { isAllowed } from '../../auth'
 
 const { Search } = Input
 const { RangePicker } = DatePicker
@@ -112,9 +113,11 @@ class Filter extends PureComponent {
               >
                 <Trans>Reset</Trans>
               </Button>
-              <Button type="ghost" onClick={onAdd} className="margin-right">
-                <Trans>Create</Trans>
-              </Button>
+              {isAllowed('user.add') && (
+                <Button type="ghost" onClick={onAdd} className="margin-right">
+                  <Trans>Create</Trans>
+                </Button>
+              )}
             </div>
           </Row>
         </Col>

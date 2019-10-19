@@ -7,7 +7,7 @@ const Error = () => (
   <Page inner>
     <div className={styles.error}>
       <Icon type="frown-o" />
-      <h1>404 Not Found</h1>
+      <h1>404 找不到页面</h1>
     </div>
   </Page>
 )

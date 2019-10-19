@@ -20,13 +20,13 @@ class role extends PureComponent {
       list,
       pagination,
       currentItem,
-      currentRoleItem,
       modalVisible,
       roleMenuModalVisible,
       modalType,
       roleMenuModalType,
       selectedRowKeys,
       treeData,
+      menuIds,
     } = role
 
     const handleRefresh = newQuery => {
@@ -43,6 +43,7 @@ class role extends PureComponent {
       confirmLoading: loading.effects[`role/${modalType}`],
       title: `${modalType === 'create' ? '创建角色' : '更新角色'}`,
       centered: true,
+      menuIds,
       onOk(data) {
         dispatch({
           type: `role/${modalType}`,
@@ -58,10 +59,10 @@ class role extends PureComponent {
       },
     }
     const roleMenuModalProps = {
-      item: roleMenuModalType === 'create' ? {} : currentRoleItem,
+      item: roleMenuModalType === 'create' ? {} : currentItem,
       visible: roleMenuModalVisible,
       treeData: treeData,
-      currentRoleItem: currentRoleItem,
+      width: '40%',
       maskClosable: false,
       confirmLoading: loading.effects[`role/${roleMenuModalType}`],
       title: `${roleMenuModalType === 'create' ? '分配菜单' : '修改分配菜单'}`,
@@ -123,18 +124,19 @@ class role extends PureComponent {
       },
       onAddMenu(item) {
         dispatch({
+          type: 'role/showRoleMenuModal',
+          payload: {
+            modalType: 'update',
+            currentItem: item,
+          },
+        })
+
+        dispatch({
           type: 'role/getMenuTree',
         }).then(() => {
           dispatch({
             type: 'role/getRoleMenuByRoleId',
             payload: item.id,
-          })
-          dispatch({
-            type: 'role/showRoleMenuModal',
-            payload: {
-              modalType: 'update',
-              currentRoleItem: item,
-            },
           })
         })
       },

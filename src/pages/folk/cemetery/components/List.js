@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Table, Modal, Avatar, Button } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
+import Link from 'umi/link'
 import styles from './List.less'
 
 const { confirm } = Modal
@@ -31,6 +32,9 @@ class List extends PureComponent {
         dataIndex: 'name',
         key: 'name',
         width: '20%',
+        render: (text, record) => (
+          <Link to={`cemetery/${record.id}`}>{text}</Link>
+        ),
       },
       {
         title: '葬地点',

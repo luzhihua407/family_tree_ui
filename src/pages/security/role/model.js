@@ -25,6 +25,7 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     treeData: [],
+    checkedKeys: [],
   },
 
   subscriptions: {
@@ -131,7 +132,7 @@ export default modelExtend(pageModel, {
       if (resp.success) {
         yield put({
           type: 'updateState',
-          payload: { currentRoleItem: resp.data },
+          payload: { currentItem: resp.data },
         })
       } else {
         throw resp

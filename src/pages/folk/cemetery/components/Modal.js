@@ -34,7 +34,6 @@ class CemeteryModal extends PureComponent {
 
   render() {
     const { item = {}, onOk, form, i18n, ...modalProps } = this.props
-    console.log(this.props)
     const { getFieldDecorator } = form
 
     return (

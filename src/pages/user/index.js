@@ -18,6 +18,7 @@ class User extends PureComponent {
   render() {
     const { location, dispatch, user, loading, i18n } = this.props
     const { query, pathname } = location
+
     const {
       list,
       pagination,

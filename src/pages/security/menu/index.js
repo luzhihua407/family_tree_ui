@@ -24,6 +24,7 @@ class menu extends PureComponent {
       modalType,
       selectedRowKeys,
       parentMenusData,
+      optPermissionListData,
     } = menu
 
     const handleRefresh = newQuery => {
@@ -37,11 +38,12 @@ class menu extends PureComponent {
       item: modalType === 'create' ? {} : currentItem,
       visible: modalVisible,
       maskClosable: false,
-      width: '70%',
+      width: '40%',
       confirmLoading: loading.effects[`menu/${modalType}`],
       title: `${modalType === 'create' ? '创建菜单' : '更新菜单'}`,
       centered: true,
       parentMenusData: parentMenusData,
+      optPermissionListData: optPermissionListData,
       onOk(data) {
         dispatch({
           type: `menu/${modalType}`,
@@ -114,6 +116,10 @@ class menu extends PureComponent {
         })
       },
       onAdd() {
+        dispatch({
+          type: 'menu/getSubDictListByParentCode',
+          payload: { parentCode: 'opt_permission' },
+        })
         dispatch({
           type: 'menu/getParentMenus',
         }).then(() => {
