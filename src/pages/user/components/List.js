@@ -5,6 +5,7 @@ import { DropOption } from 'components'
 import { Trans, withI18n } from '@lingui/react'
 import Link from 'umi/link'
 import styles from './List.less'
+import { isAllowed } from '../../auth'
 
 const { confirm } = Modal
 
@@ -19,18 +20,18 @@ class List extends PureComponent {
       onConfigMenu,
     } = this.props
 
-    if (e.key === '1') {
+    if (e === '1') {
       onEditItem(record)
-    } else if (e.key === '2') {
+    } else if (e === '2') {
       confirm({
         title: '你确定要删除这条记录吗？',
         onOk() {
           onDeleteItem(record.id)
         },
       })
-    } else if (e.key === '3') {
+    } else if (e === '3') {
       onResetPassword(record.id)
-    } else if (e.key === '4') {
+    } else if (e === '4') {
       onConfigMenu(record.id)
     }
   }
@@ -111,15 +112,44 @@ class List extends PureComponent {
         fixed: 'right',
         render: (text, record) => {
           return (
-            <DropOption
-              onMenuClick={e => this.handleUserClick(record, e)}
-              menuOptions={[
-                { key: '1', name: '更新' },
-                { key: '2', name: '删除' },
-                { key: '3', name: '重设密码' },
-                { key: '4', name: '分配菜单' },
-              ]}
-            />
+            <Button.Group>
+              {isAllowed('user.update') && (
+                <Button
+                  icon="edit"
+                  onClick={e => this.handleUserClick(record, '1')}
+                  size={'small'}
+                >
+                  更新
+                </Button>
+              )}
+              {isAllowed('user.delete') && (
+                <Button
+                  icon="delete"
+                  onClick={e => this.handleUserClick(record, '2')}
+                  size={'small'}
+                >
+                  删除
+                </Button>
+              )}
+              {isAllowed('user.reset_password') && (
+                <Button
+                  icon="edit"
+                  onClick={e => this.handleUserClick(record, '3')}
+                  size={'small'}
+                >
+                  重设密码
+                </Button>
+              )}
+              {isAllowed('user.auth_menu') && (
+                <Button
+                  icon="edit"
+                  onClick={e => this.handleUserClick(record, '4')}
+                  size={'small'}
+                >
+                  分配菜单
+                </Button>
+              )}
+            </Button.Group>
           )
         },
       },

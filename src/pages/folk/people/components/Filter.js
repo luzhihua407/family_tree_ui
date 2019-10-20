@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Trans, withI18n } from '@lingui/react'
 import { Form, Button, Row, Col, DatePicker, Input, Select } from 'antd'
+import { isAllowed } from '../../../auth'
 
 const { Search } = Input
 const { RangePicker } = DatePicker
@@ -122,22 +123,26 @@ class Filter extends PureComponent {
               <Button className="margin-right" onClick={this.handleReset}>
                 <Trans>Reset</Trans>
               </Button>
-              <Button
-                type="ghost"
-                className="margin-right"
-                onClick={onAdd}
-                icon="form"
-              >
-                <Trans>Create</Trans>
-              </Button>
-              <Button
-                type="ghost"
-                className="margin-right"
-                onClick={onSetRelationship}
-                icon="form"
-              >
-                设置关系
-              </Button>
+              {isAllowed('people.add') && (
+                <Button
+                  type="ghost"
+                  className="margin-right"
+                  onClick={onAdd}
+                  icon="form"
+                >
+                  <Trans>Create</Trans>
+                </Button>
+              )}
+              {isAllowed('people.setting_relationship') && (
+                <Button
+                  type="ghost"
+                  className="margin-right"
+                  onClick={onSetRelationship}
+                  icon="form"
+                >
+                  设置关系
+                </Button>
+              )}
             </div>
           </Row>
         </Col>

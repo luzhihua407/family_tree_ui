@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Trans } from '@lingui/react'
 import { Form, Button, Row, Col, Select, Input } from 'antd'
+import { isAllowed } from '../../auth'
 
 const ColProps = {
   xs: 24,
@@ -88,7 +89,7 @@ class Filter extends PureComponent {
           })(
             <Select
               labelInValue={false}
-              placeholder="请选择"
+              placeholder="请选择上级名称"
               style={{ width: '100%' }}
               allowClear={true}
             >
@@ -121,10 +122,13 @@ class Filter extends PureComponent {
               >
                 <Trans>Reset</Trans>
               </Button>
-              <Button type="ghost" onClick={onAdd} className="margin-right">
-                <Trans>Create</Trans>
-              </Button>
+              {isAllowed('dict.add') && (
+                <Button type="ghost" onClick={onAdd} className="margin-right">
+                  <Trans>Create</Trans>
+                </Button>
+              )}
             </div>
+            }
           </Row>
         </Col>
       </Row>

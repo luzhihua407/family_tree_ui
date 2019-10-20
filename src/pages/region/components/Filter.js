@@ -5,6 +5,7 @@ import moment from 'moment'
 import { FilterItem } from 'components'
 import { Trans, withI18n } from '@lingui/react'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
+import { isAllowed } from '../../auth'
 
 const ColProps = {
   xs: 24,
@@ -113,9 +114,11 @@ class Filter extends PureComponent {
               >
                 <Trans>Reset</Trans>
               </Button>
-              <Button type="ghost" onClick={onAdd} className="margin-right">
-                <Trans>Create</Trans>
-              </Button>
+              {isAllowed('region.add') && (
+                <Button type="ghost" onClick={onAdd} className="margin-right">
+                  <Trans>Create</Trans>
+                </Button>
+              )}
             </div>
           </Row>
         </Col>

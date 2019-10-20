@@ -5,7 +5,7 @@ export default {
     e.preventDefault()
     console.log(e)
     if (e.success == false) {
-      message.error(e.msg == undefined ? '出错了，请联系管理员' : e.msg)
+      console.log(e.msg == undefined ? '出错了，请联系管理员' : e.msg)
     }
   },
 }

@@ -132,11 +132,11 @@ class role extends PureComponent {
         })
 
         dispatch({
-          type: 'role/getMenuTree',
+          type: 'role/getRoleMenuByRoleId',
+          payload: item.id,
         }).then(() => {
           dispatch({
-            type: 'role/getRoleMenuByRoleId',
-            payload: item.id,
+            type: 'role/getMenuTree',
           })
         })
       },

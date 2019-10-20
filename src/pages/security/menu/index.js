@@ -84,6 +84,10 @@ class menu extends PureComponent {
       },
       onEditItem(item) {
         dispatch({
+          type: 'menu/getSubDictListByParentCode',
+          payload: { parentCode: 'opt_permission' },
+        })
+        dispatch({
           type: 'menu/getParentMenus',
         }).then(() => {
           dispatch({

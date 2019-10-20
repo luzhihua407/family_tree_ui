@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Trans, withI18n } from '@lingui/react'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
+import { isAllowed } from '../../../auth'
 
 const { Search } = Input
 const { RangePicker } = DatePicker
@@ -95,9 +96,11 @@ class Filter extends PureComponent {
               <Button className="margin-right" onClick={this.handleReset}>
                 <Trans>Reset</Trans>
               </Button>
-              <Button type="ghost" onClick={onAdd} icon="form">
-                <Trans>Create</Trans>
-              </Button>
+              {isAllowed('category.add') && (
+                <Button type="ghost" onClick={onAdd} icon="form">
+                  <Trans>Create</Trans>
+                </Button>
+              )}
             </div>
           </Row>
         </Col>

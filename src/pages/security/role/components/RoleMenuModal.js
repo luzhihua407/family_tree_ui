@@ -52,7 +52,6 @@ class RoleMenuModal extends PureComponent {
   }
   render() {
     const { item = {}, onOk, form, i18n, treeData, ...modalProps } = this.props
-    console.log(this.props)
     const { getFieldDecorator } = form
     return (
       <Modal {...modalProps} onOk={this.handleOk}>

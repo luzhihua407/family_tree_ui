@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Table, Modal, Button } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
 import styles from './List.less'
+import { isAllowed } from '../../auth'
 
 const { confirm } = Modal
 
@@ -70,20 +71,24 @@ class List extends PureComponent {
         render: (text, record) => {
           return (
             <Button.Group>
-              <Button
-                icon="edit"
-                onClick={e => this.handleRegionClick(record, '1')}
-                size={'small'}
-              >
-                更新
-              </Button>
-              <Button
-                icon="delete"
-                onClick={e => this.handleRegionClick(record, '2')}
-                size={'small'}
-              >
-                删除
-              </Button>
+              {isAllowed('region.update') && (
+                <Button
+                  icon="edit"
+                  onClick={e => this.handleRegionClick(record, '1')}
+                  size={'small'}
+                >
+                  更新
+                </Button>
+              )}
+              {isAllowed('region.delete') && (
+                <Button
+                  icon="delete"
+                  onClick={e => this.handleRegionClick(record, '2')}
+                  size={'small'}
+                >
+                  删除
+                </Button>
+              )}
             </Button.Group>
           )
         },
