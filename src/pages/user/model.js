@@ -153,7 +153,12 @@ export default modelExtend(pageModel, {
     *getMenuTree({ payload }, { call, put, select }) {
       const resp = yield call(getMenuTree, {})
       if (resp.success) {
-        yield put({ type: 'updateState', payload: { treeData: resp.data } })
+        yield put({
+          type: 'updateState',
+          payload: {
+            treeData: resp.data,
+          },
+        })
       } else {
         throw resp
       }

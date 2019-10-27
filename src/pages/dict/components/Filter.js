@@ -128,7 +128,6 @@ class Filter extends PureComponent {
                 </Button>
               )}
             </div>
-            }
           </Row>
         </Col>
       </Row>

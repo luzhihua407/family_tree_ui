@@ -89,4 +89,6 @@ export default {
 
   addRelationship: 'POST /folk/people/addRelationship',
   configMenu: 'POST /security/user_menu/addOrUpdate',
+
+  getNames: 'POST /folk/people/getNames',
 }

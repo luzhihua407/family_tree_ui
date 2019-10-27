@@ -12,14 +12,25 @@ import styles from './Bread.less'
 class Bread extends PureComponent {
   generateBreadcrumbs = paths => {
     return paths.map((item, key) => {
+      const content = item && (
+        <Fragment>
+          {item.icon ? (
+            <Icon type={item.icon} style={{ marginRight: 4 }} />
+          ) : null}
+          {item.name}
+        </Fragment>
+      )
+
       return (
-        <Breadcrumb.Item key={key}>
-          {/*{paths.length - 1 !== key ? (*/}
-          {/*  <Link to={addLangPrefix(item.route) || '#'}>{content}</Link>*/}
-          {/*) : (*/}
-          {/*  content*/}
-          {/*)}*/}
-        </Breadcrumb.Item>
+        item && (
+          <Breadcrumb.Item key={key}>
+            {paths.length - 1 !== key ? (
+              <Link to={addLangPrefix(item.route) || '#'}>{content}</Link>
+            ) : (
+              content
+            )}
+          </Breadcrumb.Item>
+        )
       )
     })
   }

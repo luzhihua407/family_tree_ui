@@ -1,15 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Form,
-  Input,
-  Transfer,
-  Tree,
-  Radio,
-  Modal,
-  Cascader,
-  TreeSelect,
-} from 'antd'
+import { Form, Input, Tree, Modal } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
 
 const FormItem = Form.Item
@@ -25,6 +16,13 @@ const formItemLayout = {
 @withI18n()
 @Form.create()
 class RoleMenuModal extends PureComponent {
+  state = {
+    checkedKeys: [],
+  }
+  componentWillReceiveProps(nextProps, nextContext) {
+    this.setState({ checkedKeys: nextProps.item.menuIds })
+  }
+
   handleOk = () => {
     const { item = {}, onOk, form } = this.props
     const { validateFields, getFieldsValue } = form
@@ -38,7 +36,7 @@ class RoleMenuModal extends PureComponent {
         key: item.key,
       }
       data.roleId = item.roleId
-      data.menuIds = this.state.menuIds
+      data.menuIds = this.state.checkedKeys
       onOk(data)
     })
   }
@@ -47,8 +45,9 @@ class RoleMenuModal extends PureComponent {
       type: 'user/hideModal',
     })
   }
-  onCheck = (value, node, extra) => {
-    this.state = { menuIds: value }
+  onCheck = (checkedKeys, node, extra) => {
+    this.setState({ checkedKeys })
+    this.props.item.menuIds = checkedKeys
   }
   render() {
     const { item = {}, onOk, form, i18n, treeData, ...modalProps } = this.props
@@ -69,7 +68,7 @@ class RoleMenuModal extends PureComponent {
           <FormItem label="菜单" hasFeedback {...formItemLayout}>
             <Tree
               treeData={treeData}
-              defaultCheckedKeys={item.menuIds}
+              checkedKeys={this.state.checkedKeys}
               checkable={true}
               onCheck={this.onCheck}
               autoExpandParent={true}

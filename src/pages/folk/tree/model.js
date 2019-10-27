@@ -4,14 +4,25 @@ import { pathMatchRegexp } from 'utils'
 import api from 'api'
 import { pageModel } from 'utils/model'
 
-const { queryTreeByPage, getFamilyTree, getBranchList } = api
+const {
+  queryTreeByPage,
+  getFamilyTree,
+  getBranchList,
+  getNames,
+  getSubDictListByParentCode,
+  queryPeopleById,
+} = api
 
 export default modelExtend(pageModel, {
   namespace: 'tree',
 
   state: {
     list: [],
+    modalVisible: false,
     branchListData: [],
+    namesData: [],
+    currentItem: {},
+    modalType: 'create',
   },
 
   subscriptions: {
@@ -43,6 +54,46 @@ export default modelExtend(pageModel, {
             list: data,
           },
         })
+      }
+    },
+    *getNames({ payload }, { call, put, select }) {
+      const resp = yield call(getNames, payload == undefined ? {} : payload)
+      if (resp.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            namesData: resp.data,
+          },
+        })
+      } else {
+        throw resp
+      }
+    },
+    *getSubDictListByParentCode({ payload }, { call, put, select }) {
+      const resp = yield call(getSubDictListByParentCode, payload)
+      if (resp.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            educationListData: resp.data,
+          },
+        })
+      } else {
+        throw resp
+      }
+    },
+    *get({ payload }, { call, put, select }) {
+      const resp = yield call(queryPeopleById, { id: payload })
+      if (resp.success) {
+        yield put({
+          type: 'showModal',
+          payload: {
+            modalType: 'update',
+            currentItem: resp.data,
+          },
+        })
+      } else {
+        throw resp
       }
     },
     *getBranchList({ payload }, { call, put, select }) {

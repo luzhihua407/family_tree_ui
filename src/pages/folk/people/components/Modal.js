@@ -350,27 +350,27 @@ class PeopleModal extends PureComponent {
           </Row>
           <Row>
             <Col span={12}>
-              <FormItem label="学历" hasFeedback {...formItemLayout}>
-                {getFieldDecorator('education', {
-                  initialValue: item.education,
-                  rules: [
-                    {
-                      required: false,
-                    },
-                  ],
-                })(
-                  <Select
-                    labelInValue={false}
-                    placeholder="请选择"
-                    style={{ width: 120 }}
-                    allowClear={true}
-                  >
-                    {educationListData.map(d => (
-                      <Select.Option key={d.code}>{d.name}</Select.Option>
-                    ))}
-                  </Select>
-                )}
-              </FormItem>
+              {/*<FormItem label="学历" hasFeedback {...formItemLayout}>*/}
+              {/*  {getFieldDecorator('education', {*/}
+              {/*    initialValue: item.education,*/}
+              {/*    rules: [*/}
+              {/*      {*/}
+              {/*        required: false,*/}
+              {/*      },*/}
+              {/*    ],*/}
+              {/*  })(*/}
+              {/*    <Select*/}
+              {/*      labelInValue={false}*/}
+              {/*      placeholder="请选择"*/}
+              {/*      style={{ width: 120 }}*/}
+              {/*      allowClear={true}*/}
+              {/*    >*/}
+              {/*      {educationListData.map(d => (*/}
+              {/*        <Select.Option key={d.code}>{d.name}</Select.Option>*/}
+              {/*      ))}*/}
+              {/*    </Select>*/}
+              {/*  )}*/}
+              {/*</FormItem>*/}
             </Col>
             <Col span={12}>
               <FormItem label="出生年月" hasFeedback {...formItemLayout}>
@@ -437,7 +437,13 @@ class PeopleModal extends PureComponent {
                       required: false,
                     },
                   ],
-                })(<Input.TextArea rows={6} />)}
+                })(
+                  <Radio.Group>
+                    <Radio value={'殇'}>殇</Radio>
+                    <Radio value={'止'}>止</Radio>
+                    <Radio value={''}>无</Radio>
+                  </Radio.Group>
+                )}
               </FormItem>
             </Col>
           </Row>
