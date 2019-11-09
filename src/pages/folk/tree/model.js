@@ -11,13 +11,13 @@ const {
   getNames,
   getSubDictListByParentCode,
   queryPeopleById,
+  viewPeopleById,
 } = api
 
 export default modelExtend(pageModel, {
   namespace: 'tree',
 
   state: {
-    list: [],
     modalVisible: false,
     branchListData: [],
     namesData: [],
@@ -49,9 +49,9 @@ export default modelExtend(pageModel, {
       if (result) {
         let { data } = result
         yield put({
-          type: 'querySuccess',
+          type: 'updateState',
           payload: {
-            list: data,
+            items: data.items,
           },
         })
       }
@@ -84,6 +84,20 @@ export default modelExtend(pageModel, {
     },
     *get({ payload }, { call, put, select }) {
       const resp = yield call(queryPeopleById, { id: payload })
+      if (resp.success) {
+        yield put({
+          type: 'showModal',
+          payload: {
+            modalType: 'update',
+            currentItem: resp.data,
+          },
+        })
+      } else {
+        throw resp
+      }
+    },
+    *view({ payload }, { call, put, select }) {
+      const resp = yield call(viewPeopleById, { id: payload })
       if (resp.success) {
         yield put({
           type: 'showModal',

@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Page } from 'components'
-import Modal from '../people/components/Modal'
-import { Form, Select, Input, Row, Col, Button } from 'antd'
+import Modal from './components/Modal'
+import { Form, Select, Input, Row, Col, Button, Icon } from 'antd'
 import { connect } from 'dva'
 import { withI18n } from '@lingui/react'
 import { FamDiagram } from 'basicprimitivesreact'
@@ -28,8 +28,110 @@ class Tree extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      items: [],
-      config: {},
+      config: {
+        items: [],
+        pageFitMode: primitives.common.PageFitMode.AutoSize,
+        cursorItem: 0,
+        hasSelectorCheckbox: primitives.common.Enabled.False,
+        /* Intervals */
+        normalLevelShift: 50,
+        dotLevelShift: 100,
+        lineLevelShift: 10,
+        normalItemsInterval: 10,
+        dotItemsInterval: 7,
+        lineItemsInterval: 5,
+        cousinsIntervalMultiplier: 0,
+        hasButtons: primitives.common.Enabled.True,
+        buttonsPanelSize: 40,
+        onButtonsRender: ({ context: itemConfig }) => {
+          return (
+            <>
+              <button
+                key="1"
+                className=""
+                onClick={event => {
+                  event.stopPropagation()
+                  const { dispatch } = this.props
+                  dispatch({
+                    type: 'tree/getBranchList',
+                    payload: {},
+                  }),
+                    dispatch({
+                      type: 'tree/view',
+                      payload: itemConfig.peopleId,
+                    }).then(() => {
+                      dispatch({
+                        type: 'tree/getSubDictListByParentCode',
+                        payload: { parentCode: 'education' },
+                      })
+                    })
+                }}
+              >
+                <Icon type="eye" />
+              </button>
+              <button
+                key="2"
+                className=""
+                onClick={event => {
+                  event.stopPropagation()
+                  alert(
+                    `User clicked on Sitemap button for node ${itemConfig.title}`
+                  )
+                }}
+              >
+                <Icon type="edit" />
+              </button>
+            </>
+          )
+        },
+        /* Connectors */
+        // arrowsDirection: primitives.common.GroupByType.Children,
+        // showExtraArrows: false,
+        // extraArrowsMinimumSpace: 30,
+        // connectorType: primitives.common.ConnectorType.Curved,
+        // elbowType: primitives.common.ElbowType.None,
+        // bevelSize: 4,
+        // elbowDotSize: 4,
+        // linesType: primitives.common.LineType.Solid,
+        // linesWidth: 1,
+        defaultTemplateName: 'customTemplate',
+        templates: [
+          {
+            name: 'customTemplate',
+            itemSize: { width: 132, height: 72 },
+            cursorBorderWidth: 2,
+            highlightPadding: { left: 4, top: 4, right: 4, bottom: 4 },
+            onCursorRender: ({ context: itemConfig }) => {
+              return <div className={styles.CursorFrame}></div>
+            },
+
+            // minimizedItemSize: { width: 3, height: 3 },
+            // highlightPadding: { left: 2, top: 2, right: 2, bottom: 2 },
+            onItemRender: ({ context: itemConfig }) => {
+              return (
+                <div className={styles.border}>
+                  <div
+                    className="ContactTitleBackground"
+                    style={{
+                      backgroundColor: primitives.common.Colors.RoyalBlue,
+                    }}
+                  >
+                    <div className={styles.title}>
+                      {itemConfig.title}-{itemConfig.sex}
+                    </div>
+                  </div>
+                  <div className={styles.content}>
+                    <div>{itemConfig.generations}</div>
+                    <div>{itemConfig.description}</div>
+                    <div>{itemConfig.remark}</div>
+                    <div className={styles.label}>{itemConfig.label}</div>
+                  </div>
+                </div>
+              )
+            },
+          },
+        ],
+      },
     }
   }
 
@@ -44,7 +146,6 @@ class Tree extends PureComponent {
     let fields = getFieldsValue()
     fields = this.handleFields(fields)
     fields = { param: fields }
-    console.log(fields)
     onFilterChange(fields)
     dispatch({
       type: 'tree/query',
@@ -78,75 +179,19 @@ class Tree extends PureComponent {
     fields = this.handleFields(fields)
     onFilterChange(fields)
   }
+
   update(itemid) {
     const { config } = this.state
-    console.log(config)
     this.setState({
       // highlightItem: itemid,
       config: {
         ...config,
-        highlightItem: itemid,
+        cursorItem: itemid,
       },
     })
   }
 
   render() {
-    this.state.config = {
-      ...this.state,
-      pageFitMode: primitives.common.PageFitMode.AutoSize,
-      highlightItem: 0,
-      hasSelectorCheckbox: primitives.common.Enabled.False,
-      /* Intervals */
-      normalLevelShift: 50,
-      dotLevelShift: 100,
-      lineLevelShift: 10,
-      normalItemsInterval: 10,
-      dotItemsInterval: 7,
-      lineItemsInterval: 5,
-      cousinsIntervalMultiplier: 0,
-      /* Connectors */
-      // arrowsDirection: primitives.common.GroupByType.Children,
-      // showExtraArrows: false,
-      // extraArrowsMinimumSpace: 30,
-      // connectorType: primitives.common.ConnectorType.Curved,
-      // elbowType: primitives.common.ElbowType.None,
-      // bevelSize: 4,
-      // elbowDotSize: 4,
-      // linesType: primitives.common.LineType.Solid,
-      // linesWidth: 1,
-      defaultTemplateName: 'customTemplate',
-      templates: [
-        {
-          name: 'customTemplate',
-          itemSize: { width: 132, height: 72 },
-          // minimizedItemSize: { width: 3, height: 3 },
-          // highlightPadding: { left: 2, top: 2, right: 2, bottom: 2 },
-          onItemRender: ({ context: itemConfig }) => {
-            return (
-              <div className={styles.border}>
-                <div
-                  className="ContactTitleBackground"
-                  style={{
-                    backgroundColor: primitives.common.Colors.RoyalBlue,
-                  }}
-                >
-                  <div className={styles.title}>
-                    {itemConfig.title}-{itemConfig.sex}
-                  </div>
-                </div>
-                <div className={styles.content}>
-                  <div>{itemConfig.generations}</div>
-                  <div>{itemConfig.description}</div>
-                  <div>{itemConfig.remark}</div>
-                  <div className={styles.label}>{itemConfig.label}</div>
-                </div>
-              </div>
-            )
-          },
-        },
-      ],
-    }
-
     const {
       location,
       dispatch,
@@ -154,8 +199,13 @@ class Tree extends PureComponent {
       loading,
       i18n,
       form,
-      tree: { branchListData = [], namesData = [] },
+      tree: { branchListData = [], namesData = [], items },
     } = this.props
+    this.state.config.items = items
+    const onChange = value => {
+      const { config } = this.state
+      this.setState({ value, config: { ...config, cursorItem: value } })
+    }
     const { modalVisible, currentItem, modalType } = tree
     const { getFieldDecorator } = form
     const { query, pathname } = location
@@ -168,33 +218,17 @@ class Tree extends PureComponent {
         span: 14,
       },
     }
-    const onCursorChanged = (event, data) => {
-      console.log(data)
-      const { context } = data
-      dispatch({
-        type: 'tree/getBranchList',
-        payload: {},
-      }),
-        dispatch({
-          type: 'tree/get',
-          payload: context.id,
-        }).then(() => {
-          dispatch({
-            type: 'tree/getSubDictListByParentCode',
-            payload: { parentCode: 'education' },
-          })
-        })
-    }
+    const onCursorChanged = (event, data) => {}
     const handleSearch = value => {
-      dispatch({
-        type: 'tree/getNames',
-        payload: { name: value },
-      })
+      console.log(value.length)
+      if (value.length > 1) {
+        dispatch({
+          type: 'tree/getNames',
+          payload: { name: value },
+        })
+      }
     }
-    const handleChange = value => {
-      // this.update(1408999924)
-      this.setState({ value, config: { highlightItem: 1766088249 } })
-    }
+
     const handleSelectChange = value => {
       dispatch({
         type: 'tree/query',
@@ -206,23 +240,22 @@ class Tree extends PureComponent {
       visible: modalVisible,
       maskClosable: false,
       confirmLoading: loading.effects[`people/${modalType}`],
-      title: `${modalType === 'create' ? '创建族谱' : '更新族谱'}`,
+      title: `查看个人信息`,
+      width: '70%',
       centered: true,
+      okButtonProps: { disabled: true },
+      cancelButtonProps: { disabled: true },
       onOk(data) {
         dispatch({
-          type: `people/${modalType}`,
-          payload: data,
-        }).then(() => {
-          handleRefresh()
+          type: 'tree/hideModal',
         })
       },
       onCancel() {
         dispatch({
-          type: 'people/hideModal',
+          type: 'tree/hideModal',
         })
       },
     }
-    this.setState(this.props.tree.list)
 
     const onViewItem = value => {
       dispatch({
@@ -245,10 +278,10 @@ class Tree extends PureComponent {
                   style={{ width: '100%' }}
                   allowClear={true}
                   onSearch={handleSearch}
-                  onChange={handleChange}
+                  onChange={onChange}
                 >
                   {namesData.map(d => (
-                    <Select.Option key={d}>{d}</Select.Option>
+                    <Select.Option key={d.id}>{d.full_name}</Select.Option>
                   ))}
                 </Select>
               </FormItem>

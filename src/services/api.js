@@ -52,6 +52,7 @@ export default {
 
   queryPeopleByPage: 'POST /folk/people/page',
   queryPeopleById: 'GET /folk/people/get',
+  viewPeopleById: 'GET /folk/people/view',
   updatePeople: 'POST /folk/people/edit',
   createPeople: 'POST /folk/people/add',
   removePeople: 'POST /folk/people/delete',
