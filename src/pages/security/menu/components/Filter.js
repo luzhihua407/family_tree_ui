@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from 'components'
 import { Trans, withI18n } from '@lingui/react'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
+import { Form, Button, Row, Col, DatePicker, Input, Select } from 'antd'
 import city from 'utils/city'
 import { isAllowed } from '../../../auth'
 
@@ -72,8 +72,8 @@ class Filter extends PureComponent {
   render() {
     const { onAdd, filter, form, i18n } = this.props
     const { getFieldDecorator } = form
-    const { name, code } = filter
-
+    const { name, code, type } = filter
+    const { Option } = Select
     return (
       <Row gutter={24}>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
@@ -81,14 +81,20 @@ class Filter extends PureComponent {
             <Input placeholder={'搜索菜单编码'} allowClear />
           )}
         </Col>
-        <Col
-          {...ColProps}
-          xl={{ span: 4 }}
-          md={{ span: 8 }}
-          id="addressCascader"
-        >
+        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
           {getFieldDecorator('name', { initialValue: name })(
             <Input placeholder={'搜索菜单名称'} allowClear />
+          )}
+        </Col>
+        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+          {getFieldDecorator('type', {
+            initialValue: type,
+          })(
+            <Select style={{ width: 120 }} placeholder={'请选择类型'}>
+              <Option value={0}>目录</Option>
+              <Option value={1}>可见菜单</Option>
+              <Option value={2}>不可见菜单</Option>
+            </Select>
           )}
         </Col>
         <Col

@@ -220,7 +220,6 @@ class Tree extends PureComponent {
     }
     const onCursorChanged = (event, data) => {}
     const handleSearch = value => {
-      console.log(value.length)
       if (value.length > 1) {
         dispatch({
           type: 'tree/getNames',

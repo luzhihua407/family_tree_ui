@@ -18,15 +18,7 @@ export default {
     permissions: {
       visit: [],
     },
-    routeList: [
-      {
-        id: '1',
-        icon: 'laptop',
-        name: '仪表盘',
-        zhName: '仪表盘',
-        route: '/user',
-      },
-    ],
+    routeList: [],
     locationPathname: '',
     locationQuery: {},
     theme: store.get('theme') || 'light',
@@ -60,7 +52,6 @@ export default {
     },
 
     setup({ dispatch }) {
-      //dispatch({ type: 'router' })
       dispatch({ type: 'query' })
     },
   },
@@ -105,15 +96,7 @@ export default {
           payload: {
             user: {},
             permissions: { visit: [] },
-            menu: [
-              {
-                id: '1',
-                icon: 'laptop',
-                name: 'Dashboard',
-                zhName: '仪表盘',
-                router: '/dashboard',
-              },
-            ],
+            menu: [],
           },
         })
         yield put({ type: 'query' })

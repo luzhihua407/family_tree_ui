@@ -5,6 +5,7 @@ import { Trans, withI18n } from '@lingui/react'
 import Link from 'umi/link'
 import styles from './List.less'
 import { isAllowed } from '../../../auth'
+import { router } from '../../../../utils'
 
 const { confirm } = Modal
 
@@ -15,6 +16,11 @@ class List extends PureComponent {
     if (e === '1') {
       onEditItem(record)
     } else if (e === '2') {
+      console.log('/folk/categorycontent/:id')
+      console.log('/folk/categorycontent/' + record.id)
+      console.log('/folk/categorycontent/:id')
+      router.replace('/folk/categorycontent/' + record.id)
+    } else if (e === '3') {
       confirm({
         title: '你确定要删除这条记录吗？',
         onOk() {
@@ -33,6 +39,9 @@ class List extends PureComponent {
         dataIndex: 'title',
         key: 'title',
         width: '20%',
+        render: (text, record) => (
+          <Link to={`categorycontent/${record.id}`}>{text}</Link>
+        ),
       },
       {
         title: '子标题',
@@ -80,10 +89,19 @@ class List extends PureComponent {
                   更新
                 </Button>
               )}
+              {isAllowed('category_content.view') && (
+                <Button
+                  icon="eye"
+                  onClick={e => this.handleUserClick(record, '2')}
+                  size={'small'}
+                >
+                  查看
+                </Button>
+              )}
               {isAllowed('category_content.update') && (
                 <Button
                   icon="delete"
-                  onClick={e => this.handleUserClick(record, '2')}
+                  onClick={e => this.handleUserClick(record, '3')}
                   size={'small'}
                 >
                   删除

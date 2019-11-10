@@ -44,9 +44,6 @@ class PeopleModal extends PureComponent {
           <Descriptions.Item label="小名：" span={2}>
             {item.nickname}
           </Descriptions.Item>
-          <Descriptions.Item label="全名：" span={2}>
-            {item.fullName}
-          </Descriptions.Item>
           <Descriptions.Item label="性别：" span={2}>
             {item.gender}
           </Descriptions.Item>
@@ -80,14 +77,17 @@ class PeopleModal extends PureComponent {
           <Descriptions.Item label="学历：" span={2}>
             {item.education}
           </Descriptions.Item>
-          <Descriptions.Item label="出生年月：" span={2}>
-            {item.birth}
-          </Descriptions.Item>
           <Descriptions.Item label="工作单位：" span={2}>
             {item.company}
           </Descriptions.Item>
-          <Descriptions.Item label="卒于：" span={2}>
+          <Descriptions.Item label="出生年月：" span={2}>
+            {item.birth}
+          </Descriptions.Item>
+          <Descriptions.Item label="逝于：" span={2}>
             {item.death}
+          </Descriptions.Item>
+          <Descriptions.Item label="享年：" span={2}>
+            {item.aliveAge}
           </Descriptions.Item>
           <Descriptions.Item label="简介：" span={2}>
             {item.brief}

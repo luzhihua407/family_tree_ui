@@ -13,9 +13,9 @@ class CemeteryDetail extends PureComponent {
     } = this.props
     return (
       <Page inner>
-        <Descriptions title="" column={1}>
+        <Descriptions title="" column={3} layout="horizontal" bordered>
           <Descriptions.Item label="祖名">{data.name}</Descriptions.Item>
-          <Descriptions.Item label="葬地点">{data.address}</Descriptions.Item>
+          <Descriptions.Item label="落地点">{data.address}</Descriptions.Item>
           <Descriptions.Item label="宝地形状">{data.shape}</Descriptions.Item>
           <Descriptions.Item label="备注">{data.remark}</Descriptions.Item>
         </Descriptions>

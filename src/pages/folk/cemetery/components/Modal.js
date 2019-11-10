@@ -49,7 +49,7 @@ class CemeteryModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="葬地点" hasFeedback {...formItemLayout}>
+          <FormItem label="落地点" hasFeedback {...formItemLayout}>
             {getFieldDecorator('address', {
               initialValue: item.address,
               rules: [

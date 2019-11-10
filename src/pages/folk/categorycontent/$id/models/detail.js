@@ -1,10 +1,9 @@
 import { pathMatchRegexp } from 'utils'
 import api from 'api'
-const { queryCemeteryById } = api
+const { queryCategoryContentById } = api
 
 export default {
-  namespace: 'cemeteryDetail',
-
+  namespace: 'categoryContentDetail',
   state: {
     data: {},
   },
@@ -12,20 +11,17 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(({ pathname }) => {
-        console.log(2323)
-        console.log(pathname)
-        const match = pathMatchRegexp('/folk/cemetery/:id', pathname)
+        const match = pathMatchRegexp('/folk/categorycontent/:id', pathname)
         if (match) {
-          dispatch({ type: 'query', payload: { id: match[1] } })
+          dispatch({ type: 'view', payload: { id: match[1] } })
         }
       })
     },
   },
 
   effects: {
-    *query({ payload }, { call, put }) {
-      console.log(payload)
-      const result = yield call(queryCemeteryById, payload)
+    *view({ payload }, { call, put }) {
+      const result = yield call(queryCategoryContentById, payload)
       const { success, message, status, data } = result
       if (success) {
         yield put({

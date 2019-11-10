@@ -12,8 +12,7 @@ import {
   Upload,
   Icon,
   message,
-  Row,
-  Col,
+  Checkbox,
 } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
 import locale from 'antd/es/date-picker/locale/zh_CN'
@@ -120,7 +119,7 @@ class PeopleModal extends PureComponent {
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label="全名" hasFeedback {...formItemLayout}>
+          <FormItem label="全名" {...formItemLayout}>
             {getFieldDecorator('fullName', {
               initialValue: item.fullName,
               rules: [
@@ -130,7 +129,7 @@ class PeopleModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="小名" hasFeedback {...formItemLayout}>
+          <FormItem label="小名" {...formItemLayout}>
             {getFieldDecorator('nickname', {
               initialValue: item.nickname,
               rules: [
@@ -140,7 +139,7 @@ class PeopleModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          {/*<FormItem label="头像" hasFeedback {...formItemLayout}>*/}
+          {/*<FormItem label="头像" {...formItemLayout}>*/}
           {/*  {getFieldDecorator('file', {*/}
           {/*    initialValue: item.file,*/}
           {/*    rules: [*/}
@@ -171,7 +170,7 @@ class PeopleModal extends PureComponent {
           {/*  )}*/}
           {/*</FormItem>*/}
 
-          <FormItem label="性别" hasFeedback {...formItemLayout}>
+          <FormItem label="性别" {...formItemLayout}>
             {getFieldDecorator('gender', {
               initialValue: item.gender,
               rules: [
@@ -186,7 +185,8 @@ class PeopleModal extends PureComponent {
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label="房支" hasFeedback {...formItemLayout}>
+
+          <FormItem label="房支" {...formItemLayout}>
             {getFieldDecorator('peopleBranch', {
               initialValue: item.peopleBranch,
               rules: [
@@ -198,7 +198,7 @@ class PeopleModal extends PureComponent {
               <Select
                 labelInValue={false}
                 placeholder="请选择"
-                style={{ width: 120 }}
+                style={{ width: '33%' }}
                 allowClear={true}
               >
                 {branchListData.map(d => (
@@ -207,7 +207,7 @@ class PeopleModal extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <FormItem label="世序" hasFeedback {...formItemLayout}>
+          <FormItem label="世序" {...formItemLayout}>
             {getFieldDecorator('generations', {
               initialValue: item.generations,
               rules: [
@@ -218,7 +218,22 @@ class PeopleModal extends PureComponent {
               ],
             })(<InputNumber min={1} max={100} />)}
           </FormItem>
-          <FormItem label="生产队" hasFeedback {...formItemLayout}>
+          <FormItem label="入嗣" {...formItemLayout}>
+            {getFieldDecorator('heir', {
+              initialValue: item.heir,
+              rules: [
+                {
+                  required: false,
+                },
+              ],
+            })(
+              <Select placeholder="请选择" style={{ width: '33%' }}>
+                <Select.Option value="入嗣">入嗣</Select.Option>
+                <Select.Option value="出嗣">出嗣</Select.Option>
+              </Select>
+            )}
+          </FormItem>
+          <FormItem label="生产队" {...formItemLayout}>
             {getFieldDecorator('prodTeam', {
               initialValue: item.prodTeam,
               rules: [
@@ -230,7 +245,7 @@ class PeopleModal extends PureComponent {
               <Select
                 labelInValue={false}
                 placeholder="请选择"
-                style={{ width: 120 }}
+                style={{ width: '33%' }}
                 allowClear={true}
               >
                 {prodTeamListData.map(d => (
@@ -239,7 +254,7 @@ class PeopleModal extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <FormItem label="手机" hasFeedback {...formItemLayout}>
+          <FormItem label="手机" {...formItemLayout}>
             {getFieldDecorator('phoneNumber', {
               initialValue: item.phoneNumber,
               rules: [
@@ -251,7 +266,7 @@ class PeopleModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="职务" hasFeedback {...formItemLayout}>
+          <FormItem label="职务" {...formItemLayout}>
             {getFieldDecorator('job', {
               initialValue: item.job,
               rules: [
@@ -261,7 +276,7 @@ class PeopleModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="身高(厘米)" hasFeedback {...formItemLayout}>
+          <FormItem label="身高(厘米)" {...formItemLayout}>
             {getFieldDecorator('height', {
               initialValue: item.height,
               rules: [
@@ -271,7 +286,7 @@ class PeopleModal extends PureComponent {
               ],
             })(<InputNumber min={1} max={300} />)}
           </FormItem>
-          <FormItem label="体重(公斤)" hasFeedback {...formItemLayout}>
+          <FormItem label="体重(公斤)" {...formItemLayout}>
             {getFieldDecorator('weight', {
               initialValue: item.weight,
               rules: [
@@ -281,7 +296,7 @@ class PeopleModal extends PureComponent {
               ],
             })(<InputNumber min={1} max={300} />)}
           </FormItem>
-          <FormItem label="已婚" hasFeedback {...formItemLayout}>
+          <FormItem label="已婚" {...formItemLayout}>
             {getFieldDecorator('isMarried', {
               initialValue: item.isMarried == null ? '是' : item.isMarried,
               rules: [
@@ -296,7 +311,7 @@ class PeopleModal extends PureComponent {
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label="已育" hasFeedback {...formItemLayout}>
+          <FormItem label="已育" {...formItemLayout}>
             {getFieldDecorator('hasChild', {
               initialValue: item.hasChild == null ? '是' : item.hasChild,
               rules: [
@@ -311,7 +326,7 @@ class PeopleModal extends PureComponent {
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label="学历" hasFeedback {...formItemLayout}>
+          <FormItem label="学历" {...formItemLayout}>
             {getFieldDecorator('education', {
               initialValue: item.education,
               rules: [
@@ -323,7 +338,7 @@ class PeopleModal extends PureComponent {
               <Select
                 labelInValue={false}
                 placeholder="请选择"
-                style={{ width: 120 }}
+                style={{ width: '33%' }}
                 allowClear={true}
               >
                 {educationListData.map(d => (
@@ -332,7 +347,17 @@ class PeopleModal extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <FormItem label="出生年月" hasFeedback {...formItemLayout}>
+          <FormItem label="工作单位" {...formItemLayout}>
+            {getFieldDecorator('company', {
+              initialValue: item.company,
+              rules: [
+                {
+                  required: false,
+                },
+              ],
+            })(<Input />)}
+          </FormItem>
+          <FormItem label="出生年月" {...formItemLayout}>
             {getFieldDecorator('birth', {
               initialValue:
                 item.birth != null ? moment(item.birth, dateFormat) : null,
@@ -343,17 +368,8 @@ class PeopleModal extends PureComponent {
               ],
             })(<DatePicker format={dateFormat} />)}
           </FormItem>
-          <FormItem label="工作单位" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('company', {
-              initialValue: item.company,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(<Input />)}
-          </FormItem>
-          <FormItem label="卒于" hasFeedback {...formItemLayout}>
+
+          <FormItem label="逝于" {...formItemLayout}>
             {getFieldDecorator('death', {
               initialValue:
                 item.death != null ? moment(item.death, dateFormat) : null,
@@ -364,7 +380,7 @@ class PeopleModal extends PureComponent {
               ],
             })(<DatePicker format={dateFormat} />)}
           </FormItem>
-          <FormItem label="简介" hasFeedback {...formItemLayout}>
+          <FormItem label="简介" {...formItemLayout}>
             {getFieldDecorator('brief', {
               initialValue: item.brief,
               rules: [
@@ -374,7 +390,7 @@ class PeopleModal extends PureComponent {
               ],
             })(<Input.TextArea rows={6} />)}
           </FormItem>
-          <FormItem label="备注" hasFeedback {...formItemLayout}>
+          <FormItem label="备注" {...formItemLayout}>
             {getFieldDecorator('remark', {
               initialValue: item.remark,
               rules: [
@@ -390,7 +406,7 @@ class PeopleModal extends PureComponent {
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label="启用" hasFeedback {...formItemLayout}>
+          <FormItem label="启用" {...formItemLayout}>
             {getFieldDecorator('valid', {
               initialValue: item.valid == null ? '是' : item.valid,
               rules: [

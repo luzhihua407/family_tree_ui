@@ -3,6 +3,7 @@ import modelExtend from 'dva-model-extend'
 import { pathMatchRegexp } from 'utils'
 import api from 'api'
 import { pageModel } from 'utils/model'
+import { router } from '../../../utils'
 
 const {
   queryCategoryContentByPage,
@@ -28,8 +29,15 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (pathMatchRegexp('/folk/categoryContent', location.pathname)) {
-          const payload = location.query || { page: 1, pageSize: 10 }
+        console.log('query')
+        console.log(location.pathname)
+        if (pathMatchRegexp('/folk/categorycontent', location.pathname)) {
+          // console.log(pathMatchRegexp('/folk/categorycontent', location.pathname))
+          const payload = location.query || {
+            page: 1,
+            pageSize: 10,
+            pageNumber: 1,
+          }
           dispatch({
             type: 'query',
             payload,

@@ -61,14 +61,14 @@ class CategoryContent extends PureComponent {
 
     const listProps = {
       dataSource: list,
-      loading: loading.effects['categoryContent/query'],
+      // loading: loading.effects['categoryContent/query'],
       pagination,
-      onChange(page) {
-        handleRefresh({
-          pageNumber: page.current,
-          pageSize: page.pageSize,
-        })
-      },
+      // onChange(page) {
+      //   handleRefresh({
+      //     pageNumber: page.current,
+      //     pageSize: page.pageSize,
+      //   })
+      // },
       onDeleteItem(id) {
         dispatch({
           type: 'categoryContent/delete',

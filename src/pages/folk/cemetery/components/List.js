@@ -5,6 +5,7 @@ import { Trans, withI18n } from '@lingui/react'
 import Link from 'umi/link'
 import styles from './List.less'
 import { isAllowed } from '../../../auth'
+import { router } from '../../../../utils'
 
 const { confirm } = Modal
 
@@ -15,6 +16,8 @@ class List extends PureComponent {
     if (e === '1') {
       onEditItem(record)
     } else if (e === '2') {
+      router.replace('cemetery/' + record.id)
+    } else if (e === '3') {
       confirm({
         title: '你确定要删除这条记录吗？',
         onOk() {
@@ -33,12 +36,9 @@ class List extends PureComponent {
         dataIndex: 'name',
         key: 'name',
         width: '20%',
-        render: (text, record) => (
-          <Link to={`cemetery/${record.id}`}>{text}</Link>
-        ),
       },
       {
-        title: '葬地点',
+        title: '落地点',
         dataIndex: 'address',
         key: 'address',
         width: '25%',
@@ -71,10 +71,19 @@ class List extends PureComponent {
                   更新
                 </Button>
               )}
+              {isAllowed('cemetery.view') && (
+                <Button
+                  icon="eye"
+                  onClick={e => this.handleClick(record, '2')}
+                  size={'small'}
+                >
+                  查看
+                </Button>
+              )}
               {isAllowed('cemetery.delete') && (
                 <Button
                   icon="delete"
-                  onClick={e => this.handleClick(record, '2')}
+                  onClick={e => this.handleClick(record, '3')}
                   size={'small'}
                 >
                   删除

@@ -79,7 +79,7 @@ class Filter extends PureComponent {
         </Col>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
           {getFieldDecorator('address', { initialValue: address })(
-            <Input placeholder={'搜索葬地点'} allowClear />
+            <Input placeholder={'搜索落地点'} allowClear />
           )}
         </Col>
         <Col
