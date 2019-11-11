@@ -5,7 +5,7 @@ import { Trans, withI18n } from '@lingui/react'
 import Link from 'umi/link'
 import styles from './List.less'
 import { isAllowed } from '../../../auth'
-import { router } from '../../../../utils'
+import router from 'umi/router'
 
 const { confirm } = Modal
 
@@ -16,7 +16,7 @@ class List extends PureComponent {
     if (e === '1') {
       onEditItem(record)
     } else if (e === '2') {
-      router.replace('cemetery/' + record.id)
+      router.push('cemetery/' + record.id)
     } else if (e === '3') {
       confirm({
         title: '你确定要删除这条记录吗？',

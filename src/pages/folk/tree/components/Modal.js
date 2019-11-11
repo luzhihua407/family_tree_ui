@@ -54,7 +54,7 @@ class PeopleModal extends PureComponent {
             {item.generationsText}
           </Descriptions.Item>
           <Descriptions.Item label="生产队：" span={2}>
-            {item.prodTeam}
+            {item.prodTeamName}
           </Descriptions.Item>
           <Descriptions.Item label="手机：" span={2}>
             {item.phoneNumber}
