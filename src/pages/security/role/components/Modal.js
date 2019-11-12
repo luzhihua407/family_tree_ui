@@ -46,7 +46,7 @@ class RoleModal extends PureComponent {
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label="角色编码" hasFeedback {...formItemLayout}>
+          <FormItem label="角色编码" {...formItemLayout}>
             {getFieldDecorator('code', {
               initialValue: item.code,
               rules: [
@@ -56,7 +56,7 @@ class RoleModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="角色名称" hasFeedback {...formItemLayout}>
+          <FormItem label="角色名称" {...formItemLayout}>
             {getFieldDecorator('name', {
               initialValue: item.name,
               rules: [
@@ -66,7 +66,7 @@ class RoleModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="超级管理员" hasFeedback {...formItemLayout}>
+          <FormItem label="超级管理员" {...formItemLayout}>
             {getFieldDecorator('admin', {
               initialValue: item.admin == null ? '否' : item.admin,
               rules: [
@@ -81,7 +81,7 @@ class RoleModal extends PureComponent {
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label="启用" hasFeedback {...formItemLayout}>
+          <FormItem label="启用" {...formItemLayout}>
             {getFieldDecorator('valid', {
               initialValue: item.valid == null ? '否' : item.valid,
               rules: [
@@ -96,7 +96,7 @@ class RoleModal extends PureComponent {
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label="备注" hasFeedback {...formItemLayout}>
+          <FormItem label="备注" {...formItemLayout}>
             {getFieldDecorator('remark', {
               initialValue: item.remark,
               rules: [

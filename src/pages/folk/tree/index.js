@@ -9,6 +9,7 @@ import { FamDiagram } from 'basicprimitivesreact'
 import primitives from 'basicprimitives'
 import styles from './index.less'
 import { isAllowed } from '../../auth'
+import PeopleModal from '../people/components/Modal'
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -23,6 +24,7 @@ const TwoColProps = {
 
 @withI18n()
 @connect(({ tree, loading }) => ({ tree, loading }))
+@connect(({ people, loading }) => ({ people, loading }))
 @Form.create()
 class Tree extends PureComponent {
   constructor(props) {
@@ -51,20 +53,7 @@ class Tree extends PureComponent {
                 className=""
                 onClick={event => {
                   event.stopPropagation()
-                  const { dispatch } = this.props
-                  dispatch({
-                    type: 'tree/getBranchList',
-                    payload: {},
-                  }),
-                    dispatch({
-                      type: 'tree/view',
-                      payload: itemConfig.peopleId,
-                    }).then(() => {
-                      dispatch({
-                        type: 'tree/getSubDictListByParentCode',
-                        payload: { parentCode: 'education' },
-                      })
-                    })
+                  this.onView(itemConfig)
                 }}
               >
                 <Icon type="eye" />
@@ -74,12 +63,10 @@ class Tree extends PureComponent {
                 className=""
                 onClick={event => {
                   event.stopPropagation()
-                  alert(
-                    `User clicked on Sitemap button for node ${itemConfig.title}`
-                  )
+                  this.onAdd()
                 }}
               >
-                <Icon type="edit" />
+                <Icon type="form" />
               </button>
             </>
           )
@@ -134,7 +121,44 @@ class Tree extends PureComponent {
       },
     }
   }
-
+  onView = itemConfig => {
+    const { dispatch } = this.props
+    dispatch({
+      type: 'tree/getBranchList',
+      payload: {},
+    })
+    dispatch({
+      type: 'tree/view',
+      payload: itemConfig.peopleId,
+    }).then(() => {
+      dispatch({
+        type: 'tree/getSubDictListByParentCode',
+        payload: { parentCode: 'education' },
+      })
+    })
+  }
+  onAdd = () => {
+    const { dispatch } = this.props
+    dispatch({
+      type: 'tree/getSubDictListByParentCode',
+      payload: { parentCode: 'education' },
+    }).then(() => {
+      dispatch({
+        type: 'tree/showModal',
+        payload: {
+          modalType: 'create',
+        },
+      })
+    })
+    dispatch({
+      type: 'tree/getBranchList',
+      payload: {},
+    })
+    dispatch({
+      type: 'tree/getProdTeam',
+      payload: {},
+    })
+  }
   handleFields = fields => {
     return fields
   }
@@ -196,6 +220,7 @@ class Tree extends PureComponent {
       location,
       dispatch,
       tree,
+      people,
       loading,
       i18n,
       form,
@@ -206,7 +231,14 @@ class Tree extends PureComponent {
       const { config } = this.state
       this.setState({ value, config: { ...config, cursorItem: value } })
     }
-    const { modalVisible, currentItem, modalType } = tree
+    const {
+      modalVisible,
+      peopleModalVisible,
+      currentItem,
+      educationListData,
+      prodTeamListData,
+      modalType,
+    } = tree
     const { getFieldDecorator } = form
     const { query, pathname } = location
     const FormItem = Form.Item
@@ -233,6 +265,30 @@ class Tree extends PureComponent {
         type: 'tree/query',
         payload: { branch: value },
       })
+    }
+    const peopleModalProps = {
+      item: modalType === 'create' ? {} : currentItem,
+      visible: peopleModalVisible,
+      maskClosable: false,
+      educationListData: educationListData,
+      prodTeamListData: prodTeamListData,
+      branchListData: branchListData,
+      confirmLoading: loading.effects[`people/${modalType}`],
+      title: `${modalType === 'create' ? '创建族谱' : '更新族谱'}`,
+      centered: true,
+      onOk(data) {
+        dispatch({
+          type: `people/${modalType}`,
+          payload: data,
+        }).then(() => {
+          // handleRefresh()
+        })
+      },
+      onCancel() {
+        dispatch({
+          type: 'people/hideModal',
+        })
+      },
     }
     const modalProps = {
       item: modalType === 'create' ? {} : currentItem,
@@ -332,6 +388,7 @@ class Tree extends PureComponent {
           />
         </div>
         {modalVisible && <Modal {...modalProps} />}
+        {peopleModalVisible && <PeopleModal {...peopleModalProps} />}
       </Page>
     )
   }

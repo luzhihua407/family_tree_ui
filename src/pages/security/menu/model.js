@@ -43,9 +43,10 @@ export default modelExtend(pageModel, {
 
   effects: {
     *query({ payload }, { call, put }) {
-      const data = yield call(queryMenuList, payload)
-      if (data) {
-        let { pageNumber, pageSize, result, total } = data.data
+      const result = yield call(queryMenuList, payload)
+      const { success, message, status, data } = result
+      if (success) {
+        let { pageNumber, pageSize, result, total } = data
         yield put({
           type: 'querySuccess',
           payload: {

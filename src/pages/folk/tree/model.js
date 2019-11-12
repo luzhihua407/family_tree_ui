@@ -12,6 +12,7 @@ const {
   getSubDictListByParentCode,
   queryPeopleById,
   viewPeopleById,
+  getProdTeam,
 } = api
 
 export default modelExtend(pageModel, {
@@ -19,7 +20,10 @@ export default modelExtend(pageModel, {
 
   state: {
     modalVisible: false,
+    peopleModalVisible: false,
     branchListData: [],
+    educationListData: [],
+    prodTeamListData: [],
     namesData: [],
     currentItem: {},
     modalType: 'create',
@@ -82,6 +86,33 @@ export default modelExtend(pageModel, {
         throw resp
       }
     },
+    *getProdTeam({ payload }, { call, put, select }) {
+      const resp = yield call(getProdTeam, payload)
+      if (resp.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            prodTeamListData: resp.data,
+          },
+        })
+      } else {
+        throw resp
+      }
+    },
+
+    *getBranchList({ payload }, { call, put, select }) {
+      const resp = yield call(getBranchList, payload)
+      if (resp.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            branchListData: resp.data,
+          },
+        })
+      } else {
+        throw resp
+      }
+    },
     *get({ payload }, { call, put, select }) {
       const resp = yield call(queryPeopleById, { id: payload })
       if (resp.success) {
@@ -104,19 +135,6 @@ export default modelExtend(pageModel, {
           payload: {
             modalType: 'update',
             currentItem: resp.data,
-          },
-        })
-      } else {
-        throw resp
-      }
-    },
-    *getBranchList({ payload }, { call, put, select }) {
-      const resp = yield call(getBranchList, payload)
-      if (resp.success) {
-        yield put({
-          type: 'updateState',
-          payload: {
-            branchListData: resp.data,
           },
         })
       } else {

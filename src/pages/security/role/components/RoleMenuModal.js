@@ -55,7 +55,7 @@ class RoleMenuModal extends PureComponent {
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label="角色名称" hasFeedback {...formItemLayout}>
+          <FormItem label="角色名称" {...formItemLayout}>
             {getFieldDecorator('roleName', {
               initialValue: item.roleName,
               rules: [
@@ -65,12 +65,13 @@ class RoleMenuModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="菜单" hasFeedback {...formItemLayout}>
+          <FormItem label="菜单" {...formItemLayout}>
             <Tree
               treeData={treeData}
               checkedKeys={this.state.checkedKeys}
               checkable={true}
               onCheck={this.onCheck}
+              defaultExpandAll={true}
               autoExpandParent={true}
             />
           </FormItem>

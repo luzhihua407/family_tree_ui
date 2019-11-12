@@ -55,7 +55,7 @@ class UserModal extends PureComponent {
               ],
             })(<Input hidden={true} />)}
           </div>
-          <FormItem label="新密码" hasFeedback {...formItemLayout}>
+          <FormItem label="新密码" {...formItemLayout}>
             {getFieldDecorator('password', {
               initialValue: item.password,
               rules: [
@@ -65,7 +65,7 @@ class UserModal extends PureComponent {
               ],
             })(<Input.Password />)}
           </FormItem>
-          <FormItem label="确认密码" hasFeedback {...formItemLayout}>
+          <FormItem label="确认密码" {...formItemLayout}>
             {getFieldDecorator('againPassword', {
               initialValue: item.againPassword,
               rules: [

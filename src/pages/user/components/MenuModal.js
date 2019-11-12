@@ -16,7 +16,7 @@ const formItemLayout = {
 @Form.create()
 class MenuModal extends PureComponent {
   handleOk = () => {
-    const { item = {}, onOk, form } = this.props
+    const { item = {}, onOk, form, userId } = this.props
     const { validateFields, getFieldsValue } = form
 
     validateFields(errors => {
@@ -27,26 +27,22 @@ class MenuModal extends PureComponent {
         ...getFieldsValue(),
         key: item.key,
       }
-      console.log(data)
+      console.log(item)
+      data.userId = item.userId
+      data.menuIds = this.state.checkedKeys
       onOk(data)
     })
   }
   state = {
-    menuIds: [],
+    checkedKeys: [],
   }
-
+  componentWillReceiveProps(nextProps, nextContext) {
+    console.log(nextProps.item)
+    this.setState({ checkedKeys: nextProps.item.menuIds })
+  }
   onCheck = (checkedKeys, e) => {
-    console.log('onCheck', checkedKeys)
-    console.log('onCheck', e)
-    let checkedNodes = e.checkedNodes
-    let menuIds = []
-    for (let i = 0; i < checkedNodes.length; i++) {
-      const checkedNode = checkedNodes[i]
-
-      let value = checkedNode.props.dataRef.value
-      menuIds[i] = value
-    }
-    this.setState({ menuIds: menuIds })
+    this.setState({ checkedKeys })
+    this.props.item.menuIds = checkedKeys
   }
 
   renderTreeNodes = data =>
@@ -74,32 +70,18 @@ class MenuModal extends PureComponent {
     return (
       <Modal {...menuModalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          {getFieldDecorator('userId', {
-            initialValue: userId,
-            rules: [
-              {
-                required: true,
-              },
-            ],
-          })(<Input hidden={false} />)}
-          <FormItem label="系统菜单" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('menuIds', {
-              initialValue: this.state.menuIds,
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(
+          <FormItem label="系统菜单" {...formItemLayout}>
+            {
               <Tree
                 checkable
+                checkedKeys={this.state.checkedKeys}
                 defaultExpandAll={true}
                 autoExpandParent={true}
                 onCheck={this.onCheck}
               >
                 {this.renderTreeNodes(treeData)}
               </Tree>
-            )}
+            }
           </FormItem>
         </Form>
       </Modal>

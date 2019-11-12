@@ -81,13 +81,19 @@ class Category extends PureComponent {
       },
       onEditItem(item) {
         dispatch({
+          type: 'category/showModal',
+          payload: {
+            modalType: 'update',
+          },
+        })
+        dispatch({
           type: 'category/getCategoryList',
           payload: {},
-        }),
-          dispatch({
-            type: 'category/get',
-            payload: item.id,
-          })
+        })
+        dispatch({
+          type: 'category/get',
+          payload: item.id,
+        })
       },
       rowSelection: {
         selectedRowKeys,
@@ -116,13 +122,13 @@ class Category extends PureComponent {
         dispatch({
           type: 'category/getCategoryList',
           payload: {},
-        }),
-          dispatch({
-            type: 'category/showModal',
-            payload: {
-              modalType: 'create',
-            },
-          })
+        })
+        dispatch({
+          type: 'category/showModal',
+          payload: {
+            modalType: 'create',
+          },
+        })
       },
     }
 

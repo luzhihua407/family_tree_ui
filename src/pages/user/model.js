@@ -1,4 +1,3 @@
-/* global window */
 import modelExtend from 'dva-model-extend'
 import { pathMatchRegexp } from 'utils'
 import api from 'api'
@@ -15,6 +14,7 @@ const {
   resetPassword,
   configMenu,
   getMenuTree,
+  getUserMenuByUserId,
 } = api
 
 export default modelExtend(pageModel, {
@@ -49,9 +49,10 @@ export default modelExtend(pageModel, {
 
   effects: {
     *query({ payload }, { call, put }) {
-      const data = yield call(queryUserList, payload)
-      if (data) {
-        let { pageNumber, pageSize, result, total } = data.data
+      const result = yield call(queryUserList, payload)
+      const { success, data } = result
+      if (success) {
+        let { pageNumber, pageSize, result, total } = data
         yield put({
           type: 'querySuccess',
           payload: {
@@ -146,6 +147,18 @@ export default modelExtend(pageModel, {
       const resp = yield call(configMenu, payload)
       if (resp.success) {
         yield put({ type: 'hideMenuModal' })
+      } else {
+        throw resp
+      }
+    },
+
+    *getUserMenuByUserId({ payload }, { call, put, select }) {
+      const resp = yield call(getUserMenuByUserId, { userId: payload })
+      if (resp.success) {
+        yield put({
+          type: 'updateState',
+          payload: { currentItem: resp.data },
+        })
       } else {
         throw resp
       }

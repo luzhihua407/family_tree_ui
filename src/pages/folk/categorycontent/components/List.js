@@ -16,10 +16,7 @@ class List extends PureComponent {
     if (e === '1') {
       onEditItem(record)
     } else if (e === '2') {
-      console.log('/folk/categorycontent/:id')
-      console.log('/folk/categorycontent/' + record.id)
-      console.log('/folk/categorycontent/:id')
-      router.replace('/folk/categorycontent/' + record.id)
+      router.replace('/folk/categoryContent/' + record.id)
     } else if (e === '3') {
       confirm({
         title: '你确定要删除这条记录吗？',
@@ -39,9 +36,9 @@ class List extends PureComponent {
         dataIndex: 'title',
         key: 'title',
         width: '20%',
-        render: (text, record) => (
-          <Link to={`categorycontent/${record.id}`}>{text}</Link>
-        ),
+        // render: (text, record) => (
+        //   <Link to={`categoryContent/${record.id}`}>{text}</Link>
+        // ),
       },
       {
         title: '子标题',
@@ -53,7 +50,7 @@ class List extends PureComponent {
         title: '类别',
         dataIndex: 'categoryName',
         key: 'categoryName',
-        width: '10%',
+        width: '20%',
       },
       {
         title: '创建时间',
@@ -67,12 +64,12 @@ class List extends PureComponent {
         key: 'valid',
         width: '10%',
       },
-      {
-        title: '备注',
-        dataIndex: 'remark',
-        key: 'remark',
-        width: '20%',
-      },
+      // {
+      //   title: '备注',
+      //   dataIndex: 'remark',
+      //   key: 'remark',
+      //   width: '20%',
+      // },
       {
         title: '操作',
         key: 'operation',

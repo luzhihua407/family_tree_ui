@@ -11,7 +11,7 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(({ pathname }) => {
-        const match = pathMatchRegexp('/folk/categorycontent/:id', pathname)
+        const match = pathMatchRegexp('/folk/categoryContent/:id', pathname)
         if (match) {
           dispatch({ type: 'view', payload: { id: match[1] } })
         }

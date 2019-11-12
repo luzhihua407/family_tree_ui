@@ -50,7 +50,7 @@ class RelationshipModal extends PureComponent {
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label="丈夫" hasFeedback {...formItemLayout}>
+          <FormItem label="丈夫" {...formItemLayout}>
             {getFieldDecorator('husband', {
               initialValue: item.husband,
               rules: [
@@ -75,7 +75,7 @@ class RelationshipModal extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <FormItem label="妻子" hasFeedback {...formItemLayout}>
+          <FormItem label="妻子" {...formItemLayout}>
             {getFieldDecorator('wife', {
               initialValue: item.wife,
               rules: [
@@ -100,7 +100,7 @@ class RelationshipModal extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <FormItem label="孩子" hasFeedback {...formItemLayout}>
+          <FormItem label="孩子" {...formItemLayout}>
             {getFieldDecorator('children', {
               initialValue: item.children,
               rules: [

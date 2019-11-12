@@ -29,10 +29,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        console.log('query')
-        console.log(location.pathname)
-        if (pathMatchRegexp('/folk/categorycontent', location.pathname)) {
-          // console.log(pathMatchRegexp('/folk/categorycontent', location.pathname))
+        if (pathMatchRegexp('/folk/categoryContent', location.pathname)) {
           const payload = location.query || {
             page: 1,
             pageSize: 10,
@@ -49,9 +46,10 @@ export default modelExtend(pageModel, {
 
   effects: {
     *query({ payload }, { call, put }) {
-      const data = yield call(queryCategoryContentByPage, payload)
-      if (data) {
-        let { pageNumber, pageSize, total, result } = data.data
+      const result = yield call(queryCategoryContentByPage, payload)
+      const { success, message, status, data } = result
+      if (success) {
+        let { pageNumber, pageSize, total, result } = data
         yield put({
           type: 'querySuccess',
           payload: {

@@ -54,7 +54,7 @@ class CategoryModal extends PureComponent {
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label="类别" hasFeedback {...formItemLayout}>
+          <FormItem label="类别" {...formItemLayout}>
             {getFieldDecorator('categoryId', {
               initialValue: item.categoryId,
               rules: [
@@ -75,7 +75,7 @@ class CategoryModal extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <FormItem label="启用" hasFeedback {...formItemLayout}>
+          <FormItem label="启用" {...formItemLayout}>
             {getFieldDecorator('valid', {
               initialValue: item.valid == null ? '是' : item.valid,
               rules: [
@@ -90,7 +90,7 @@ class CategoryModal extends PureComponent {
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label="标题" hasFeedback {...formItemLayout}>
+          <FormItem label="标题" {...formItemLayout}>
             {getFieldDecorator('title', {
               initialValue: item.title,
               rules: [
@@ -100,7 +100,7 @@ class CategoryModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="子标题" hasFeedback {...formItemLayout}>
+          <FormItem label="子标题" {...formItemLayout}>
             {getFieldDecorator('subTitle', {
               initialValue: item.subTitle,
               rules: [
@@ -110,7 +110,7 @@ class CategoryModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="内容" hasFeedback {...formItemLayout}>
+          <FormItem label="内容" {...formItemLayout}>
             {getFieldDecorator('content', {
               initialValue: item.content,
               rules: [

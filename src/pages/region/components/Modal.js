@@ -37,7 +37,7 @@ class RegionModal extends PureComponent {
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label="区号" hasFeedback {...formItemLayout}>
+          <FormItem label="区号" {...formItemLayout}>
             {getFieldDecorator('areaCode', {
               initialValue: item.areaCode,
               rules: [
@@ -47,7 +47,7 @@ class RegionModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="编码" hasFeedback {...formItemLayout}>
+          <FormItem label="编码" {...formItemLayout}>
             {getFieldDecorator('code', {
               initialValue: item.code,
               rules: [
@@ -57,7 +57,7 @@ class RegionModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="名称" hasFeedback {...formItemLayout}>
+          <FormItem label="名称" {...formItemLayout}>
             {getFieldDecorator('name', {
               initialValue: item.name,
               rules: [
@@ -67,7 +67,7 @@ class RegionModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="地区简称" hasFeedback {...formItemLayout}>
+          <FormItem label="地区简称" {...formItemLayout}>
             {getFieldDecorator('shortName', {
               initialValue: item.shortName,
               rules: [
@@ -77,7 +77,7 @@ class RegionModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="地区全称" hasFeedback {...formItemLayout}>
+          <FormItem label="地区全称" {...formItemLayout}>
             {getFieldDecorator('fullName', {
               initialValue: item.fullName,
               rules: [
@@ -87,7 +87,7 @@ class RegionModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="邮政编码" hasFeedback {...formItemLayout}>
+          <FormItem label="邮政编码" {...formItemLayout}>
             {getFieldDecorator('postCode', {
               initialValue: item.postCode,
               rules: [
@@ -97,7 +97,7 @@ class RegionModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="备注" hasFeedback {...formItemLayout}>
+          <FormItem label="备注" {...formItemLayout}>
             {getFieldDecorator('remark', {
               initialValue: item.remark,
               rules: [
@@ -107,7 +107,7 @@ class RegionModal extends PureComponent {
               ],
             })(<Input.TextArea rows={6} />)}
           </FormItem>
-          <FormItem label="启用" hasFeedback {...formItemLayout}>
+          <FormItem label="启用" {...formItemLayout}>
             {getFieldDecorator('valid', {
               initialValue: item.valid == null ? '是' : item.valid,
               rules: [

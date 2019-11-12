@@ -99,7 +99,7 @@ class RelationshipModal extends PureComponent {
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label="丈夫" hasFeedback {...formItemLayout}>
+          <FormItem label="丈夫" {...formItemLayout}>
             {getFieldDecorator('husbandId', {
               initialValue: item.husbandId,
               rules: [
@@ -123,7 +123,7 @@ class RelationshipModal extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <FormItem label="妻子" hasFeedback {...formItemLayout}>
+          <FormItem label="妻子" {...formItemLayout}>
             {getFieldDecorator('wifeId', {
               initialValue: item.wifeId,
               rules: [
@@ -147,7 +147,7 @@ class RelationshipModal extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <FormItem label="孩子" hasFeedback {...formItemLayout}>
+          <FormItem label="孩子" {...formItemLayout}>
             {getFieldDecorator('childrenIds', {
               initialValue: item.childrenIds,
               rules: [

@@ -102,7 +102,7 @@ class PeopleModal extends PureComponent {
       onOk,
       form,
       i18n,
-      educationListData,
+      educationListData = [],
       prodTeamListData = [],
       branchListData = [],
       ...modalProps

@@ -47,7 +47,7 @@ class CategoryModal extends PureComponent {
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label="名称" hasFeedback {...formItemLayout}>
+          <FormItem label="名称" {...formItemLayout}>
             {getFieldDecorator('name', {
               initialValue: item.name,
               rules: [
@@ -57,7 +57,7 @@ class CategoryModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="父级" hasFeedback {...formItemLayout}>
+          <FormItem label="父级" {...formItemLayout}>
             {getFieldDecorator('parentId', {
               initialValue: item.parentId,
               rules: [
@@ -78,7 +78,7 @@ class CategoryModal extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <FormItem label="备注" hasFeedback {...formItemLayout}>
+          <FormItem label="备注" {...formItemLayout}>
             {getFieldDecorator('remark', {
               initialValue: item.remark,
               rules: [
@@ -88,7 +88,7 @@ class CategoryModal extends PureComponent {
               ],
             })(<Input.TextArea rows={6} />)}
           </FormItem>
-          <FormItem label="启用" hasFeedback {...formItemLayout}>
+          <FormItem label="启用" {...formItemLayout}>
             {getFieldDecorator('valid', {
               initialValue: item.valid == null ? '是' : item.valid,
               rules: [

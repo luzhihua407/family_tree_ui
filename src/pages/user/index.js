@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { router } from 'utils'
 import { connect } from 'dva'
 import { Row, Col, Button, Popconfirm } from 'antd'
 import { withI18n } from '@lingui/react'
@@ -31,6 +30,7 @@ class User extends PureComponent {
       rolesData,
       userId,
       treeData,
+      menuIds,
     } = user
 
     const handleRefresh = newQuery => {
@@ -94,6 +94,7 @@ class User extends PureComponent {
       confirmLoading: loading.effects[`user/${modalType}`],
       title: `分配菜单`,
       centered: true,
+      menuIds,
       onOk(data) {
         dispatch({
           type: `user/configMenu`,
@@ -159,29 +160,35 @@ class User extends PureComponent {
           payload: {
             userId: userId,
           },
-        }),
-          dispatch({
-            type: 'user/showResetPasswordModal',
-            payload: {
-              modalType: 'create',
-            },
-          })
+        })
+        dispatch({
+          type: 'user/showResetPasswordModal',
+          payload: {
+            modalType: 'create',
+          },
+        })
       },
       onConfigMenu(userId) {
+        // dispatch({
+        //   type: 'user/updateState',
+        //   payload: {
+        //     userId: userId,
+        //   },
+        // }),
         dispatch({
-          type: 'user/updateState',
+          type: 'user/showMenuModal',
           payload: {
-            userId: userId,
+            modalType: 'create',
           },
-        }),
-          dispatch({
-            type: 'user/showMenuModal',
-            payload: {
-              modalType: 'create',
-            },
-          })
+        })
+
         dispatch({
-          type: 'user/getMenuTree',
+          type: 'user/getUserMenuByUserId',
+          payload: userId,
+        }).then(() => {
+          dispatch({
+            type: 'user/getMenuTree',
+          })
         })
       },
     }

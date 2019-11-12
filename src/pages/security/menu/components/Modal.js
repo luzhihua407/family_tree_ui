@@ -46,7 +46,7 @@ class MenuModal extends PureComponent {
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label="菜单编码" hasFeedback {...formItemLayout}>
+          <FormItem label="菜单编码" {...formItemLayout}>
             {getFieldDecorator('code', {
               initialValue: item.code,
               rules: [
@@ -56,7 +56,7 @@ class MenuModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="菜单名称" hasFeedback {...formItemLayout}>
+          <FormItem label="菜单名称" {...formItemLayout}>
             {getFieldDecorator('name', {
               initialValue: item.name,
               rules: [
@@ -66,7 +66,7 @@ class MenuModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="图标" hasFeedback {...formItemLayout}>
+          <FormItem label="图标" {...formItemLayout}>
             {getFieldDecorator('icon', {
               initialValue: item.icon,
               rules: [
@@ -76,7 +76,7 @@ class MenuModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="类型" hasFeedback {...formItemLayout}>
+          <FormItem label="类型" {...formItemLayout}>
             {getFieldDecorator('type', {
               initialValue: item.type == null ? '菜单' : item.type,
               rules: [
@@ -92,7 +92,7 @@ class MenuModal extends PureComponent {
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label="路径" hasFeedback {...formItemLayout}>
+          <FormItem label="路径" {...formItemLayout}>
             {getFieldDecorator('url', {
               initialValue: item.url,
               rules: [
@@ -102,7 +102,7 @@ class MenuModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="上级菜单" hasFeedback {...formItemLayout}>
+          <FormItem label="上级菜单" {...formItemLayout}>
             {getFieldDecorator('parent', {
               initialValue: item.parent,
               rules: [
@@ -123,7 +123,7 @@ class MenuModal extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <FormItem label="启用" hasFeedback {...formItemLayout}>
+          <FormItem label="启用" {...formItemLayout}>
             {getFieldDecorator('valid', {
               initialValue: item.valid == null ? '否' : item.valid,
               rules: [
@@ -138,7 +138,7 @@ class MenuModal extends PureComponent {
               </Radio.Group>
             )}
           </FormItem>
-          <FormItem label="备注" hasFeedback {...formItemLayout}>
+          <FormItem label="备注" {...formItemLayout}>
             {getFieldDecorator('remark', {
               initialValue: item.remark,
               rules: [
@@ -148,7 +148,7 @@ class MenuModal extends PureComponent {
               ],
             })(<TextArea rows={3} />)}
           </FormItem>
-          <FormItem label="操作权限" hasFeedback {...formItemLayout}>
+          <FormItem label="操作权限" {...formItemLayout}>
             {getFieldDecorator('menuRights', {
               initialValue: item.menuRights,
               rules: [
