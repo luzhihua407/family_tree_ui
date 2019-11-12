@@ -68,6 +68,13 @@ export default {
   queryTreeByPage: 'POST /folk/people/tree',
   getFamilyTree: 'POST /folk/people/getFamilyTree',
 
+  queryVillage: 'GET /bs/village/get',
+  queryVillageList: 'POST /bs/village/page',
+  updateVillage: 'POST /bs/village/addOrUpdate',
+  createVillage: 'POST /bs/village/addOrUpdate',
+  removeVillage: 'POST /bs/village/delete',
+  removeVillageList: 'POST /bs/village/delete',
+
   queryDict: 'GET /basic/dict/get',
   queryDictList: 'POST /basic/dict/page',
   updateDict: 'POST /basic/dict/addOrUpdate',

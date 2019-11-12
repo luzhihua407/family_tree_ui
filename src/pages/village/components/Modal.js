@@ -14,7 +14,7 @@ const formItemLayout = {
 }
 @withI18n()
 @Form.create()
-class DictModal extends PureComponent {
+class VillageModal extends PureComponent {
   handleOk = () => {
     const { item = {}, onOk, form } = this.props
     const { validateFields, getFieldsValue } = form
@@ -32,40 +32,12 @@ class DictModal extends PureComponent {
   }
 
   render() {
-    const {
-      item = {},
-      onOk,
-      form,
-      i18n,
-      parentDictData,
-      ...modalProps
-    } = this.props
+    const { item = {}, onOk, form, i18n, ...modalProps } = this.props
     const { getFieldDecorator } = form
     return (
       <Modal {...modalProps} onOk={this.handleOk}>
         <Form layout="horizontal">
-          <FormItem label="上级目录" {...formItemLayout}>
-            {getFieldDecorator('parentId', {
-              initialValue: item.parentId,
-              rules: [
-                {
-                  required: false,
-                },
-              ],
-            })(
-              <Select
-                labelInValue={false}
-                placeholder="请选择"
-                style={{ width: '100%' }}
-                allowClear={true}
-              >
-                {parentDictData.map(d => (
-                  <Select.Option key={d.id}>{d.name}</Select.Option>
-                ))}
-              </Select>
-            )}
-          </FormItem>
-          <FormItem label="编码" {...formItemLayout}>
+          <FormItem label="乡村编码" {...formItemLayout}>
             {getFieldDecorator('code', {
               initialValue: item.code,
               rules: [
@@ -75,7 +47,7 @@ class DictModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="名称" {...formItemLayout}>
+          <FormItem label="乡村名称" {...formItemLayout}>
             {getFieldDecorator('name', {
               initialValue: item.name,
               rules: [
@@ -85,20 +57,19 @@ class DictModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="数值" {...formItemLayout}>
-            {getFieldDecorator('numValue', {
-              initialValue: item.numValue,
+          <FormItem label="地址" {...formItemLayout}>
+            {getFieldDecorator('address', {
+              initialValue: item.address,
               rules: [
                 {
-                  required: false,
-                  type: 'number',
+                  required: true,
                 },
               ],
             })(<InputNumber />)}
           </FormItem>
-          <FormItem label="字符值" {...formItemLayout}>
-            {getFieldDecorator('value', {
-              initialValue: item.value,
+          <FormItem label="经度" {...formItemLayout}>
+            {getFieldDecorator('longitude', {
+              initialValue: item.longitude,
               rules: [
                 {
                   required: false,
@@ -106,9 +77,9 @@ class DictModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="dis" {...formItemLayout}>
-            {getFieldDecorator('dis', {
-              initialValue: item.dis,
+          <FormItem label="纬度" {...formItemLayout}>
+            {getFieldDecorator('latitude', {
+              initialValue: item.latitude,
               rules: [
                 {
                   required: false,
@@ -147,10 +118,10 @@ class DictModal extends PureComponent {
   }
 }
 
-DictModal.propTypes = {
+VillageModal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
 }
 
-export default DictModal
+export default VillageModal
