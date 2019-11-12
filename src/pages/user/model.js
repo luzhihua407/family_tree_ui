@@ -22,6 +22,7 @@ export default modelExtend(pageModel, {
 
   state: {
     currentItem: {},
+    checkedMenus: {},
     modalVisible: false,
     resetPasswordModalVisible: false,
     menuModalVisible: false,
@@ -154,10 +155,12 @@ export default modelExtend(pageModel, {
 
     *getUserMenuByUserId({ payload }, { call, put, select }) {
       const resp = yield call(getUserMenuByUserId, { userId: payload })
+      console.log('response')
+      console.log(resp)
       if (resp.success) {
         yield put({
           type: 'updateState',
-          payload: { currentItem: resp.data },
+          payload: { checkedMenus: resp.data },
         })
       } else {
         throw resp

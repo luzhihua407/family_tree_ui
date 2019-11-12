@@ -27,8 +27,7 @@ class MenuModal extends PureComponent {
         ...getFieldsValue(),
         key: item.key,
       }
-      console.log(item)
-      data.userId = item.userId
+      data.userId = userId
       data.menuIds = this.state.checkedKeys
       onOk(data)
     })
@@ -37,7 +36,6 @@ class MenuModal extends PureComponent {
     checkedKeys: [],
   }
   componentWillReceiveProps(nextProps, nextContext) {
-    console.log(nextProps.item)
     this.setState({ checkedKeys: nextProps.item.menuIds })
   }
   onCheck = (checkedKeys, e) => {

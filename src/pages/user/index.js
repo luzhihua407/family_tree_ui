@@ -22,6 +22,7 @@ class User extends PureComponent {
       list,
       pagination,
       currentItem,
+      checkedMenus,
       modalVisible,
       resetPasswordModalVisible,
       menuModalVisible,
@@ -86,7 +87,7 @@ class User extends PureComponent {
       },
     }
     const menuModalProps = {
-      item: modalType === 'create' ? {} : currentItem,
+      item: modalType === 'create' ? {} : checkedMenus,
       visible: menuModalVisible,
       userId: userId,
       treeData: treeData,
@@ -169,16 +170,16 @@ class User extends PureComponent {
         })
       },
       onConfigMenu(userId) {
-        // dispatch({
-        //   type: 'user/updateState',
-        //   payload: {
-        //     userId: userId,
-        //   },
-        // }),
+        dispatch({
+          type: 'user/updateState',
+          payload: {
+            userId: userId,
+          },
+        })
         dispatch({
           type: 'user/showMenuModal',
           payload: {
-            modalType: 'create',
+            modalType: 'update',
           },
         })
 
