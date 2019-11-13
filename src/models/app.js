@@ -75,7 +75,7 @@ export default {
         })
         if (pathMatchRegexp(['/', '/login'], window.location.pathname)) {
           router.push({
-            pathname: '/user',
+            pathname: '/dashboard',
           })
         }
       } else if (queryLayout(config.layouts, locationPathname) !== 'public') {

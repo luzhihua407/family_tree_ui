@@ -99,5 +99,7 @@ export default {
   configMenu: 'POST /security/user_menu/addOrUpdate',
   getUserMenuByUserId: 'GET /security/user_menu/getUserMenuByUserId',
 
+  getOverview: 'GET /bs/village/getOverview',
+
   getNames: 'POST /folk/people/getNames',
 }

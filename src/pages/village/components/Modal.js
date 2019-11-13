@@ -65,7 +65,7 @@ class VillageModal extends PureComponent {
                   required: true,
                 },
               ],
-            })(<InputNumber />)}
+            })(<Input />)}
           </FormItem>
           <FormItem label="经度" {...formItemLayout}>
             {getFieldDecorator('longitude', {

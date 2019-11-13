@@ -4,6 +4,7 @@ import { connect } from 'dva'
 import { Row, Col, Card } from 'antd'
 import { Color } from 'utils'
 import { Page, ScrollBar } from 'components'
+import { Chart, Geom, Axis, Tooltip, Legend, Coord, Label } from 'bizcharts'
 import {
   NumberCard,
   Quote,
@@ -17,7 +18,7 @@ import {
   User,
 } from './components'
 import styles from './index.less'
-
+import DataSet from '@antv/data-set'
 const bodyStyle = {
   bodyStyle: {
     height: 432,
@@ -33,7 +34,9 @@ const bodyStyle = {
 }))
 class Dashboard extends PureComponent {
   render() {
+    const { DataView } = DataSet
     const { avatar, username, dashboard, loading } = this.props
+    console.log(this.props)
     const {
       weather,
       sales,
@@ -45,13 +48,16 @@ class Dashboard extends PureComponent {
       browser,
       cpu,
       user,
+      numByBranch,
+      numByGender,
+      numByEducation,
+      numByProTeam,
     } = dashboard
-
-    const numberCards = numbers.map((item, key) => (
-      <Col key={key} lg={6} md={12}>
-        <NumberCard {...item} />
-      </Col>
-    ))
+    const cols = {
+      num: {
+        tickInterval: 1,
+      },
+    }
 
     return (
       <Page
@@ -59,92 +65,107 @@ class Dashboard extends PureComponent {
         className={styles.dashboard}
       >
         <Row gutter={24}>
-          {numberCards}
-          <Col lg={18} md={24}>
+          <Col lg={8} md={24}>
             <Card
               bordered={false}
               bodyStyle={{
                 padding: '24px 36px 24px 0',
               }}
             >
-              <Sales data={sales} />
+              <Chart height={200} data={numByEducation} scale={cols} forceFit>
+                <Axis name="name" />
+                <Axis name="num" />
+                <Tooltip
+                  showTitle={false}
+                  itemTpl='<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}人</li>'
+                />
+                <Geom type="interval" position="name*num" color="name" />
+              </Chart>
             </Card>
           </Col>
-          <Col lg={6} md={24}>
-            <Row gutter={24}>
-              <Col lg={24} md={12}>
-                <Card
-                  bordered={false}
-                  className={styles.weather}
-                  bodyStyle={{
-                    padding: 0,
-                    height: 204,
-                    background: Color.blue,
-                  }}
-                >
-                  <Weather
-                    {...weather}
-                    loading={loading.effects['dashboard/queryWeather']}
-                  />
-                </Card>
-              </Col>
-              <Col lg={24} md={12}>
-                <Card
-                  bordered={false}
-                  className={styles.quote}
-                  bodyStyle={{
-                    padding: 0,
-                    height: 204,
-                    background: Color.peach,
-                  }}
-                >
-                  <ScrollBar>
-                    <Quote {...quote} />
-                  </ScrollBar>
-                </Card>
-              </Col>
-            </Row>
-          </Col>
-          <Col lg={12} md={24}>
-            <Card bordered={false} {...bodyStyle}>
-              <RecentSales data={recentSales} />
-            </Card>
-          </Col>
-          <Col lg={12} md={24}>
-            <Card bordered={false} {...bodyStyle}>
-              <ScrollBar>
-                <Comments data={comments} />
-              </ScrollBar>
-            </Card>
-          </Col>
-          <Col lg={24} md={24}>
+          <Col lg={8} md={24}>
             <Card
               bordered={false}
               bodyStyle={{
                 padding: '24px 36px 24px 0',
               }}
             >
-              <Completed data={completed} />
-            </Card>
-          </Col>
-          <Col lg={8} md={24}>
-            <Card bordered={false} {...bodyStyle}>
-              <Browser data={browser} />
-            </Card>
-          </Col>
-          <Col lg={8} md={24}>
-            <Card bordered={false} {...bodyStyle}>
-              <ScrollBar>
-                <Cpu {...cpu} />
-              </ScrollBar>
+              <Chart height={200} data={numByProTeam} scale={cols} forceFit>
+                <Axis name="name" />
+                <Axis name="num" />
+                <Tooltip
+                  showTitle={false}
+                  itemTpl='<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}人</li>'
+                />
+                <Geom type="interval" position="name*num" color="name" />
+              </Chart>
             </Card>
           </Col>
           <Col lg={8} md={24}>
             <Card
               bordered={false}
-              bodyStyle={{ ...bodyStyle.bodyStyle, padding: 0 }}
+              bodyStyle={{
+                padding: '24px 36px 24px 0',
+              }}
             >
-              <User {...user} avatar={avatar} username={username} />
+              <Chart
+                height={200}
+                data={numByGender}
+                // scale={}
+                forceFit
+              >
+                <Coord type="theta" radius={1} />
+                <Axis name="num" />
+                <Legend
+                  position="right"
+                  offsetY={-window.innerHeight / 2 + 120}
+                  offsetX={-100}
+                />
+                <Tooltip
+                  showTitle={false}
+                  itemTpl='<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}人</li>'
+                />
+                <Geom
+                  type="intervalStack"
+                  position="num"
+                  color="gender"
+                  style={{
+                    lineWidth: 1,
+                    stroke: '#fff',
+                  }}
+                >
+                  <Label content="gender" />
+                </Geom>
+              </Chart>
+            </Card>
+          </Col>
+        </Row>
+        <Row gutter={24}>
+          <Col lg={24} md={12}>
+            <Card
+              bordered={true}
+              bodyStyle={{
+                padding: '24px 36px 24px 0',
+              }}
+            >
+              <Chart
+                height={200}
+                data={numByBranch}
+                scale={{
+                  num: {
+                    tickInterval: 10,
+                  },
+                }}
+                forceFit
+              >
+                <Axis name="name" />
+                <Axis name="num" />
+                <Tooltip
+                  showTitle={false}
+                  itemTpl='<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}人</li>'
+                />
+                <Geom type="interval" position="name*num" color="name" />
+              </Chart>
             </Card>
           </Col>
         </Row>
