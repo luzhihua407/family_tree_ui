@@ -19,6 +19,7 @@ import {
 } from './components'
 import styles from './index.less'
 import DataSet from '@antv/data-set'
+import VillageProfile from './components/village-profile'
 const bodyStyle = {
   bodyStyle: {
     height: 432,
@@ -36,18 +37,8 @@ class Dashboard extends PureComponent {
   render() {
     const { DataView } = DataSet
     const { avatar, username, dashboard, loading } = this.props
-    console.log(this.props)
     const {
-      weather,
-      sales,
-      quote,
-      numbers,
-      recentSales,
-      comments,
-      completed,
-      browser,
-      cpu,
-      user,
+      villageInfo,
       numByBranch,
       numByGender,
       numByEducation,
@@ -65,6 +56,16 @@ class Dashboard extends PureComponent {
         className={styles.dashboard}
       >
         <Row gutter={24}>
+          <Col lg={8} md={24}>
+            <Card
+              bordered={false}
+              bodyStyle={{
+                padding: '24px 36px 24px 0',
+              }}
+            >
+              <VillageProfile data={villageInfo} />
+            </Card>
+          </Col>
           <Col lg={8} md={24}>
             <Card
               bordered={false}

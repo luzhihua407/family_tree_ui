@@ -1,5 +1,5 @@
 import NumberCard from './numberCard'
-import Quote from './quote'
+import Quote from './village-profile'
 import Sales from './sales'
 import Weather from './weather'
 import RecentSales from './recentSales'

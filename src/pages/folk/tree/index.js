@@ -58,16 +58,16 @@ class Tree extends PureComponent {
               >
                 <Icon type="eye" />
               </button>
-              <button
-                key="2"
-                className=""
-                onClick={event => {
-                  event.stopPropagation()
-                  this.onAdd()
-                }}
-              >
-                <Icon type="form" />
-              </button>
+              {/*<button*/}
+              {/*  key="2"*/}
+              {/*  className=""*/}
+              {/*  onClick={event => {*/}
+              {/*    event.stopPropagation()*/}
+              {/*    this.onAdd()*/}
+              {/*  }}*/}
+              {/*>*/}
+              {/*  <Icon type="form" />*/}
+              {/*</button>*/}
             </>
           )
         },

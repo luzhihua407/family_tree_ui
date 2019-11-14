@@ -4,7 +4,7 @@ import api from 'api'
 import { pathMatchRegexp } from 'utils'
 import { model } from 'utils/model'
 
-const { queryDashboard, queryWeather, getOverview } = api
+const { queryDashboard, queryWeather, getOverview, getCurrentVillage } = api
 
 export default modelExtend(model, {
   namespace: 'dashboard',
@@ -22,6 +22,7 @@ export default modelExtend(model, {
           pathMatchRegexp('/', pathname)
         ) {
           dispatch({ type: 'getOverview' })
+          dispatch({ type: 'getCurrentVillage' })
         }
       })
     },
@@ -34,6 +35,16 @@ export default modelExtend(model, {
         yield put({
           type: 'updateState',
           payload: rs,
+        })
+      }
+    },
+    *getCurrentVillage({ payload }, { call, put }) {
+      const data = yield call(getCurrentVillage, parse(payload))
+      if (data.success) {
+        const rs = data.data
+        yield put({
+          type: 'updateState',
+          payload: { villageInfo: rs },
         })
       }
     },

@@ -69,6 +69,7 @@ export default {
   getFamilyTree: 'POST /folk/people/getFamilyTree',
 
   queryVillage: 'GET /bs/village/get',
+  getCurrentVillage: 'GET /bs/village/getCurrentVillage',
   queryVillageList: 'POST /bs/village/page',
   updateVillage: 'POST /bs/village/addOrUpdate',
   createVillage: 'POST /bs/village/addOrUpdate',
@@ -102,4 +103,6 @@ export default {
   getOverview: 'GET /bs/village/getOverview',
 
   getNames: 'POST /folk/people/getNames',
+
+  signup: 'POST //usercenter/user/signup',
 }

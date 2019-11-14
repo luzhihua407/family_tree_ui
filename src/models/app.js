@@ -57,6 +57,7 @@ export default {
   },
   effects: {
     *query({ payload }, { call, put, select }) {
+      console.log(11111111)
       const {
         success,
         data: { menus, user, permission },
@@ -79,12 +80,16 @@ export default {
           })
         }
       } else if (queryLayout(config.layouts, locationPathname) !== 'public') {
-        router.push({
-          pathname: '/login',
-          search: stringify({
-            from: locationPathname,
-          }),
-        })
+        if (locationPathname == '/signup') {
+          router.push({ pathname: '/signup' })
+        } else {
+          router.push({
+            pathname: '/login',
+            search: stringify({
+              from: locationPathname,
+            }),
+          })
+        }
       }
     },
 
