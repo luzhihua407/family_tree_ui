@@ -41,7 +41,7 @@ class Layout extends Component {
   loadCatalog = async language => {
     const catalog = await import(
       /* webpackMode: "lazy", webpackChunkName: "i18n-[index]" */
-      `@lingui/loader!../locales/${language}/messages.json`
+      `@lingui/loader!../locales/zh/messages.json`
     )
 
     this.setState(state => ({

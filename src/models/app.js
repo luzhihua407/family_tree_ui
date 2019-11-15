@@ -57,7 +57,6 @@ export default {
   },
   effects: {
     *query({ payload }, { call, put, select }) {
-      console.log(11111111)
       const {
         success,
         data: { menus, user, permission },
@@ -75,21 +74,18 @@ export default {
           },
         })
         if (pathMatchRegexp(['/', '/login'], window.location.pathname)) {
+          console.log('login')
           router.push({
             pathname: '/dashboard',
           })
         }
       } else if (queryLayout(config.layouts, locationPathname) !== 'public') {
-        if (locationPathname == '/signup') {
-          router.push({ pathname: '/signup' })
-        } else {
-          router.push({
-            pathname: '/login',
-            search: stringify({
-              from: locationPathname,
-            }),
-          })
-        }
+        router.push({
+          pathname: '/login',
+          search: stringify({
+            from: locationPathname,
+          }),
+        })
       }
     },
 

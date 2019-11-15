@@ -10,7 +10,11 @@ module.exports = {
     {
       name: 'primary',
       include: [/.*/],
-      exlude: [/(\/(en|zh))*\/login/],
+      exlude: [
+        /(\/(en|zh))*\/login/,
+        /(\/(en|zh))*\/signup/,
+        /(\/(en|zh))*\/forgotPassword/,
+      ],
     },
   ],
 

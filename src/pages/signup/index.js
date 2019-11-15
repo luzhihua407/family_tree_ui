@@ -3,46 +3,25 @@ import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Row, Col, Button, Select, Input, Spin, Form } from 'antd'
 import { withI18n } from '@lingui/react'
-import { Page } from 'components'
 import styles from '../login/index.less'
 import { GlobalFooter } from 'ant-design-pro'
 const { Option } = Select
 const FormItem = Form.Item
-
-const formItemLayout = {
-  labelCol: {
-    span: 6,
-  },
-  wrapperCol: {
-    span: 14,
-  },
-}
+import { Link } from 'umi'
 @withI18n()
-@connect(({ signup, loading }) => ({ signup, loading }))
+@connect(({ signUp, loading }) => ({ signUp, loading }))
 @Form.create()
-class Signup extends PureComponent {
+class SignUp extends PureComponent {
   state = {
     data: [],
     value: [],
   }
   fetchUser = value => {
-    console.log('fetching user', value)
-    this.lastFetchId += 1
-    const fetchId = this.lastFetchId
-    this.setState({ data: [], fetching: true })
-    fetch('https://randomuser.me/api/?results=5')
-      .then(response => response.json())
-      .then(body => {
-        if (fetchId !== this.lastFetchId) {
-          // for fetch callback order
-          return
-        }
-        const data = body.results.map(user => ({
-          text: `${user.name.first} ${user.name.last}`,
-          value: user.login.username,
-        }))
-        this.setState({ data, fetching: false })
-      })
+    const { dispatch } = this.props
+    dispatch({
+      type: 'signUp/getVillageName',
+      payload: { name: value },
+    })
   }
   handleOk = () => {
     const { item = {}, onOk, form, dispatch } = this.props
@@ -56,20 +35,24 @@ class Signup extends PureComponent {
         ...getFieldsValue(),
         key: item.key,
       }
-      dispatch({ type: 'signup/signup', payload: data })
+      dispatch({ type: 'signUp/signUp', payload: data })
     })
   }
 
   render() {
-    const { location, dispatch, signup, loading, form } = this.props
+    const { location, dispatch, signUp, loading, form } = this.props
     const { query, pathname } = location
     const { getFieldDecorator } = form
     const { fetching, data, value } = this.state
+    this.setState({ data: signUp.data })
     return (
       <Fragment>
         <div className={styles.form}>
-          <Form layout="horizontal">
-            <FormItem label="登录名" {...formItemLayout}>
+          <Form>
+            <Row>
+              <Link to={'/login'}>返回登录</Link>
+            </Row>
+            <FormItem label="用户名">
               {getFieldDecorator('username', {
                 rules: [
                   {
@@ -78,7 +61,7 @@ class Signup extends PureComponent {
                 ],
               })(<Input />)}
             </FormItem>
-            <FormItem label="邮箱" {...formItemLayout}>
+            <FormItem label="邮箱">
               {getFieldDecorator('email', {
                 rules: [
                   {
@@ -87,7 +70,7 @@ class Signup extends PureComponent {
                 ],
               })(<Input placeholder="请输入用来激活账户的邮箱" />)}
             </FormItem>
-            <FormItem label="登录密码" {...formItemLayout}>
+            <FormItem label="密码">
               {getFieldDecorator('password', {
                 rules: [
                   {
@@ -102,7 +85,7 @@ class Signup extends PureComponent {
                 />
               )}
             </FormItem>
-            <FormItem label="村名" {...formItemLayout}>
+            <FormItem label="村名">
               {getFieldDecorator('villageName', {
                 rules: [
                   {
@@ -111,18 +94,16 @@ class Signup extends PureComponent {
                 ],
               })(
                 <Select
-                  mode="multiple"
-                  labelInValue
+                  showSearch
                   value={value}
                   placeholder="请选择村名，如搜索不到则新建输入的村名"
-                  notFoundContent={fetching ? <Spin size="small" /> : null}
+                  notFoundContent={null}
                   filterOption={false}
                   onSearch={this.fetchUser}
-                  onChange={this.handleChange}
                   style={{ width: '100%' }}
                 >
                   {data.map(d => (
-                    <Option key={d.value}>{d.text}</Option>
+                    <Option key={d}>{d}</Option>
                   ))}
                 </Select>
               )}
@@ -143,11 +124,11 @@ class Signup extends PureComponent {
   }
 }
 
-Signup.propTypes = {
-  signup: PropTypes.object,
+SignUp.propTypes = {
+  signUp: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default Signup
+export default SignUp

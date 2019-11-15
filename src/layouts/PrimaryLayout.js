@@ -75,10 +75,8 @@ class PrimaryLayout extends PureComponent {
     const currentRoute = newRouteList.find(
       _ => _.route && pathMatchRegexp(_.route, location.pathname)
     )
-
     // Query whether you have permission to enter this page
     const hasPermission = currentRoute ? true : false
-
     // MenuParentId is equal to -1 is not a available menu.
 
     const menus = newRouteList.filter(_ => _.menuParentId !== '-1')

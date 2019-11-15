@@ -25,7 +25,6 @@ class BaseLayout extends PureComponent {
   render() {
     const { loading, children, location } = this.props
     const Container = LayoutMap[queryLayout(config.layouts, location.pathname)]
-
     const currentPath = location.pathname + location.search
     if (currentPath !== this.previousPath) {
       NProgress.start()

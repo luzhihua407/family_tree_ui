@@ -3,35 +3,22 @@ import api from 'api'
 import { pageModel } from 'utils/model'
 import router from 'umi/router'
 import { message } from 'antd'
-const { signUp, getVillageName } = api
+const { forgotPassword, getVillageName } = api
 
 export default modelExtend(pageModel, {
-  namespace: 'signUp',
+  namespace: 'forgotPassword',
 
   state: { data: [] },
 
   effects: {
-    *signUp({ payload }, { call, put }) {
-      const result = yield call(signUp, payload)
+    *forgotPassword({ payload }, { call, put }) {
+      const result = yield call(forgotPassword, payload)
       const { success, data, msg } = result
       if (success) {
         message.info('注册成功，正在跳转到登录页')
         router.push('/login')
       } else {
         message.error(msg)
-      }
-    },
-    *getVillageName({ payload }, { call, put }) {
-      const result = yield call(getVillageName, payload)
-      const { success, data, msg } = result
-
-      if (success) {
-        yield put({
-          type: 'updateState',
-          payload: {
-            data: data,
-          },
-        })
       }
     },
   },

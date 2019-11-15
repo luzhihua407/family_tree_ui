@@ -75,6 +75,7 @@ export default {
   createVillage: 'POST /bs/village/addOrUpdate',
   removeVillage: 'POST /bs/village/delete',
   removeVillageList: 'POST /bs/village/delete',
+  getVillageName: 'GET /SignUp/getVillageName',
 
   queryDict: 'GET /basic/dict/get',
   queryDictList: 'POST /basic/dict/page',
@@ -104,5 +105,6 @@ export default {
 
   getNames: 'POST /folk/people/getNames',
 
-  signup: 'POST //usercenter/user/signup',
+  signUp: 'POST /SignUp/signUp',
+  forgotPassword: 'POST /SignUp/forgotPassword',
 }

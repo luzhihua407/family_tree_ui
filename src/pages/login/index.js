@@ -8,6 +8,7 @@ import { setLocale } from 'utils'
 import config from 'utils/config'
 
 import styles from './index.less'
+import { Link } from 'umi'
 const FormItem = Form.Item
 
 @withI18n()
@@ -96,6 +97,14 @@ class Login extends PureComponent {
               >
                 登录
               </Button>
+              <p>
+                <span>
+                  <Link to={'/signup'}>我要注册</Link>
+                </span>
+                <span>
+                  <Link to={'/forgotPassword'}>找回密码</Link>
+                </span>
+              </p>
             </Row>
           </form>
         </div>
