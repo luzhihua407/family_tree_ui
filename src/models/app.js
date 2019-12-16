@@ -26,17 +26,18 @@ export default {
     notifications: [],
   },
   subscriptions: {
-    setupHistory({ dispatch, history }) {
-      history.listen(location => {
-        dispatch({
-          type: 'updateState',
-          payload: {
-            locationPathname: location.pathname,
-            locationQuery: location.query,
-          },
-        })
-      })
-    },
+    // setupHistory({ dispatch, history }) {
+    //   history.listen(location => {
+    //     console.log(location)
+    //     dispatch({
+    //       type: 'updateState',
+    //       payload: {
+    //         locationPathname: location.pathname,
+    //         locationQuery: location.query,
+    //       },
+    //     })
+    //   })
+    // },
 
     setupRequestCancel({ history }) {
       history.listen(() => {

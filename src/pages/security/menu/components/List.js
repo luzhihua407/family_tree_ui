@@ -95,7 +95,7 @@ class List extends PureComponent {
                   onClick={e => this.handleMenuClick(record, '1')}
                   size={'small'}
                 >
-                  更新
+                  修改
                 </Button>
               )}
               {isAllowed('menu.delete') && (

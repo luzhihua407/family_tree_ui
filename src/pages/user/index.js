@@ -47,7 +47,7 @@ class User extends PureComponent {
       maskClosable: false,
       confirmLoading: loading.effects[`user/${modalType}`],
       rolesData: rolesData,
-      title: `${modalType === 'create' ? '创建用户' : '更新用户'}`,
+      title: `${modalType === 'create' ? '创建用户' : '修改用户'}`,
       centered: true,
       onOk(data) {
         dispatch({

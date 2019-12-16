@@ -16,7 +16,7 @@ class List extends PureComponent {
     if (e === '1') {
       onEditItem(record)
     } else if (e === '2') {
-      router.push('cemetery/' + record.id)
+      router.push('/folk/cemetery/' + record.id)
     } else if (e === '3') {
       confirm({
         title: '你确定要删除这条记录吗？',
@@ -68,7 +68,7 @@ class List extends PureComponent {
                   onClick={e => this.handleClick(record, '1')}
                   size={'small'}
                 >
-                  更新
+                  修改
                 </Button>
               )}
               {isAllowed('cemetery.view') && (

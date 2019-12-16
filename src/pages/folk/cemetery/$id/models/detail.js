@@ -12,18 +12,16 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(({ pathname }) => {
-        console.log(2323)
-        console.log(pathname)
         const match = pathMatchRegexp('/folk/cemetery/:id', pathname)
         if (match) {
-          dispatch({ type: 'query', payload: { id: match[1] } })
+          dispatch({ type: 'get', payload: { id: match[1] } })
         }
       })
     },
   },
 
   effects: {
-    *query({ payload }, { call, put }) {
+    *get({ payload }, { call, put }) {
       console.log(payload)
       const result = yield call(queryCemeteryById, payload)
       const { success, message, status, data } = result

@@ -33,7 +33,7 @@ class List extends PureComponent {
         title: '角色编码',
         dataIndex: 'code',
         key: 'code',
-        width: 120
+        width: 120,
       },
       {
         title: '角色名称',
@@ -52,7 +52,7 @@ class List extends PureComponent {
         dataIndex: 'admin',
         key: 'admin',
         width: 120,
-        render: text => <span>{text==1 ? '是' : '否'}</span>,
+        render: text => <span>{text == 1 ? '是' : '否'}</span>,
       },
       {
         title: '创建人',
@@ -71,7 +71,7 @@ class List extends PureComponent {
         dataIndex: 'valid',
         key: 'valid',
         width: 120,
-        render: text => <span>{text==1 ? '是' : '否'}</span>,
+        render: text => <span>{text == 1 ? '是' : '否'}</span>,
       },
       {
         title: '操作',
@@ -82,7 +82,7 @@ class List extends PureComponent {
             <DropOption
               onMenuClick={e => this.handleRoleClick(record, e)}
               menuOptions={[
-                { key: '1', name: '更新' },
+                { key: '1', name: '修改' },
                 { key: '2', name: '删除' },
               ]}
             />

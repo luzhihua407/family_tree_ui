@@ -84,7 +84,7 @@ class List extends PureComponent {
                   onClick={e => this.handlePeopleClick(record, '1')}
                   size={'small'}
                 >
-                  更新
+                  修改
                 </Button>
               )}
               {isAllowed('relationship.delete') && (

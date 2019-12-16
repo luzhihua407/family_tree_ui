@@ -37,7 +37,7 @@ class Village extends PureComponent {
       visible: modalVisible,
       maskClosable: false,
       confirmLoading: loading.effects[`village/${modalType}`],
-      title: `${modalType === 'create' ? '创建乡村' : '更新乡村'}`,
+      title: `${modalType === 'create' ? '创建乡村' : '修改乡村'}`,
       centered: true,
       onOk(data) {
         dispatch({

@@ -38,7 +38,7 @@ class Dict extends PureComponent {
       visible: modalVisible,
       maskClosable: false,
       confirmLoading: loading.effects[`dict/${modalType}`],
-      title: `${modalType === 'create' ? '创建字典' : '更新字典'}`,
+      title: `${modalType === 'create' ? '创建字典' : '修改字典'}`,
       parentDictData: parentDictData,
       centered: true,
       onOk(data) {

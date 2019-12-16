@@ -274,7 +274,7 @@ class Tree extends PureComponent {
       prodTeamListData: prodTeamListData,
       branchListData: branchListData,
       confirmLoading: loading.effects[`people/${modalType}`],
-      title: `${modalType === 'create' ? '创建族谱' : '更新族谱'}`,
+      title: `${modalType === 'create' ? '创建族谱' : '修改族谱'}`,
       centered: true,
       onOk(data) {
         dispatch({

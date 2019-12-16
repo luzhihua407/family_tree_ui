@@ -83,7 +83,7 @@ class List extends PureComponent {
                   onClick={e => this.handleDictClick(record, '1')}
                   size={'small'}
                 >
-                  更新
+                  修改
                 </Button>
               )}
               {isAllowed('dict.delete') && (

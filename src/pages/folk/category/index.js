@@ -39,7 +39,7 @@ class Category extends PureComponent {
       categoryListData: categoryListData,
       maskClosable: false,
       confirmLoading: loading.effects[`category/${modalType}`],
-      title: `${modalType === 'create' ? '创建分类' : '更新分类'}`,
+      title: `${modalType === 'create' ? '创建分类' : '修改分类'}`,
       centered: true,
       onOk(data) {
         dispatch({

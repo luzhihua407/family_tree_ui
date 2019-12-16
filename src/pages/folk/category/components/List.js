@@ -66,7 +66,7 @@ class List extends PureComponent {
                   onClick={e => this.handleUserClick(record, '1')}
                   size={'small'}
                 >
-                  更新
+                  修改
                 </Button>
               )}
               {isAllowed('category.delete') && (

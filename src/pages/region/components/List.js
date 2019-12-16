@@ -77,7 +77,7 @@ class List extends PureComponent {
                   onClick={e => this.handleRegionClick(record, '1')}
                   size={'small'}
                 >
-                  更新
+                  修改
                 </Button>
               )}
               {isAllowed('region.delete') && (

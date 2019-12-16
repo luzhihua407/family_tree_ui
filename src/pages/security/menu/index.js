@@ -40,7 +40,7 @@ class menu extends PureComponent {
       maskClosable: false,
       width: '40%',
       confirmLoading: loading.effects[`menu/${modalType}`],
-      title: `${modalType === 'create' ? '创建菜单' : '更新菜单'}`,
+      title: `${modalType === 'create' ? '创建菜单' : '修改菜单'}`,
       centered: true,
       parentMenusData: parentMenusData,
       optPermissionListData: optPermissionListData,

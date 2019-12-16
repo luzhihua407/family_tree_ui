@@ -41,7 +41,7 @@ class role extends PureComponent {
       visible: modalVisible,
       maskClosable: false,
       confirmLoading: loading.effects[`role/${modalType}`],
-      title: `${modalType === 'create' ? '创建角色' : '更新角色'}`,
+      title: `${modalType === 'create' ? '创建角色' : '修改角色'}`,
       centered: true,
       menuIds,
       onOk(data) {

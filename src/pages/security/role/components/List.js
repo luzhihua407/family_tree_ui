@@ -86,7 +86,7 @@ class List extends PureComponent {
                   onClick={e => this.handleRoleClick(record, '1')}
                   size={'small'}
                 >
-                  更新
+                  修改
                 </Button>
               )}
               {isAllowed('role.delete') && (

@@ -33,7 +33,6 @@ export default modelExtend(pageModel, {
           const payload = location.query || {
             page: 1,
             pageSize: 10,
-            pageNumber: 1,
           }
           dispatch({
             type: 'query',
