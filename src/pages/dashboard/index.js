@@ -43,6 +43,7 @@ class Dashboard extends PureComponent {
       numByGender,
       numByEducation,
       numByProTeam,
+      genderByGenerations,
     } = dashboard
     const cols = {
       num: {
@@ -166,6 +167,39 @@ class Dashboard extends PureComponent {
                   itemTpl='<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}人</li>'
                 />
                 <Geom type="interval" position="name*num" color="name" />
+              </Chart>
+            </Card>
+          </Col>
+        </Row>
+        <Row gutter={24}>
+          <Col lg={24} md={12}>
+            <Card
+              bordered={true}
+              bodyStyle={{
+                padding: '24px 36px 24px 0',
+              }}
+            >
+              <Chart
+                height={200}
+                data={genderByGenerations}
+                scale={{
+                  num: {
+                    tickInterval: 10,
+                  },
+                }}
+                forceFit
+              >
+                <Axis name="name" />
+                <Axis name="num" />
+                <Tooltip
+                  showTitle={false}
+                  itemTpl='<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}人</li>'
+                />
+                <Geom
+                  type="interval"
+                  position="generations*num"
+                  color="generations"
+                />
               </Chart>
             </Card>
           </Col>

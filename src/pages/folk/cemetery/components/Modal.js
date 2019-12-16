@@ -64,7 +64,7 @@ class CemeteryModal extends PureComponent {
               initialValue: item.shape,
               rules: [
                 {
-                  required: true,
+                  required: false,
                 },
               ],
             })(<Input />)}
