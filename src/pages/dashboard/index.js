@@ -44,13 +44,23 @@ class Dashboard extends PureComponent {
       numByEducation,
       numByProTeam,
       genderByGenerations,
+      generationsNames,
     } = dashboard
     const cols = {
       num: {
         tickInterval: 1,
       },
     }
-
+    const ds = new DataSet()
+    const dv = ds.createView().source(genderByGenerations)
+    dv.transform({
+      type: 'fold',
+      fields: generationsNames,
+      // 展开字段集
+      key: '世代',
+      // key字段
+      value: '人数', // value字段
+    })
     return (
       <Page
         // loading={loading.models.dashboard && sales.length === 0}
@@ -179,26 +189,25 @@ class Dashboard extends PureComponent {
                 padding: '24px 36px 24px 0',
               }}
             >
-              <Chart
-                height={200}
-                data={genderByGenerations}
-                scale={{
-                  num: {
-                    tickInterval: 10,
-                  },
-                }}
-                forceFit
-              >
-                <Axis name="name" />
-                <Axis name="num" />
+              <Chart height={400} data={dv} forceFit>
+                <Axis name="世代" />
+                <Axis name="人数" />
+                <Legend />
                 <Tooltip
-                  showTitle={false}
-                  itemTpl='<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}人</li>'
+                  crosshairs={{
+                    type: 'y',
+                  }}
                 />
                 <Geom
                   type="interval"
-                  position="generations*num"
-                  color="generations"
+                  position="世代*人数"
+                  color={'name'}
+                  adjust={[
+                    {
+                      type: 'dodge',
+                      marginRatio: 1 / 32,
+                    },
+                  ]}
                 />
               </Chart>
             </Card>

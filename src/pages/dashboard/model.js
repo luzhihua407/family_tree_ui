@@ -14,6 +14,7 @@ export default modelExtend(model, {
     numByEducation: [],
     numByProTeam: [],
     genderByGenerations: [],
+    generationsNames: [],
   },
   subscriptions: {
     setup({ dispatch, history }) {
