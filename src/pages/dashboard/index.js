@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Col, Card } from 'antd'
+import { Row, Col, Card, Avatar, Select } from 'antd'
 import { Color } from 'utils'
 import { Page, ScrollBar } from 'components'
 import { Chart, Geom, Axis, Tooltip, Legend, Coord, Label } from 'bizcharts'

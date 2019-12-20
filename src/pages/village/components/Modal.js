@@ -1,6 +1,18 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader, Select } from 'antd'
+import {
+  Form,
+  Input,
+  InputNumber,
+  Radio,
+  Modal,
+  Cascader,
+  Select,
+  Button,
+  Upload,
+  Icon,
+  message,
+} from 'antd'
 import { Trans, withI18n } from '@lingui/react'
 const FormItem = Form.Item
 
@@ -11,6 +23,23 @@ const formItemLayout = {
   wrapperCol: {
     span: 14,
   },
+}
+function getBase64(img, callback) {
+  const reader = new FileReader()
+  reader.addEventListener('load', () => callback(reader.result))
+  reader.readAsDataURL(img)
+}
+function beforeUpload(file) {
+  console.log(file)
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
+  if (!isJpgOrPng) {
+    message.error('You can only upload JPG/PNG file!')
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2
+  if (!isLt2M) {
+    message.error('Image must smaller than 2MB!')
+  }
+  return isJpgOrPng && isLt2M
 }
 @withI18n()
 @Form.create()
@@ -32,6 +61,12 @@ class VillageModal extends PureComponent {
   }
 
   render() {
+    const fileList = []
+    const props = {
+      action: 'http://localhost:7000/api/v1/file_upload/upload',
+      listType: 'picture',
+      defaultFileList: [...fileList],
+    }
     const { item = {}, onOk, form, i18n, ...modalProps } = this.props
     const { getFieldDecorator } = form
     return (
@@ -86,6 +121,22 @@ class VillageModal extends PureComponent {
                 },
               ],
             })(<Input />)}
+          </FormItem>
+          <FormItem label="图片" {...formItemLayout}>
+            {getFieldDecorator('file', {
+              initialValue: item.file,
+              rules: [
+                {
+                  required: false,
+                },
+              ],
+            })(
+              <Upload {...props}>
+                <Button>
+                  <Icon type="upload" /> 上传
+                </Button>
+              </Upload>
+            )}
           </FormItem>
           <FormItem label="备注" {...formItemLayout}>
             {getFieldDecorator('remark', {

@@ -25,6 +25,19 @@ class Login extends PureComponent {
       dispatch({ type: 'login/login', payload: values })
     })
   }
+  guestLogin = () => {
+    const { dispatch, form } = this.props
+    // const { validateFieldsAndScroll } = form
+    // validateFieldsAndScroll((errors, values) => {
+    //   if (errors) {
+    //     return
+    //   }
+    // })
+    dispatch({
+      type: 'login/login',
+      payload: { username: 'guest', password: 'guest' },
+    })
+  }
 
   render() {
     const { loading, form, i18n } = this.props
@@ -97,6 +110,15 @@ class Login extends PureComponent {
               >
                 登录
               </Button>
+              <p>
+                <Button
+                  type="primary"
+                  onClick={this.guestLogin}
+                  loading={loading.effects.login}
+                >
+                  我是游客
+                </Button>
+              </p>
               <p>
                 <span>
                   <Link to={'/signup'}>我要注册</Link>

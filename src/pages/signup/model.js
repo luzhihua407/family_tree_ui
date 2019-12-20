@@ -1,11 +1,10 @@
 import modelExtend from 'dva-model-extend'
 import api from 'api'
-import { pageModel } from 'utils/model'
 import router from 'umi/router'
 import { message } from 'antd'
-const { signUp, getVillageName } = api
+const { signUp, getVillageName, forgotPassword } = api
 
-export default modelExtend(pageModel, {
+export default {
   namespace: 'signUp',
 
   state: { data: [] },
@@ -34,7 +33,18 @@ export default modelExtend(pageModel, {
         })
       }
     },
+    *forgotPassword({ payload }, { call, put }) {
+      console.log(1111)
+      const result = yield call(forgotPassword, payload)
+      const { success, data, msg } = result
+      if (success) {
+        message.info('注册成功，正在跳转到登录页')
+        router.push('/login')
+      } else {
+        message.error(msg)
+      }
+    },
   },
 
   reducers: {},
-})
+}

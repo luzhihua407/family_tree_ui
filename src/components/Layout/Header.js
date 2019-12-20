@@ -36,7 +36,7 @@ class Header extends PureComponent {
               <span style={{ color: '#999', marginRight: 4 }}>
                 <Trans>Hi,</Trans>
               </span>
-              <span>{user.username}</span>
+              <span>{user.realName == '' ? user.username : user.realName}</span>
               <Avatar style={{ marginLeft: 8 }} src={avatar} />
             </Fragment>
           }

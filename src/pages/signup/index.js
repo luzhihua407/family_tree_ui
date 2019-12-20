@@ -1,13 +1,24 @@
 import React, { Fragment, PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Col, Button, Select, Input, Spin, Form } from 'antd'
+import { Row, Col, Button, Select, Input, Spin, Form, Icon } from 'antd'
 import { withI18n } from '@lingui/react'
-import styles from '../login/index.less'
+import styles from '../signup/index.less'
 import { GlobalFooter } from 'ant-design-pro'
+import config from 'utils/config'
+
 const { Option } = Select
 const FormItem = Form.Item
 import { Link } from 'umi'
+
+const formItemLayout = {
+  labelCol: {
+    span: 6,
+  },
+  wrapperCol: {
+    span: 18,
+  },
+}
 @withI18n()
 @connect(({ signUp, loading }) => ({ signUp, loading }))
 @Form.create()
@@ -45,14 +56,25 @@ class SignUp extends PureComponent {
     const { getFieldDecorator } = form
     const { fetching, data, value } = this.state
     this.setState({ data: signUp.data })
+    let footerLinks = [
+      {
+        key: 'github',
+        title: <Icon type="github" />,
+        href: 'https://github.com/luzhihua407/family_tree_ui',
+        blankTarget: true,
+      },
+    ]
+
     return (
       <Fragment>
         <div className={styles.form}>
-          <Form>
-            <Row>
-              <Link to={'/login'}>返回登录</Link>
-            </Row>
-            <FormItem label="用户名">
+          <Form layout="horizontal">
+            <p>
+              <span>
+                <Link to={'/login'}>返回登录</Link>
+              </span>
+            </p>
+            <FormItem label="用户名" {...formItemLayout}>
               {getFieldDecorator('username', {
                 rules: [
                   {
@@ -61,7 +83,7 @@ class SignUp extends PureComponent {
                 ],
               })(<Input />)}
             </FormItem>
-            <FormItem label="邮箱">
+            <FormItem label="邮箱" {...formItemLayout}>
               {getFieldDecorator('email', {
                 rules: [
                   {
@@ -70,7 +92,7 @@ class SignUp extends PureComponent {
                 ],
               })(<Input placeholder="请输入用来激活账户的邮箱" />)}
             </FormItem>
-            <FormItem label="密码">
+            <FormItem label="密码" {...formItemLayout}>
               {getFieldDecorator('password', {
                 rules: [
                   {
@@ -85,7 +107,7 @@ class SignUp extends PureComponent {
                 />
               )}
             </FormItem>
-            <FormItem label="村名">
+            <FormItem label="村名" {...formItemLayout}>
               {getFieldDecorator('villageName', {
                 rules: [
                   {
@@ -99,12 +121,13 @@ class SignUp extends PureComponent {
                   placeholder="请选择村名，如搜索不到则新建输入的村名"
                   notFoundContent={null}
                   filterOption={false}
-                  onSearch={this.fetchUser}
+                  // onSearch={this.fetchUser}
                   style={{ width: '100%' }}
                 >
-                  {data.map(d => (
-                    <Option key={d}>{d}</Option>
-                  ))}
+                  {/*{data.map(d => (*/}
+                  {/*  <Option key={d}>{d}</Option>*/}
+                  {/*))}*/}
+                  <Option key="长岐塘">长岐塘</Option>
                 </Select>
               )}
             </FormItem>
@@ -118,6 +141,9 @@ class SignUp extends PureComponent {
               </Button>
             </Row>
           </Form>
+        </div>
+        <div className={styles.footer}>
+          <GlobalFooter links={footerLinks} copyright={config.copyright} />
         </div>
       </Fragment>
     )

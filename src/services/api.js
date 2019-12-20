@@ -68,13 +68,13 @@ export default {
   queryTreeByPage: 'POST /folk/people/tree',
   getFamilyTree: 'POST /folk/people/getFamilyTree',
 
-  queryVillage: 'GET /bs/village/get',
-  getCurrentVillage: 'GET /bs/village/getCurrentVillage',
-  queryVillageList: 'POST /bs/village/page',
-  updateVillage: 'POST /bs/village/addOrUpdate',
-  createVillage: 'POST /bs/village/addOrUpdate',
-  removeVillage: 'POST /bs/village/delete',
-  removeVillageList: 'POST /bs/village/delete',
+  queryVillage: 'GET /village/get',
+  getCurrentVillage: 'GET /village/getCurrentVillage',
+  queryVillageList: 'POST /village/page',
+  updateVillage: 'POST /village/addOrUpdate',
+  createVillage: 'POST /village/addOrUpdate',
+  removeVillage: 'POST /village/delete',
+  removeVillageList: 'POST /village/delete',
   getVillageName: 'GET /SignUp/getVillageName',
 
   queryDict: 'GET /basic/dict/get',
@@ -101,7 +101,9 @@ export default {
   configMenu: 'POST /security/user_menu/addOrUpdate',
   getUserMenuByUserId: 'GET /security/user_menu/getUserMenuByUserId',
 
-  getOverview: 'GET /bs/village/getOverview',
+  getOverview: 'GET /village/getOverview',
+
+  getVillageImages: 'GET /imageFile/getVillageImages',
 
   getNames: 'POST /folk/people/getNames',
 
