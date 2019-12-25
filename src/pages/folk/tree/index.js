@@ -33,6 +33,7 @@ class Tree extends PureComponent {
       config: {
         items: [],
         pageFitMode: primitives.common.PageFitMode.AutoSize,
+        autoSizeMaximum: new primitives.common.Size(2000, 2000),
         cursorItem: 0,
         hasSelectorCheckbox: primitives.common.Enabled.False,
         /* Intervals */
