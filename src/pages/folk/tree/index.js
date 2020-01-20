@@ -32,6 +32,7 @@ class Tree extends PureComponent {
     this.state = {
       config: {
         items: [],
+        width: 2000,
         pageFitMode: primitives.common.PageFitMode.AutoSize,
         autoSizeMaximum: new primitives.common.Size(2000, 2000),
         cursorItem: 0,

@@ -1,5 +1,5 @@
 module.exports = {
-  siteName: 'system', //盧氏迺炯公后裔族譜',
+  siteName: '盧氏迺炯公后裔族譜', //盧氏迺炯公后裔族譜',
   copyright: '星火  © 2019',
   logoPath: '/lu.jpg',
   apiPrefix: '/api/v1',

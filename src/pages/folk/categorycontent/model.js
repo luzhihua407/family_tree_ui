@@ -3,7 +3,6 @@ import modelExtend from 'dva-model-extend'
 import { pathMatchRegexp } from 'utils'
 import api from 'api'
 import { pageModel } from 'utils/model'
-import { router } from '../../../utils'
 
 const {
   queryCategoryContentByPage,
@@ -29,7 +28,13 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (pathMatchRegexp('/folk/categoryContent', location.pathname)) {
+        console.log('list')
+        console.log(location.pathname)
+        const match = pathMatchRegexp(
+          '/folk/categorycontent',
+          location.pathname
+        )
+        if (match) {
           const payload = location.query || {
             page: 1,
             pageSize: 10,
@@ -65,7 +70,7 @@ export default modelExtend(pageModel, {
 
     *delete({ payload }, { call, put, select }) {
       const data = yield call(removeCategoryContent, { ids: [payload] })
-      const { selectedRowKeys } = yield select(_ => _.categoryContent)
+      const { selectedRowKeys } = yield select(_ => _.categorycontent)
       if (data.success) {
         yield put({
           type: 'updateState',
@@ -98,7 +103,7 @@ export default modelExtend(pageModel, {
 
     *update({ payload }, { select, call, put }) {
       const id = yield select(
-        ({ categoryContent }) => categoryContent.currentItem.id
+        ({ categorycontent }) => categorycontent.currentItem.id
       )
       const newCategoryContent = { ...payload, id }
       const data = yield call(updateCategoryContent, newCategoryContent)

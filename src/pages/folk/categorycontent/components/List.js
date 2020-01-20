@@ -1,18 +1,18 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal, Avatar, Button } from 'antd'
+import { Table, Modal, Button } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
 import Link from 'umi/link'
 import styles from './List.less'
+import router from 'umi/router'
 import { isAllowed } from '../../../auth'
-import { router } from '../../../../utils'
 
 const { confirm } = Modal
 
 @withI18n()
 class List extends PureComponent {
   handleUserClick = (record, e) => {
-    const { onDeleteItem, onEditItem, i18n } = this.props
+    const { onDeleteItem, onEditItem, onLink } = this.props
     if (e === '1') {
       onEditItem(record)
     } else if (e === '2') {
@@ -37,7 +37,7 @@ class List extends PureComponent {
         key: 'title',
         width: '20%',
         // render: (text, record) => (
-        //   <Link to={`categoryContent/${record.id}`}>{text}</Link>
+        //   <Link to={`/folk/categorycontent/${record.id}`}>{text}</Link>
         // ),
       },
       {

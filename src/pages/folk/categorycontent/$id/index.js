@@ -2,23 +2,13 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Page } from 'components'
-import {
-  PageHeader,
-  Descriptions,
-  Dropdown,
-  Icon,
-  Button,
-  Tag,
-  Typography,
-  Row,
-} from 'antd'
+import { PageHeader } from 'antd'
 
 @connect(({ categoryContentDetail }) => ({ categoryContentDetail }))
 class CategoryContentDetail extends PureComponent {
   render() {
-    const {
-      categoryContentDetail: { data },
-    } = this.props
+    const { categoryContentDetail } = this.props
+    const { data } = categoryContentDetail
     return (
       <Page inner>
         <PageHeader title={data.title} subTitle={data.subTitle}>

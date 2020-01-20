@@ -11,21 +11,24 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(({ pathname }) => {
-        const match = pathMatchRegexp('/folk/categoryContent/:id', pathname)
+        const match = pathMatchRegexp('/folk/categorycontent/:id', pathname)
         if (match) {
-          dispatch({ type: 'view', payload: { id: match[1] } })
+          dispatch({
+            type: 'viewCategoryContent',
+            payload: { id: match[1] },
+          })
         }
       })
     },
   },
 
   effects: {
-    *view({ payload }, { call, put }) {
+    *viewCategoryContent({ payload }, { call, put }) {
       const result = yield call(queryCategoryContentById, payload)
       const { success, message, status, data } = result
       if (success) {
         yield put({
-          type: 'querySuccess',
+          type: 'updateState',
           payload: {
             data: data,
           },
@@ -37,7 +40,7 @@ export default {
   },
 
   reducers: {
-    querySuccess(state, { payload }) {
+    updateState(state, { payload }) {
       const { data } = payload
       return {
         ...state,

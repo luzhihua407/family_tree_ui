@@ -33,11 +33,11 @@ function beforeUpload(file) {
   console.log(file)
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
   if (!isJpgOrPng) {
-    message.error('You can only upload JPG/PNG file!')
+    message.error('您只可以上传 JPG/PNG 的图片!')
   }
   const isLt2M = file.size / 1024 / 1024 < 2
   if (!isLt2M) {
-    message.error('Image must smaller than 2MB!')
+    message.error('图片必须小于 2MB!')
   }
   return isJpgOrPng && isLt2M
 }
@@ -66,6 +66,7 @@ class VillageModal extends PureComponent {
       action: 'http://localhost:7000/api/v1/file_upload/upload',
       listType: 'picture',
       defaultFileList: [...fileList],
+      beforeUpload: beforeUpload,
     }
     const { item = {}, onOk, form, i18n, ...modalProps } = this.props
     const { getFieldDecorator } = form

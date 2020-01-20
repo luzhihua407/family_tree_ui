@@ -123,15 +123,15 @@ const routerAddLangPrefix = params => {
  */
 const myRouter = { ...umiRouter }
 
-myRouter.push = flow(
-  routerAddLangPrefix,
-  umiRouter.push
-)
-
-myRouter.replace = flow(
-  routerAddLangPrefix,
-  myRouter.replace
-)
+// myRouter.push = flow(
+//   routerAddLangPrefix,
+//   umiRouter.push
+// )
+//
+// myRouter.replace = flow(
+//   routerAddLangPrefix,
+//   myRouter.replace
+// )
 
 export const router = myRouter
 
