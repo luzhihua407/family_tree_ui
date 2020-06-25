@@ -1,10 +1,9 @@
 module.exports = {
-  siteName: '盧氏迺炯公后裔族譜', //盧氏迺炯公后裔族譜',
+  siteName: '盧氏迺炯公后裔族譜',
   copyright: '星火  © 2019',
   logoPath: '/lu.jpg',
   apiPrefix: '/api/v1',
   fixedHeader: true, // sticky primary layout header
-
   /* Layout configuration, specify which layout to use for route. */
   layouts: [
     {

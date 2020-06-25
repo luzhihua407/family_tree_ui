@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import withRouter from 'umi/withRouter'
 import { connect } from 'dva'
 import { MyLayout } from 'components'
-import { BackTop, Layout, Drawer } from 'antd'
+import { BackTop, Layout, Drawer, Icon } from 'antd'
 import { GlobalFooter } from 'ant-design-pro'
 import { enquireScreen, unenquireScreen } from 'enquire-js'
 import { config, pathMatchRegexp, langFromPath } from 'utils'
@@ -45,6 +45,14 @@ class PrimaryLayout extends PureComponent {
   }
 
   render() {
+    let footerLinks = [
+      {
+        key: 'github',
+        title: <Icon type="github" />,
+        href: 'https://github.com/luzhihua407/family_tree_ui',
+        blankTarget: true,
+      },
+    ]
     const { app, location, dispatch, children } = this.props
     const {
       user,
@@ -144,6 +152,7 @@ class PrimaryLayout extends PureComponent {
             />
             <GlobalFooter
               className={styles.footer}
+              links={footerLinks}
               copyright={config.copyright}
             />
           </div>
