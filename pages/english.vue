@@ -28,11 +28,12 @@
       <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
         <a-row>
           <a-col :span="18">
-            <a-list item-layout="horizontal" :data-source="data" :pagination="pagination">
+            <a-list item-layout="horizontal" :data-source="this.data" :pagination="pagination">
               <a-list-item slot="renderItem" slot-scope="item, index">
                 <a-list-item-meta
                 >
-                  <p slot="description">{{item.word}}/{{item.pronunciation}}/{{item.partOfSpeech}}/{{item.chinese}}</p>
+                  <p slot="title" v-html="item.word"></p>
+                  <p slot="description">{{item.pronunciation}}/{{item.partOfSpeech}}/{{item.chinese}}</p>
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
@@ -80,7 +81,7 @@
         this.listEnglish(this.params);
       },
       async queryByRoot(root) {
-        this.params.keyword=root;
+        this.params.word=root;
         this.listEnglish(this.params);
       },
       async listEnglish(params) {
@@ -92,6 +93,7 @@
           pagination.total = total;
           pagination.current = params.pageNumber+1;
           pagination.defaultPageSize = pageSize;
+          pagination.pageSize = pageSize;
           this.pagination = pagination;
           console.log(this.pagination)
         })
