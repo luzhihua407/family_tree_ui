@@ -1,7 +1,7 @@
 <template>
   <a-layout id="components-layout-demo-fixed">
-    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
-      <Menu/>
+    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%',background: '#FFFFFF' }">
+    <Menu :current="this.selectedKey"/>
     </a-layout-header>
       <a-layout-content :style="{ padding: '0 50px', marginTop: '64px' }">
         <Search @query="listArticle" :params="params"/>
@@ -48,6 +48,7 @@
                     author: '',
                     pageNumber: 0,
                 },
+                selectedKey: 0,
                 content: [],
                 data: [],
                 loading: false,
@@ -75,6 +76,8 @@
         },
 
         created() {
+            const category=this.$route.query.category
+            this.selectedKey=category;
             this.getAuthorList();
         }
 

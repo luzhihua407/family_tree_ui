@@ -1,9 +1,9 @@
 <template>
   <div>
 
-  <NuxtLogo/>
+<!--  <NuxtLogo/>-->
   <a-menu
-    theme="dark"
+    theme="light"
     mode="horizontal"
     :selected-keys="[current]"
     :style="{ lineHeight: '64px' }"
@@ -11,7 +11,8 @@
     <template v-for="item in list">
       <a-menu-item :key="item.value">
         <NuxtLink to="/author" v-if="item.value==1">{{item.name}}</NuxtLink>
-        <NuxtLink :to="{ path: '/', query: { category: item.value }}" v-if="item.value!=1">{{item.name}}</NuxtLink>
+        <NuxtLink :to="{ path: '/', query: { category: item.value }}" v-if="item.value!=1 && item.value!=5">{{item.name}}</NuxtLink>
+        <NuxtLink :to="{ path: '/english', query: { category: item.value }}" v-if="item.value==5">{{item.name}}</NuxtLink>
       </a-menu-item>
     </template>
   </a-menu>

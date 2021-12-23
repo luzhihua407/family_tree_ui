@@ -1,7 +1,7 @@
 <template>
   <a-layout id="components-layout-demo-fixed">
-    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
-      <Menu/>
+    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%',background: '#FFFFFF' }">
+      <Menu :current="this.selectedKey"/>
     </a-layout-header>
     <a-layout-content :style="{ padding: '0 50px', marginTop: '64px' }">
       <a-form-model layout="inline" :model="params">
@@ -63,17 +63,18 @@
           chinese: '',
           pageNumber: 0,
         },
-        content: [],
-        data: [],
-        roots: [],
-        loading: false,
-        pagination: {
-          onChange: page => {
-            const pageNumber = page-1;
-            this.params.pageNumber=pageNumber;
-            this.listEnglish(this.params);
-          }
-        },
+          selectedKey: 0,
+          content: [],
+          data: [],
+          roots: [],
+          loading: false,
+          pagination: {
+            onChange: page => {
+              const pageNumber = page-1;
+              this.params.pageNumber=pageNumber;
+              this.listEnglish(this.params);
+            }
+          },
       }
     },
     methods:{
@@ -95,20 +96,20 @@
           pagination.defaultPageSize = pageSize;
           pagination.pageSize = pageSize;
           this.pagination = pagination;
-          console.log(this.pagination)
         })
       },
       async listWordRoot() {
         this.$axios.$get('http://localhost:7001/wordRoot/list').then(response => {
           this.roots=response.data;
-          console.log(this.pagination)
         })
       },
     },
 
     created() {
-      this.listWordRoot();
-      this.listEnglish(this.params);
+        const category=this.$route.query.category
+        this.selectedKey=category;
+        this.listWordRoot();
+        this.listEnglish(this.params);
     }
 
   }

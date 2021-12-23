@@ -1,7 +1,7 @@
 <template>
   <a-layout id="components-layout-demo-fixed">
-    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
-      <Menu :current="selectedKey"/>
+    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%',background: '#FFFFFF' }">
+      <Menu :current="this.selectedKey"/>
     </a-layout-header>
     <a-layout-content :style="{ padding: '0 50px', marginTop: '64px' }">
 
@@ -84,7 +84,6 @@
             this.params.category=category;
             this.selectedKey=category;
             this.listArticle(this.params)
-            console.log(111)
         },
         watch: {
             '$route': function() {
