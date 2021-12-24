@@ -3,7 +3,7 @@
     <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%',background: '#FFFFFF' }">
       <Menu :current="this.selectedKey"/>
     </a-layout-header>
-    <a-layout-content :style="{ padding: '0 50px', marginTop: '64px' }">
+    <a-layout-content :style="{ padding: '0 200px', marginTop: '64px' }">
 
       <Search @query="listArticle" :params="params"/>
       <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">

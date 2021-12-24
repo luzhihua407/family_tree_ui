@@ -3,7 +3,7 @@
     <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%',background: '#FFFFFF' }">
       <Menu :current="this.selectedKey"/>
     </a-layout-header>
-    <a-layout-content :style="{ padding: '0 50px', marginTop: '64px' }">
+    <a-layout-content :style="{ padding: '0 200px', marginTop: '64px'}">
       <a-form-model layout="inline" :model="params">
         <a-form-model-item>
           <a-input v-model="params.word" placeholder="请输入单词" allow-clear>
@@ -26,8 +26,8 @@
         </a-form-model-item>
       </a-form-model>
       <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
-        <a-row>
-          <a-col :span="18">
+        <a-row :gutter="16">
+          <a-col :span="16">
             <a-list item-layout="horizontal" :data-source="this.data" :pagination="pagination">
               <a-list-item slot="renderItem" slot-scope="item, index">
                 <a-list-item-meta
@@ -38,7 +38,7 @@
               </a-list-item>
             </a-list>
           </a-col>
-          <a-col :span="6">
+          <a-col :span="8">
             <template v-for="item in roots">
               <a-checkable-tag  @change="queryByRoot(item.root,checked)">
                 {{item.root}}-{{item.chinese}}

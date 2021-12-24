@@ -3,11 +3,11 @@
     <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%',background: '#FFFFFF' }">
     <Menu :current="this.selectedKey"/>
     </a-layout-header>
-      <a-layout-content :style="{ padding: '0 50px', marginTop: '64px' }">
+      <a-layout-content :style="{ padding: '0 200px', marginTop: '64px' }">
         <Search @query="listArticle" :params="params"/>
       <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
-        <a-row>
-          <a-col :span="18">
+        <a-row :gutter="16">
+          <a-col :span="16">
             <a-list item-layout="horizontal" :data-source="data" >
               <a-list-item slot="renderItem" slot-scope="item, index">
                 <a-list-item-meta
@@ -19,7 +19,7 @@
               </a-list-item>
             </a-list>
           </a-col>
-          <a-col :span="6">
+          <a-col :span="8">
             <template v-for="item in content">
               <a-card :title="item.firstLetter" :bordered="false" style="width: 300px" size="small">
                 <template v-for="name in item.authors">
