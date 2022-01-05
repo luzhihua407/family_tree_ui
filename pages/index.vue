@@ -7,11 +7,27 @@
 
       <Search @query="listArticle" :params="params"/>
       <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
-        <a-table :columns="columns" :data-source="data"
-                 :pagination="pagination"
-                 :loading="loading" @change="handleTableChange" rowKey='id' >
-          <p slot="name" slot-scope="text" v-html="text"></p>
-        </a-table>
+        <a-row :gutter="16">
+          <a-col :span="16">
+            <a-list item-layout="vertical" :data-source="data" :pagination="pagination">
+              <a-list-item slot="renderItem" slot-scope="item, index">
+                <a-list-item-meta
+                >
+                  <p slot="description">{{item.body}}</p>
+                  <a slot="title" href="#?">{{ item.title }}</a>
+                </a-list-item-meta>
+                  <div slot="actions">{{ item.author }}</div>
+              </a-list-item>
+            </a-list>
+          </a-col>
+          <a-col :span="8">
+          </a-col>
+        </a-row>
+<!--        <a-table :columns="columns" :data-source="data"-->
+<!--                 :pagination="pagination"-->
+<!--                 :loading="loading" @change="handleTableChange" rowKey='id' >-->
+<!--          <p slot="name" slot-scope="text" v-html="text"></p>-->
+<!--        </a-table>-->
       </div>
     </a-layout-content>
     <Footer/>
@@ -30,7 +46,14 @@
                 },
                 list: [],
                 data: [],
-                pagination: {defaultPageSize:15,total:0},
+                // pagination: {defaultPageSize:15,total:0},
+                pagination: {
+                    onChange: page => {
+                        const pageNumber = page-1;
+                        this.params.pageNumber=pageNumber;
+                        this.listArticle(this.params);
+                    }
+                },
                 selectedKey: 0,
                 loading: false,
                 columns : [
